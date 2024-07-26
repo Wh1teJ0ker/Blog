@@ -32,9 +32,10 @@ jobs:
           git config --global user.email "1430100306@qq.com"
       - name: Install dependencies
         run: |
-          npm i -g hexo-cli
+          npm install -g hexo-cli
           npm install hexo-deployer-git --save
-          npm i
       - name: Deploy hexo
         run: |
-          hexo generate && hexo deploy
+          hexo clean
+          hexo generate 
+          hexo deploy
