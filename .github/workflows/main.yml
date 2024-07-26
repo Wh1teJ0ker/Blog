@@ -40,7 +40,6 @@ jobs:
         run: |
           rm -rf .deploy_git/
           git config --global core.autocrlf false
-          git reset --hard commitId
           hexo clean
           hexo g
           hexo d
