@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +38,8 @@ jobs:
 
       - name: Deploy hexo
         run: |
+          rm -f .deploy_git
+          git config --global core.autocrlf false
           hexo clean
-          hexo generate
-          hexo deploy
+          hexo g
+          hexo d
