@@ -13,16 +13,16 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Configuration environment
         env:
-          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_PRI}}
+          HEXO_DEPLOY_PRI: ${{ secrets.HEXO_DEPLOY_PRI }}
         run: |
           mkdir -p ~/.ssh/
           echo "$HEXO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
@@ -30,12 +30,14 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "Wh1teJ0ker"
           git config --global user.email "1430100306@qq.com"
+
       - name: Install dependencies
         run: |
           npm install -g hexo-cli
           npm install hexo-deployer-git --save
+
       - name: Deploy hexo
         run: |
           hexo clean
-          hexo generate 
+          hexo generate
           hexo deploy
