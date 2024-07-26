@@ -34,10 +34,13 @@ jobs:
       - name: Install dependencies
         run: |
           npm install -g hexo-cli
-          npm install hexo-deployer-git --save
+          npm install
 
       - name: Deploy hexo
         run: |
+          rm -rf .deploy_git/
+          git config --global core.autocrlf false
+          git reset --hard commitId
           hexo clean
           hexo g
           hexo d
