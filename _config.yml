@@ -101,4 +101,6 @@ theme: ZenMind
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: git@github.com:Wh1teJ0ker/Blog.git
+  branch: main
