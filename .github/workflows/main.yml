@@ -38,8 +38,6 @@ jobs:
 
       - name: Deploy hexo
         run: |
-          rm -rf .deploy_git/
-          git config --global core.autocrlf false
           hexo clean
           hexo g
           hexo d
