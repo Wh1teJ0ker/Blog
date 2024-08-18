@@ -29,7 +29,7 @@ upx脱壳
 
 LSB隐写
 
-​![](https://birkenwald.feishu.cn/space/api/box/stream/download/asynccode/?code=MGJlMDEwOTk1ZGE4MDUzODc3ZjYyMGIzZmM2MzU3MjRfR2xKZTVhV0sxUW96b3B6YXNOYWZnbjUyeHlPMmZ2Z3BfVG9rZW46QWRBZGJOd2Vkb3dyWDB4MEg1QWNLbTFJbjRiXzE3MjM5NjYyODg6MTcyMzk2OTg4OF9WNA)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240818205032.png)​
 
 http://47.104.129.38/79407f2309b5763fbd0e33dc583c4262/default.a
 
@@ -39,7 +39,7 @@ http://47.104.129.38/79407f2309b5763fbd0e33dc583c4262/default.a
 
 异或出来即得样本
 
-​![](https://birkenwald.feishu.cn/space/api/box/stream/download/asynccode/?code=ODQxNzQ3ZTRlOWU2YjExNWZhZWI1MzQyMzQ0NmJkNjZfNm1ncjQ2NDk1Wm1mYjVXN2VpN1FMU1ZpQm9hSUdEVjlfVG9rZW46RHdrYmJEcER4b3NBdEt4UzF1T2NxUURCbnkzXzE3MjM5NjYyODg6MTcyMzk2OTg4OF9WNA)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240818205006.png)​
 
 然后利用下面脚本进行提取的
 
