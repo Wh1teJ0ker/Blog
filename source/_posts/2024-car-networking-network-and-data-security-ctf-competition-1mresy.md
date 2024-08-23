@@ -14,7 +14,7 @@ toc: true
 
 ## misc01
 
-这题运气不错，成功抢到了
+这题运气不错，成功抢到了三血
 
 稍微fuzz了一下，发现应该是对所有字母进行了过滤
 
@@ -28,9 +28,9 @@ toc: true
 __import__('os').system('sh')
 ```
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240823211209.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240823211913.png)​
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240823211211.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240823211202.png)​
 
 ## misc02
 
