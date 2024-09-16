@@ -9,6 +9,10 @@ toc: true
 
 # 2024黑龙江省大学网络安全竞赛
 
+备注：图片图床使用为Github，打不开需要挂梯子！
+
+---
+
 # 前言
 
 遗憾告北，没能守住（
@@ -19,7 +23,7 @@ toc: true
 
 不会密码，crypto方向的赛题都是强行出来的
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183659.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185107.png)​
 
 # Web
 
@@ -33,7 +37,7 @@ toc: true
 
 然后使用递归查找，发现flag
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183713.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185117.png)​
 
 ## FileInclusion
 
@@ -41,11 +45,11 @@ toc: true
 
 先在User-Agent传入phpinfo
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183715.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185119.png)​
 
 然后读取日志文件，发现flag
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183717.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185121.png)​
 
 ```python
 DASCTF{22743534597924607412099622973209}
@@ -59,19 +63,19 @@ DASCTF{22743534597924607412099622973209}
 
 然后在失败中加入那串疑似flag判断的内容
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183719.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185123.png)​
 
 选择替换原有文件为本地文件
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183722.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185126.png)​
 
 然后初级，中级，高级各玩输一次，就得到全部flag了
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183728.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185129.png)​
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183730.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185132.png)​
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183733.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185135.png)​
 
 ```python
 DASCTF{c4a204599255589b065eb366cf514aee}
@@ -141,7 +145,7 @@ if(isset($_GET['boy']) && isset($_GET['girl']))
 
 首先解压缩文件，得到shaflag.zip，然后伪加密进行修复
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183736.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185138.png)​
 
 得到一个hash字符串，四十位的，是sha1算法的，然后挨个爆破即可（手动的
 
@@ -237,7 +241,7 @@ print(encrypted_data.hex())
 # c76c12c485ca0c8e1a457b3893f976c84c8da18968424d23fb7128792de3ee59047ada411c55fb4141f825caedc85aae1a3d6c8d8236049c472c28cd7890e189c91244413c047184cd5758394dd8293150ea54d809e3256d585ff6e20c0e1c3ac7314e5eb655443b
 ```
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183739.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916185141.png)​
 
 ​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916183741.png)​
 
