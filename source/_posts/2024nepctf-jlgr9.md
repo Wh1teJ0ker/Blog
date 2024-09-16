@@ -9,29 +9,33 @@ toc: true
 
 # 2024NepCTF
 
+备注：图片图床使用为Github，打不开需要挂梯子！
+
+---
+
 (PS:今年刚开始在研究硬件那个，后来也没花太多时间在这个上面，hhh)
 
 # Misc
 
 ## NepMagic —— CheckIn
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165038.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184532.png)​
 
 确信，我没意见
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165039.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184533.png)​
 
 ## 3DNep
 
 ‍
 
-​![00003458](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165040.png)​
+​![00003458](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184535.png)​
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165043.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184539.png)​
 
 ps不会用，所以用excel
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165045.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184540.png)​
 
 ## Nemophila
 
@@ -157,9 +161,9 @@ print(flag)
 
 中间根据镜莲华的花语以及《葬送的芙莉莲》猜测了一下得到相关的单词，然后再进行爆破
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165046.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184541.png)​
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165047.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184542.png)​
 
 得到了压缩包密码
 
@@ -169,11 +173,11 @@ secret_is{Frieren&C_SunR15e&Himme1_eterna1_10ve}
 
 然后用这个进行异或
 
-​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165049.png)​
+​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916184544.png)​
 
 保存图片，爆破宽高
 
-​![download-修复高宽](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916165050.png)​
+​![download-修复高宽](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/20240916164852.png)​
 
 ```python
 NepCTF{1f_I_were_the_on1y_one_i_would_N0T_be_able_to_see_this_Sunrise}
