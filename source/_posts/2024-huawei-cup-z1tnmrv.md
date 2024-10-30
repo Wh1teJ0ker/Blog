@@ -9,6 +9,10 @@ toc: true
 
 # 2024华为杯
 
+备注：图片图床使用为Github，打不开需要挂梯子！
+
+---
+
 # Misc
 
 ## Secret\_Varied\_Gif
@@ -42,3 +46,5 @@ Secret information about these:
 ​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/image-20241020021838-hg2tagg.png)​
 
 还有一题取证做了一半，也是卡住了，就还没发现，最近一段时间乱起八糟的事情不少，有的时候也有点心烦，但是能陪我家小美女还是非常开心的
+
+‍
