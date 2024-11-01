@@ -56,8 +56,6 @@ navbar:
       url: /archives/
     - name: 友链
       url: /friends/
-    - name: Page
-      url: /page/
 
   # 导航栏永远显示在屏幕顶端
   # 仅当屏幕宽度不小于 1080 px 时生效
