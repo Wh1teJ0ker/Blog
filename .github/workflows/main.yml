@@ -35,7 +35,7 @@ jobs:
 
       - name: Set npm registry and upgrade
         run: |
-          npm config set registry https://registry.npmjs.org/
+          npm config set registry https://registry.npmmirror.com/
           npm install -g npm@latest
 
       - name: Install Hexo and dependencies
