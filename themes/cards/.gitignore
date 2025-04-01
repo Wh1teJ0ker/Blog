@@ -1,8 +1,0 @@
-_site/
-.sass-cache/
-.jekyll-metadata
-.DS_Store
-*.log
-node_modules
-package-lock.json
-yarn.lock
