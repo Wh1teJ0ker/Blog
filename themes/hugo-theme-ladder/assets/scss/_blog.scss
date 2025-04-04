@@ -4,7 +4,7 @@
   margin: auto;
   padding: 1.5rem;
 
-  .blog-card {
+  .card {
     position: relative;
     padding: 0.5rem 1.5rem 1.5rem 0.5rem;
     background: white;
@@ -75,30 +75,13 @@
   float: right;
 }
 
-.paginator .prev {
-  .icon {
-    vertical-align: middle;
-    display: inline-block;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
-.paginator .next {
-  .icon {
-    vertical-align: middle;
-    display: inline-block;
-    margin-left: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-}
-
 .blog-content {
   p img {
     border-radius: 0.6rem;
   }
 
   a {
+    //box-shadow: 0 1px;
     text-decoration: none;
     color: $gray-800;
     box-shadow: rgba(11, 11, 11, 0.5) 0px 1px 0px;

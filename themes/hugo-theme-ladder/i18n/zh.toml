@@ -2,10 +2,6 @@
 one = "文章"
 other = "文章"
 
-[art]
-one = "生活"
-other = "生活"
-
 [tags]
 one = "分类"
 other = "分类"

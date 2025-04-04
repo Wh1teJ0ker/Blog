@@ -1,6 +1,0 @@
-.idea
-.vscode
-*.lock
-.DS_Store
-resources/*
-exampleSite/resources/*

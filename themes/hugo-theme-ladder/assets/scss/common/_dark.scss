@@ -66,16 +66,8 @@
   border-left: 3px solid $body-color-dark !important;
 }
 
-[data-dark-mode] body .blog-card {
-  background: $body-bg-dark;
-}
-
 [data-dark-mode] body .card {
-  background: $gray-900;
-
-  p {
-    color: $gray-400;
-  }
+  background: $body-bg-dark;
 }
 
 [data-dark-mode] body .blog-toc {
@@ -113,14 +105,6 @@
 }
 
 [data-dark-mode] .blog-content {
-  a {
-    box-shadow: 0 0;
-    text-decoration: none;
-    color: $color-dark-blue;
-  }
-}
-
-[data-dark-mode] .home .info .intro {
   a {
     box-shadow: 0 0;
     text-decoration: none;

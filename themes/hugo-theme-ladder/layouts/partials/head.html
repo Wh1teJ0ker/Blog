@@ -1,6 +1,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ block "title" . }}{{ .Title }}{{ end }}</title>
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
 
     {{- /* Meta */}}
     <meta charset="utf-8">
@@ -18,13 +18,19 @@
     {{ partial "common/analytics.html" . }}
     {{ partial "common/extensions.html" . }}
     {{ partial "common/icon.html" . }}
-    {{ if .Params.math }}{{ partial "math.html" . }}{{ end }}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
 
+    {{ if hugo.IsServer }}
+    {{ $cssFile := (dict "targetPath" "css/main.css" "enableSourceMap" true ) }}
+    {{ $styles := resources.Get "/scss/app.scss" | toCSS $cssFile }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+    {{ else }}
     {{ $cssFile := (dict "targetPath" "css/main.css" ) }}
     {{ $styles := resources.Get "/scss/app.scss" | toCSS $cssFile | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" crossorigin="anonymous" media="screen" />
+    {{ end }}
+
 
     {{ $highlight := resources.Get "scss/highlight/github-dark.min.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $highlight.RelPermalink }}" />

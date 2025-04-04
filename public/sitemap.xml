@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:1313/categories/other/</loc>
+    <lastmod>2025-04-04T12:56:06+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2025-04-04T12:56:06+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2025-04-04T12:56:06+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2025-04-04T12:56:06+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac.html</loc>
+    <lastmod>2025-04-04T12:56:06+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+  </url><url>
+    <loc>http://localhost:1313/friends/</loc>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
+  </url>
+</urlset>

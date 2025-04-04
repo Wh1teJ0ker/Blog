@@ -17,23 +17,23 @@ Demo 网站是通过这个仓库构建而来 [exampleSite Source Code](https://g
 
 ---
 
-## 文档 [`docs`](docs/home.md)
+## Documentations [`docs`](docs/home.md)
 
 See [`docs`](docs/home.md) folder.
 
-### 基础使用
+### Basic Usage
 
 * [Quick Start](docs/quick-start.md)
 * [Configurations](docs/configurations.md)
 
-### 高级用法
+### Extra Guides
 
 * [Multi Language](docs/multi-language.md)
 * [Comment System](docs/comment-system.md)
 * [Analytics](docs/analytics.md)
 * [Analytics Umami](docs/umami.md)
 
-## 快速开始
+## Quick Start
 
 Just click `Use this template` to create your blog site in the [exampleSite Repository](https://github.com/guangzhengli/hugo-ladder-exampleSite).
 
@@ -47,7 +47,7 @@ Then configure the GitHub page setting following:
 
 🎉🎉🎉 Open the browser and enter: https://username.github.io 🎉🎉🎉
 
-## 最小配置
+## Minimal Configuration
 
 Clone your repository.
 
@@ -76,11 +76,6 @@ Modifying the default configuration. Then push it to your repository.
 Following this [article](https://guangzhengli.com/blog/en/how-to-create-your-blog-for-free-by-hugo-ladder-in-30min/) to cofiguration.
 
 Following this [article](https://guangzhengli.com/blog/en/how-to-integrate-umami-for-free-to-blog-site/) to configure the umami analytics
-
-## Sponsor
-
-如果这份教程对你有帮助，欢迎请作者喝杯咖啡。
-https://guangzhengli.com/sponsors
 
 ## Special Thanks
 
