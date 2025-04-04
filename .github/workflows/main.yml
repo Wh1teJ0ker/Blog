@@ -46,6 +46,10 @@ jobs:
           cd public
           git config --global user.name "Wh1teJ0ker"
           git config --global user.email "1430100306@qq.com"
+          
+          # 使用 GH_TOKEN 进行身份验证
+          git remote set-url origin https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/Wh1teJ0ker/wh1tej0ker.github.io.git
+          
           git add .  # 添加所有更改
           git commit -m "Deploy Hugo site"  # 提交更改
           git push origin main  # 推送到远程仓库
