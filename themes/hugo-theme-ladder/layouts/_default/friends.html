@@ -1,0 +1,67 @@
+{{ define "content" }}
+<div class="friend-links">
+    <div class="friend-list">
+        {{ range .Site.RegularPages }}
+        {{ if eq .Section "friends" }}
+        <div class="friend-card">
+            <a href="{{ .Params.link }}" target="_blank" rel="noopener noreferrer">
+                <img class="friend-avatar" src="{{ .Params.avatar }}" alt="{{ .Params.name }}">
+                <div class="friend-info">
+                    <h3>{{ .Params.name }}</h3>
+                    <p>{{ .Params.description }}</p>
+                </div>
+            </a>
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+</div>
+
+<style>
+.friend-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.friend-card {
+  width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.friend-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.friend-avatar {
+  width: 90px;
+  height: 90px;
+  margin-top: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ddd;
+}
+
+.friend-info {
+  padding: 15px;
+}
+
+.friend-info h3 {
+  margin: 12px 0 6px;
+  font-size: 20px;
+}
+
+.friend-info p {
+  font-size: 14px;
+  color: #777;
+}
+</style>
+{{ end }}

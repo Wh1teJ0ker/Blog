@@ -9,7 +9,7 @@ params:
   author: Wh1teJ0ker
   avatarURL: /joker.jpg
   authorDescription: 👋 我是 @Wh1teJ0ker ｜专注 CTF（Web & Misc）｜热爱 AI 与安全
-  info: 欢迎来到我的博客
+  info: 欢迎来到我的博客! Keep hacking, keep learning!
   favicon: /favicon.ico
   showDarkMode: true
   social:
@@ -69,3 +69,6 @@ markup:
     guessSyntax: true
     lineNos: true
     style: manni
+  goldmark:
+    renderer:
+      unsafe: true
