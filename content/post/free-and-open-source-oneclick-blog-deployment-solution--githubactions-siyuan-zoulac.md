@@ -11,6 +11,7 @@ categories:
   - Other
 description: 自动化博客部署方案-Github Actions + Siyuan，优点是免费开源
 isCJKLanguage: true
+featured: true
 ---
 
 # 自动化博客部署方案-Github Actions + Siyuan
