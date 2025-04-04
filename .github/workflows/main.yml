@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Update Submodule                                # 第二步 更新子模块
-        run: git submodule update --init --recursive
-
       - name: Set up Hugo (from local path)
         run: |
           chmod +x ./hugo  # 确保 Hugo 二进制文件是可执行的
