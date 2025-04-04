@@ -13,7 +13,7 @@
   <section class="blog-content">{{ .Content }}</section>
 
   {{ if .Site.Params.comments.giscus.enable }}
-    {{ partial "giscus.html" . }}
+    {{ partial "common/giscus.html" . }}
   {{ end }}
 
   {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
