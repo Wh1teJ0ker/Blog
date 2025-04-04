@@ -33,7 +33,7 @@ params:
       category_id: DIC_kwDOMbVXlM4CovNt
       mapping: pathname
       position: top
-      lang: zh
+      lang: zh-CN
   analytics:
     umami:
       enable: true
