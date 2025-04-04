@@ -6,6 +6,8 @@ date: '2024-08-26 13:49:49+08:00'
 lastmod: '2025-04-04 19:41:01+08:00'
 toc: true
 isCJKLanguage: true
+categories:
+  - CTF-Writeup
 ---
 
 # 2024西湖论剑

@@ -6,15 +6,18 @@ date: '2023-11-15 13:46:49+08:00'
 lastmod: '2025-04-04 19:17:33+08:00'
 toc: true
 isCJKLanguage: true
+categories:
+  - CTF-Writeup
 ---
 
+SYC yyds!除区块链以外，还差一题ak，太菜啦，qwq\~\~
+<!--more-->
 # 2023SYCGeekchallenge
 
 # 2023SYCGeekchallenge
 
 ## Misc
 
-除区块链以外，还差一题ak，太菜啦，qwq\~\~
 
 ### cheekin
 
