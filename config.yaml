@@ -27,10 +27,10 @@ params:
   comments:
     giscus:
       enable: true
-      repo: Wh1teJ0ker/wh1tej0ker.github.io
-      repo_id: R_kgDOMbVXlA
+      repo: Wh1teJ0ker/discussion
+      repo_id: R_kgDOOTzcZA
       category: Announcements
-      category_id: DIC_kwDOMbVXlM4CovNt
+      category_id: DIC_kwDOOTzcZM4CoxXV
       mapping: pathname
       position: top
       lang: zh-CN
