@@ -54,5 +54,9 @@ jobs:
           git remote set-url origin https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/Wh1teJ0ker/wh1tej0ker.github.io.git
           
           git add .  # 添加所有更改
-          git commit -m "Deploy Hugo site"  # 提交更改
-          git push origin main  # 推送到远程仓库
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "Deploy Hugo site"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
