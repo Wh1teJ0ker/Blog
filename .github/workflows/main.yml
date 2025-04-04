@@ -1,0 +1,47 @@
+name: Hugo CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        hugo-version: [./hugo]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Hugo (from local path)
+        run: |
+          chmod +x ./hugo  # 确保 Hugo 二进制文件是可执行的
+          ./hugo version   # 确保 Hugo 可以正常运行
+
+      - name: Configure Git and SSH
+        env:
+          HEXO_DEPLOY_PRI: ${{ secrets.HEXO_DEPLOY_PRI }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$HEXO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name "Wh1teJ0ker"
+          git config --global user.email "1430100306@qq.com"
+
+      - name: Build Hugo Site
+        run: |
+          ./hugo --minify
+
+      - name: Deploy Hugo Site
+        run: |
+          git clone --branch=main https://github.com/Wh1teJ0ker/wh1tej0ker.github.io.git public
+          cd public
+          git config --global user.name "Wh1teJ0ker"
+          git config --global user.email "1430100306@qq.com"
+          git add .
+          git commit -m "Deploy Hugo site"
+          git push origin main
