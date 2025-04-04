@@ -15,10 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
 
       - name: Update Submodule                                # 第二步 更新子模块
-          run: git submodule update --init --recursive
+        run: git submodule update --init --recursive
 
       - name: Set up Hugo (from local path)
         run: |
