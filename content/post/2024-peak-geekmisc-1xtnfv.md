@@ -63,13 +63,13 @@ https://github.com/CaledoniaProject/pupyrat-config-decoder
 
 ​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-20240818154146-20241001025744-380andk.png)​
 
-```JavaScript
+```shell
 {'launcher_args': ['--host', '60.177.118.44:3432', '-t', 'ssl']
 ```
 
 最终flag为
 
-```python
+```shell
 flag{b57758d5acc923137eef453239ba685b}
 ```
 

@@ -47,7 +47,7 @@ docker run -d \
   --accessAuthCode=joker
 ```
 
-```plain
+```shell
 chown 1000:1000 /Data/siyuan/workspace
 ```
 
@@ -102,7 +102,7 @@ token生成如下：
 
 先做一个测试环境
 
-```plain
+```shell
 docker run -it --name Blog \
   -p 250:8080 \
   -v "/Data/Blog/coder/.config:/home/coder/.config" \
@@ -115,7 +115,7 @@ docker run -it --name Blog \
 
 安装nvm
 
-```plain
+```shell
 cd /root
 wget https://github.com/nvm-sh/nvm/archive/refs/tags/v0.38.0.tar.gz
 mkdir -p /root/.nvm
@@ -131,7 +131,7 @@ source ~/.bashrc
 
 切换npm
 
-```plain
+```shell
 nvm install
 nvm use
 nvm ls
@@ -140,7 +140,7 @@ nvm uninstall
 
 安装npm
 
-```plain
+```shell
 #配置源
 nvm node_mirror https://registry.npmmirror.com/node/
 nvm npm_mirror https://registry.npmmirror.com/npm/
@@ -159,7 +159,7 @@ sudo chown -R $(whoami) ~/.nvm
 
 安装hexo
 
-```plain
+```shell
 #阿里源
 npm config set registry https://npm.aliyun.com
 #淘宝
@@ -172,7 +172,7 @@ npm install hexo-deployer-git --save
 
 选择目录初始化操作
 
-```plain
+```shell
 hexo init
 ```
 
@@ -206,7 +206,7 @@ deploy需要使用ssh
 
 借鉴如上
 
-```
+```shell
 name: HEXO CI
 
 on:

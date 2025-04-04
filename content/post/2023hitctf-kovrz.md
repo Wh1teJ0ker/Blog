@@ -9,6 +9,8 @@ isCJKLanguage: true
 categories:
   - CTF-Writeup
 ---
+CTF第一次获得奖金的比赛，也算是比较有纪念意义了
+<!--more-->
 
 # 2023HITCTF
 
