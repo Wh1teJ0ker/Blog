@@ -24,16 +24,6 @@ params:
         1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44
         7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
       url: https://github.com/Wh1teJ0ker
-  comments:
-    giscus:
-      enable: true
-      repo: Wh1teJ0ker/wh1tej0ker.github.io
-      repo_id: R_kgDOMbVXlA
-      category: Announcements
-      category_id: DIC_kwDOMbVXlM4CovNt
-      mapping: pathname
-      position: top
-      lang: zh-CN
   analytics:
     umami:
       enable: true
