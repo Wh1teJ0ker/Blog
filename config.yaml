@@ -26,7 +26,7 @@ params:
       url: https://github.com/Wh1teJ0ker
   comments:
     giscus:
-      enable: true
+      enable: false
       repo: Wh1teJ0ker/discussion
       repo_id: R_kgDOOTzcZA
       category: Announcements
@@ -34,10 +34,6 @@ params:
       mapping: pathname
       position: top
       lang: zh-CN
-    utteranc:
-      enable: false
-      repo: Wh1teJ0ker/wh1tej0ker.github.io
-      issueTerm: pathname
   analytics:
     umami:
       enable: true
