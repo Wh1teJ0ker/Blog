@@ -1,0 +1,53 @@
+baseURL: https://wh1tej0ker.github.io
+languageCode: zh-CN
+title: Wh1teJ0kerのBlog
+theme: hugo-theme-ladder
+license: MIT
+licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
+params:
+  brand: HOME
+  author: Wh1teJ0ker
+  avatarURL: /joker.jpg
+  authorDescription: 👋 我是 @Wh1teJ0ker ｜专注 CTF（Web & Misc）｜热爱 AI 与安全
+  info: 欢迎来到我的博客
+  favicon: /favicon.ico
+  comments:
+    giscus:
+      enable: true
+      repo: Wh1teJ0ker/wh1tej0ker.github.io
+      repo_id: R_kgDOMbVXlA
+      category: Announcements
+      category_id: DIC_kwDOMbVXlM4CovNt
+      mapping: pathname
+      position: top
+      lang: zh
+  analytics:
+    umami:
+      enable: true
+      website_id: 8ab9bf68-dca3-4807-a3b3-8ef0b17ec8c5
+      url: https://analytics.umami.is/script.js
+menu:
+  main:
+    - identifier: categories
+      name: 分类
+      url: /categories/
+      weight: 2
+    - identifier: archives
+      name: 归档
+      url: /archives/
+      weight: 3
+    - identifier: friends
+      name: 友链
+      url: /friends/
+      weight: 4
+    - identifier: about
+      name: 关于
+      url: /about/
+      weight: 5
+markup:
+  highlight:
+    noClasses: false
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    style: solarized-light
