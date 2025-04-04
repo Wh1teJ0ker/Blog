@@ -9,7 +9,8 @@ categories:
   - CTF-Writeup
 isCJKLanguage: true
 ---
-
+还行吧
+<!--more-->
 # 2024强网拟态
 
 备注：图片图床使用为Github，打不开需要挂梯子！
