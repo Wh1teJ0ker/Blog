@@ -1,3 +1,17 @@
+---
+title: 自动化博客部署方案-Github Actions + Siyuan
+slug: >-
+  free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac
+url: >-
+  /post/free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac.html
+date: '2024-07-26 21:41:54+08:00'
+lastmod: '2025-04-04 12:56:06+08:00'
+toc: true
+categories:
+  - Other
+description: 自动化博客部署方案-Github Actions + Siyuan，优点是免费开源
+isCJKLanguage: true
+---
 
 # 自动化博客部署方案-Github Actions + Siyuan
 
