@@ -34,11 +34,16 @@ params:
       mapping: pathname
       position: top
       lang: zh-CN
+    utteranc:
+      enable: false
+      repo: Wh1teJ0ker/wh1tej0ker.github.io
+      issueTerm: pathname
   analytics:
     umami:
       enable: true
       website_id: 56cc42c1-3656-4d3e-af3c-acded927b8ed
       url: https://analytics.umami.is/script.js
+  
 menu:
   main:
     - identifier: categories
