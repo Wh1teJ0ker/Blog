@@ -23,14 +23,18 @@ jobs:
 
       - name: Configure Git and SSH
         env:
-          HEXO_DEPLOY_PRI: ${{ secrets.HEXO_DEPLOY_PRI }}
+          HUGO_DEPLOY_PRI: ${{ secrets.HUGO_DEPLOY_PRI }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$HEXO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "$HUGO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "Wh1teJ0ker"
           git config --global user.email "1430100306@qq.com"
+
+      - name: Remove existing public directory
+        run: |
+          rm -rf public
 
       - name: Build Hugo Site
         run: |
