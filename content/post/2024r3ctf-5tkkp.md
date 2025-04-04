@@ -9,7 +9,8 @@ categories:
   - CTF-Writeup
 isCJKLanguage: true
 ---
-
+cool!最爱的取证
+<!--more-->
 # 2024R3CTF
 
 # Forensics
