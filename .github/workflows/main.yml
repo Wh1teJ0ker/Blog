@@ -23,10 +23,10 @@ jobs:
 
       - name: Configure Git and SSH
         env:
-          HUGO_DEPLOY_PRI: ${{ secrets.HUGO_DEPLOY_PRI }}
+          HEXO_DEPLOY_PRI: ${{ secrets.HEXO_DEPLOY_PRI }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$HUGO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "$HEXO_DEPLOY_PRI" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.name "Wh1teJ0ker"
@@ -34,18 +34,18 @@ jobs:
 
       - name: Remove existing public directory
         run: |
-          rm -rf public
+          rm -rf public  # 删除 existing public 目录
 
       - name: Build Hugo Site
         run: |
-          ./hugo --minify
+          ./hugo --minify  # 执行 Hugo 构建
 
       - name: Deploy Hugo Site
         run: |
-          git clone --branch=main https://github.com/Wh1teJ0ker/wh1tej0ker.github.io.git public
+          git clone --branch=main https://github.com/Wh1teJ0ker/wh1tej0ker.github.io.git public  # 克隆仓库
           cd public
           git config --global user.name "Wh1teJ0ker"
           git config --global user.email "1430100306@qq.com"
-          git add .
-          git commit -m "Deploy Hugo site"
-          git push origin main
+          git add .  # 添加所有更改
+          git commit -m "Deploy Hugo site"  # 提交更改
+          git push origin main  # 推送到远程仓库
