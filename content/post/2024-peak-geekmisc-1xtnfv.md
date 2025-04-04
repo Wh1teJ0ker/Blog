@@ -7,7 +7,6 @@ lastmod: '2025-04-04 17:34:56+08:00'
 toc: true
 categories:
   - CTF-Writeup
-description: easy-病毒分析，但是脑洞（
 isCJKLanguage: true
 ---
 
