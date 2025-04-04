@@ -35,6 +35,7 @@ jobs:
       - name: Remove existing public directory
         run: |
           rm -rf public  # 删除 existing public 目录
+          git clone --branch=main https://github.com/Wh1teJ0ker/wh1tej0ker.github.io.git public
 
       - name: Build Hugo Site
         run: |
@@ -42,7 +43,6 @@ jobs:
 
       - name: Deploy Hugo Site
         run: |
-          git clone --branch=main https://github.com/Wh1teJ0ker/wh1tej0ker.github.io.git public  # 克隆仓库
           cd public
           git config --global user.name "Wh1teJ0ker"
           git config --global user.email "1430100306@qq.com"
