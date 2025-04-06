@@ -9,6 +9,8 @@ categories:
   - K8s
 isCJKLanguage: true
 ---
+K8s初认知
+<!--more-->
 
 # K8s基础介绍
 

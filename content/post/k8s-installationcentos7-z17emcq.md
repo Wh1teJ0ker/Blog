@@ -8,7 +8,9 @@ toc: true
 categories:
   - K8s
 isCJKLanguage: true
----
+---                                                                                                                                                                                                                                                     
+基于CentOs对k8s的第一次学习尝试
+<!--more-->
 
 # K8s安装-Centos7
 
