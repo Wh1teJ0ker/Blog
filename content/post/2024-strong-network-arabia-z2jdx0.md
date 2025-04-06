@@ -43,7 +43,7 @@ isCJKLanguage: true
 
 ## PvZ
 
-```yaml
+```shell
 李华的梦想是攒钱买毁灭菇加农炮，可是他总攒不住钱，请帮他理财，算一下他刚开始的这局游戏花了多少钱
 ```
 
@@ -67,7 +67,7 @@ isCJKLanguage: true
 
 微信扫码得到
 
-```yaml
+```shell
 D'`_q^K![YG{VDTveRc10qpnJ+*)G!~f1{d@-}v<)9xqYonsrqj0hPlkdcb(`Hd]#a`_A@VzZY;Qu8NMqKPONGkK-,BGF?cCBA@">76Z:321U54-21*Non,+*#G'&%$d"y?w_uzsr8vunVrk1ongOe+ihgfeG]#[ZY^W\UZSwWVUNrRQ3IHGLEiCBAFE>=aA:9>765:981Uvu-2+O/.nm+$Hi'~}|B"!~}|u]s9qYonsrqj0hmlkjc)gIedcb[!YX]\UZSwWVUN6LpP2HMFEDhHG@dDCBA:^!~<;:921U/u3,+*Non&%*)('&}C{cy?}|{zs[q7unVl2ponmleMib(fHG]b[Z~k
 ```
 
@@ -87,13 +87,13 @@ D'`_q^K![YG{VDTveRc10qpnJ+*)G!~f1{d@-}v<)9xqYonsrqj0hPlkdcb(`Hd]#a`_A@VzZY;Qu8NM
 
 得到以下信息
 
-```yaml
+```shell
 BV1P62EYHEZd eyJ2IjozLCJuIjoiZmw0ZyIsInMiOiIiLCJoIjoiZGExMTcyNSIsIm0iOjkwLCJrIjo4MSwibWciOjIwMCwia2ciOjEzMCwibCI6NDMsInNsIjoxLCJmaGwiOlsiMjUyZjEwYyIsImFjYWM4NmMiLCJjYTk3ODExIiwiY2QwYWE5OCIsIjAyMWZiNTkiLCIyYzYyNDIzIiwiY2E5NzgxMSIsIjRlMDc0MDgiLCJlN2Y2YzAxIiwiMmM2MjQyMyIsIjI1MmYxMGMiLCI1ZmVjZWI2IiwiZWYyZDEyNyIsIjM5NzNlMDIiLCJjYTk3ODExIiwiNGIyMjc3NyIsImU3ZjZjMDEiLCI3OTAyNjk5IiwiMzk3M2UwMiIsIjRiMjI3NzciLCI3OTAyNjk5IiwiZWYyZDEyNyIsIjI1MmYxMGMiLCIzOTczZTAyIiwiY2E5NzgxMSIsImVmMmQxMjciLCJkNDczNWUzIiwiMjUyZjEwYyIsIjM5NzNlMDIiLCI2Yjg2YjI3IiwiM2UyM2U4MSIsImQ0NzM1ZTMiLCJlN2Y2YzAxIiwiMmU3ZDJjMCIsIjJlN2QyYzAiLCI0YjIyNzc3IiwiNWZlY2ViNiIsIjI1MmYxMGMiLCIyZTdkMmMwIiwiNGIyMjc3NyIsIjNmNzliYjciLCJkMTBiMzZhIiwiMDFiYTQ3MSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiNmUzNDBiOSIsIjZlMzQwYjkiLCI2ZTM0MGI5IiwiMDg0ZmVkMCIsIjE4ZjUzODQiLCIxODlmNDAwIiwiZWY2Y2JkMiIsIjI3OTUyMTciLCJhOTI1M2RjIiwiNGM5NDQ4NSIsIjI1MmYxMGMiLCI4NWY5N2UwIl19
 ```
 
 得到一个b站的av号和一段base64
 
-```yaml
+```shell
 {"v":3,"n":"fl4g","s":"","h":"da11725","m":90,"k":81,"mg":200,"kg":130,"l":43,"sl":1,"fhl":["252f10c","acac86c","ca97811","cd0aa98","021fb59","2c62423","ca97811","4e07408","e7f6c01","2c62423","252f10c","5feceb6","ef2d127","3973e02","ca97811","4b22777","e7f6c01","7902699","3973e02","4b22777","7902699","ef2d127","252f10c","3973e02","ca97811","ef2d127","d4735e3","252f10c","3973e02","6b86b27","3e23e81","d4735e3","e7f6c01","2e7d2c0","2e7d2c0","4b22777","5feceb6","252f10c","2e7d2c0","4b22777","3f79bb7","d10b36a","01ba471","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","6e340b9","084fed0","18f5384","189f400","ef6cbd2","2795217","a9253dc","4c94485","252f10c","85f97e0"]}
 ```
 
@@ -101,7 +101,7 @@ BV1P62EYHEZd eyJ2IjozLCJuIjoiZmw0ZyIsInMiOiIiLCJoIjoiZGExMTcyNSIsIm0iOjkwLCJrIjo
 
 然后扔给gpt帮忙联想猜测
 
-```yaml
+```shell
 v: 可能代表 video（视频）或 version（版本）。
 n: 可能是视频的 name（名称）。
 s: 可能表示 status（状态），例如播放状态、加载状态等。

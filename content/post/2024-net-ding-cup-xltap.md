@@ -19,13 +19,13 @@ isCJKLanguage: true
 
 首先打开流量，发现存在多种协议
 
-```python
+```shell
 S1AP
 GTPv2
 DIAMETER
 ```
 
-```python
+```shell
 在移动通信协议中，S1AP、GTPv2 和 Diameter 协议都可能涉及位置信息。这些协议通常携带不同层级的位置信息，用于不同的功能，如位置更新、会话管理和用户的移动性管理。以下是每种协议中与位置信息相关的字段：
 
 ---
@@ -106,19 +106,19 @@ Diameter 协议用于 MME 和 HSS 之间的信令，通常承载用户订阅和�
 
 ​![QQ_1730190262965](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/QQ_1730190262965-20241029162426-zut3olm.png)​
 
-```python
+```shell
 da18bee581c4ae
 ```
 
 md5加密一下
 
-```python
+```shell
 daedc32bdeceb78094502e481c90c6cc
 ```
 
 ## MISC02
 
-```python
+```shell
 LinuxUbuntu_6_5_0-41-generic_profilex64
 ```
 
@@ -140,7 +140,7 @@ LinuxUbuntu_6_5_0-41-generic_profilex64
 
 最终提交这个ip即可
 
-```python
+```shell
 39.168.5.60
 ```
 
@@ -206,7 +206,7 @@ new_image.save("rearranged_image.jpg")
 
 翻转图像后使用微信扫码得到flag
 
-```python
+```shell
 wdflag{3f531c43-3b8b-42ab-babf-567f1216fa06}
 ```
 

@@ -31,7 +31,7 @@ isCJKLanguage: true
 
 某个表中找到了拉美科技
 
-```python
+```shell
 13758293461
 ```
 
@@ -43,9 +43,6 @@ isCJKLanguage: true
 
 然后进行数据处理和解密
 
-```python
-
-```
 
 ## 数据备份
 
@@ -55,7 +52,7 @@ isCJKLanguage: true
 
 ida打开，main函数直接找到版本号
 
-```python
+```shell
 3.85.4h6
 ```
 
@@ -65,7 +62,7 @@ ida打开，main函数直接找到版本号
 
 找到密钥为rc4算法的密钥
 
-```python
+```shell
 30048-0bea264-c01c6ea3-e5047d488
 ```
 
@@ -79,7 +76,7 @@ ida打开，main函数直接找到版本号
 
 在文件开头就是
 
-```python
+```shell
 EACDD8510B0F54EA412FA900A2F0645F
 ```
 
@@ -97,7 +94,7 @@ EACDD8510B0F54EA412FA900A2F0645F
 
 答案
 
-```python
+```shell
 postgres,delete
 ```
 
@@ -107,7 +104,7 @@ postgres,delete
 
 提取的文件里找到一共压缩包，解压后，发现一个字典和提示
 
-```python
+```shell
 Hint: 
 我很高西你能找到这个地方，我使用的是smb1协议，密码是我从top1000字典中随机选的，我不知道你有没有能力拿到正确密钥呢？
 由于我的记忆力太差了，总是记不住密码，所以我给冰蝎密钥也设置成一样的密码了！
@@ -178,7 +175,7 @@ Oracle使用
 
 需要先开启监听，并且进行环境变量的设置
 
-```python
+```shell
 export ORACLE_HOME=/o11g/app/oracle/product/11.2.0/db_1   #oracle安装目录
 export PATH=$ORACLE_HOME/bin:$PATH                        #添加Bin的可执行文件目录
 source ~/.bashrc                                          #重启终端，使配置生效

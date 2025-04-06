@@ -9,7 +9,8 @@ categories:
   - CTF-Writeup
 isCJKLanguage: true
 ---
-
+太阴了，没想到现在的musc神力已经发展到如此地步了
+<!--more-->
 # 2025阴间CTF
 
 # Misc
@@ -18,7 +19,7 @@ isCJKLanguage: true
 
 大概思路就是基于做连接请求的时间戳前后大段时间进行爆破，验证成功率在一定比例以上就按照此时间戳去预测后续的股票波动率，获得flag
 
-```shell
+```python
 from pwn import *
 from random import Random
 import time

@@ -39,7 +39,7 @@ maybe u need,that's not absolute
 
 root:P@5sW0rdForU
 
-```plain
+```sql
 CREATE TABLE IF NOT EXISTS `mysql`.`secret`(
     `id` int NULL,
     `data` blob NULL

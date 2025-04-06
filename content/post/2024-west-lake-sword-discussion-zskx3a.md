@@ -35,7 +35,7 @@ categories:
 
 第二种是使用mimikatz
 
-```plain
+```shell
 #确定镜像版本
 vol.py -f rawraw.raw imageinfo
 vol.py --plugins=./volatility/plugins/ -f rawraw.raw  --profile=Win7SP1x64 mimikatz
@@ -53,7 +53,7 @@ vol.py --plugins=./volatility/plugins/ -f rawraw.raw  --profile=Win7SP1x64 mimik
 
 第二种我们检索一下剪切板内容
 
-```plain
+```shell
 vol.py -f rawraw.raw --profile=Win7SP1x64 clipboard
 vol.py -f rawraw.raw --profile=Win7SP1x64 clipboard -v  #查看详细内容
 ```
@@ -64,7 +64,7 @@ vol.py -f rawraw.raw --profile=Win7SP1x64 clipboard -v  #查看详细内容
 
 接着，继上面得到两个密码后，我们来搜索密码关键词
 
-```plain
+```shell
 vol.py -f rawraw.raw --profile=Win7SP1x64 filescan | grep pass
 ```
 
@@ -74,13 +74,13 @@ vol.py -f rawraw.raw --profile=Win7SP1x64 filescan | grep pass
 
 然后将其dump出来
 
-```plain
+```shell
 vol.py -f rawraw.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003df8b650 -D ./
 ```
 
 分离出一张图片，图片里有压缩包
 
-```plain
+```shell
 root@DESKTOP-BESI31C:/home/wjy/tools/volatility-master# binwalk pass.png 
 
 DECIMAL       HEXADECIMAL     DESCRIPTION

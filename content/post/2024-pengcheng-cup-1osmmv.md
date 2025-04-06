@@ -101,7 +101,7 @@ for i in range(1000):
 
 得到后一半的flag
 
-```python
+```shell
 3_h4ck1ng}
 ```
 
@@ -111,13 +111,13 @@ for i in range(1000):
 
 将`89504E470D0A1A0A0000000D49484452`​放入
 
-```python
+```shell
 echo 89504E470D0A1A0A0000000D49484452 | xxd -r -ps > png_header
 ```
 
 开始爆破
 
-```python
+```shell
 bkcrack.exe -C secret.zip -c flag.png -p pngheader -o 0
 ```
 
@@ -125,7 +125,7 @@ bkcrack.exe -C secret.zip -c flag.png -p pngheader -o 0
 
 修改压缩包密码
 
-```python
+```shell
 bkcrack.exe -C secret.zip -k f45dd89f e3e929fb 3202ba17 -U flag.zip easy
 ```
 
@@ -135,12 +135,12 @@ bkcrack.exe -C secret.zip -k f45dd89f e3e929fb 3202ba17 -U flag.zip easy
 
 ​![QQ_1731148890263](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/QQ_1731148890263-20241109184139-7lbufwk.png)​
 
-```python
+```shell
 flag{We_11k
 ```
 
 合并起来flag
 
-```python
+```shell
 flag{We_11k3_h4ck1ng}
 ```

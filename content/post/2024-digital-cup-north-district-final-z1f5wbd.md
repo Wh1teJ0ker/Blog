@@ -44,7 +44,7 @@ python2 vol.py -f ../data1.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000007f3f1
 
 ​![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/image-20240929155248-l5hfsb2.png)​
 
-```bash
+```python
 #!/usr/bin/env python
 # Version: Python 3.7
 

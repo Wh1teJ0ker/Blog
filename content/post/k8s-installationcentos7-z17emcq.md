@@ -40,14 +40,14 @@ isCJKLanguage: true
 
 ## 配置网络
 
-```plain
+```shell
 $ vi /etc/sysconfig/network
 # 添加下面的配置
 NETWORKING=yes
 HOSTNAME=master
 ```
 
-```plain
+```shell
 $ vi /etc/sysconfig/network-scripts/ifcfg-ens33
 # 配置如下
 
@@ -78,7 +78,7 @@ DNS2=114.114.114.114
 
 配置hosts
 
-```plain
+```shell
 $ vi /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -98,14 +98,14 @@ $ vi /etc/hosts
 
 **关闭防火墙**
 
-```plain
+```shell
 $ service iptables stop
 $ systemctl disable iptables
 ```
 
 若无，则会报错
 
-```plain
+```shell
   [root@master ~]# service iptables stop
   Redirecting to /bin/systemctl stop iptables.service
   Failed to stop iptables.service: Unit iptables.service not loaded.
@@ -115,7 +115,7 @@ $ systemctl disable iptables
 
 **禁用selinux**
 
-```plain
+```shell
 # 查看selinux
 $ getenforce
 Enforcing
@@ -128,14 +128,14 @@ SELINUX=disabled
 
 **禁用防火墙**
 
-```plain
+```shell
 systemctl stop firewalld
 systemctl disable firewalld
 ```
 
 ## SSH登录配置
 
-```plain
+```shell
 $ vi /etc/ssh/sshd_config
 # 修改
 UseDNS no
@@ -148,7 +148,7 @@ PasswordAuthentication yes # 设置是否使用口令验证
 
 ## 4关闭Swap空间
 
-```plain
+```shell
 [root@master ~]# swapoff -a
 [root@master ~]# sed -ie '/swap/ s/^/# /' /etc/fstab 
 [root@master ~]# free -m
@@ -159,7 +159,7 @@ Swap:             0           0           0
 
 ## 配置桥接流量
 
-```plain
+```shell
 [root@k8s-master1 ~]# cat > /etc/sysctl.d/k8s.conf << EOF
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
@@ -168,7 +168,7 @@ EOF
 
 ## 配置yum源
 
-```plain
+```shell
 # 配置阿里云源
 # 备份
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
@@ -185,20 +185,20 @@ yum -y update
 
 ## 基本软件配置
 
-```plain
+```shell
 yum install -y wget
 yum install -y htop vim net-tools wget
 ```
 
 ### 时间同步ntp
 
-```plain
+```shell
 yum install ntp
 ```
 
 配置ntp：
 
-```plain
+```shell
 # 开启服务
 service ntpd start
 
@@ -208,7 +208,7 @@ systemctl enable ntpd
 
 ### Docker
 
-```plain
+```shell
 yum install -y yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 sed -i 's+download.docker.com+mirrors.aliyun.com/docker-ce+' /etc/yum.repos.d/docker-ce.repo
@@ -242,7 +242,7 @@ docker info | grep 'Server Version'
 
 安装需要注意两问题，一个是安装的版本要统一，一个是安装的版本不要太新
 
-```plain
+```shell
 cat  > /etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
@@ -254,7 +254,7 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors
 EOF
 ```
 
-```plain
+```shell
 yum install kubeadm-1.20.2 -y
 yum install -y kubelet-1.20.4 kubectl-1.20.4 kubeadm-1.20.4
 systemctl enable kubelet
@@ -269,7 +269,7 @@ kubelet version
 
 ## 修改克隆机及测试
 
-```plain
+```shell
 $ vi /etc/sysconfig/network
 NETWORKING=yes
 HOSTNAME=master
@@ -305,7 +305,7 @@ DNS2=114.114.114.114
 
 ## 初始化master
 
-```plain
+```shell
 [root@master ~]# kubeadm init \
   --apiserver-advertise-address=192.168.188.180 \
   --image-repository registry.aliyuncs.com/google_containers \
@@ -318,7 +318,7 @@ DNS2=114.114.114.114
 
 配置文件同上
 
-```plain
+```shell
   $ vi kubeadm.conf
   apiVersion: kubeadm.k8s.io/v1beta2
   kind: ClusterConfiguration
@@ -333,7 +333,7 @@ DNS2=114.114.114.114
 
 **问题**
 
-```plain
+```shell
 vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 [Service]
@@ -348,7 +348,7 @@ ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELE
 
 ## 拷贝认证文件
 
-```plain
+```shell
 # 拷贝kubectl使用的连接k8s认证文件到默认路径
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -359,24 +359,24 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 
 这里又卡了好一会儿，是需要又对应的k8s和calico的版本要求
 
-```plain
+```shell
 curl https://docs.projectcalico.org/v3.20/manifests/calico.yaml -O
 ```
 
-```plain
+```shell
 kubectl apply -f calico.yaml
 ```
 
 **检测**
 
-```plain
+```shell
 kubectl get pods -n kube-system
 kubectl get nodes
 ```
 
 **创建鉴权token**
 
-```plain
+```shell
 kubeadm token create --print-join-command
 kubeadm join 192.168.188.180:6443 --token w928sh.9zjwu8hlfy12y3x6     --discovery-token-ca-cert-hash sha256:da708b8f6be1ed027ecc3910e3d13174fe8f608c3460d84c929fece921ed0597
 ```
@@ -387,12 +387,12 @@ kubeadm join 192.168.188.180:6443 --token w928sh.9zjwu8hlfy12y3x6     --discover
 
 ## 下载部署
 
-```plain
+```shell
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.1.0/aio/deploy/recommended.yaml -O dashboard.yaml
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml -O dashboard.yaml
 ```
 
-```plain
+```shell
 vi dashboard.yaml
 
 kind: Service
@@ -414,13 +414,13 @@ spec:
 
 配置文件应用即可
 
-```plain
+```shell
 kubectl apply -f recommended.yaml
 ```
 
 确认服务启用后running以及是否TYPE修改成功
 
-```plain
+```shell
 kubectl get pods -n kubernetes-dashboard
 kubectl get svc -n kubernetes-dashboard
 kubectl get all -n kubernetes-dashboard
@@ -430,13 +430,13 @@ kubectl get all -n kubernetes-dashboard
 
 ### 删除默认的secret
 
-```plain
+```shell
 kubectl delete secret -n kubernetes-dashboard kubernetes-dashboard-certs
 ```
 
 ### 签发证书
 
-```plain
+```shell
 mkdir keys & cd keys
 openssl genrsa -out tls.key 2048
 openssl req -new -out tls.csr -key tls.key -subj '/CN=192.168.188.180'
@@ -447,7 +447,7 @@ ls
 
 ### 创建启用secret
 
-```plain
+```shell
 cd keys # 如果本身就在keys文件夹下，则可以省略该步骤
 kubectl create secret generic kubernetes-dashboard-certs --from-file=./ -n kubernetes-dashboard
 kubectl edit deploy kubernetes-dashboard -n kubernetes-dashboard
@@ -455,13 +455,13 @@ kubectl edit deploy kubernetes-dashboard -n kubernetes-dashboard
 
 ### 创建用户角色
 
-```plain
+```shell
 kubectl create serviceaccount dashboard-admin -n kube-system
 kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin
 kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/{print $1}')
 ```
 
-```plain
+```shell
 #用户信息
 Name:         dashboard-admin-token-2pnkj
 Namespace:    kube-system
@@ -491,7 +491,7 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Im5GbG83eUp0TThGeDNySHBUZ2pqSVE3UFg2empB
 1. args增加参数：- –kubelet-insecure-tls   #表示不验证客户端证书
 2. image改为阿里镜像：registry.cn-hangzhou.aliyuncs.com/google\_containers/metrics-server:v0.6.4
 
-```plain
+```shell
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -691,7 +691,7 @@ spec:
   versionPriority: 100
 ```
 
-```plain
+```shell
 kubectl apply -f components.yaml
 ```
 
@@ -699,7 +699,7 @@ kubectl apply -f components.yaml
 
 另外还有一个dashboard可能会有点问题
 
-```plain
+```shell
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
