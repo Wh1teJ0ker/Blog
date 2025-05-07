@@ -8,7 +8,6 @@ toc: true
 isCJKLanguage: true
 categories:
   - AI
-description: 一些关于CTF的AI安全学习
 featured: true
 ---
 一些关于CTF的AI安全学习
