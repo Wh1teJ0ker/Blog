@@ -9,7 +9,7 @@ categories:
   - penetration
 isCJKLanguage: true
 ---
-
+<!--more-->
 # Tryhackme-easy-RootMe
 
 # Reconnaissance
