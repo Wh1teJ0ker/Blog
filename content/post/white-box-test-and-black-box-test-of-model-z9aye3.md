@@ -6,6 +6,9 @@ date: '2024-08-23 21:38:09+08:00'
 lastmod: '2025-05-07 20:23:41+08:00'
 toc: true
 isCJKLanguage: true
+categories:
+  - AI
+description: 一些关于CTF的AI安全学习
 ---
 
 # 模型的白盒测试和黑盒测试
@@ -18,7 +21,7 @@ isCJKLanguage: true
 
 1. ‍
 
-```plain
+```python
 import torch
 #自行选用cpu或者gpu
 pt = torch.load("./model.pth", map_location="cpu")
@@ -171,7 +174,7 @@ print("Concatenated Result:", result_string)
 
 纯粹的模型逆向，先来分析一下初始代码
 
-```plain
+```python
 import torch
 import torch.nn as nn
 flag=''
@@ -207,7 +210,7 @@ with open('ciphertext.txt', 'w') as f:
 
 关于这个网络，我们打印出模型数据，详细过程如下：
 
-```plain
+```python
 import torch
 pt = torch.load("./model.pth", map_location="cpu")
 for i in pt:
