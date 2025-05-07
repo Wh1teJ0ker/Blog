@@ -1,5 +1,5 @@
 ---
-title: GreatWall
+title: 春秋云境-GreatWall
 slug: greatwall-z1cku96
 url: /post/greatwall-z1cku96.html
 date: '2025-03-05 14:23:57+08:00'
@@ -9,7 +9,7 @@ description: 春秋云境还是太贵了
 isCJKLanguage: true
 ---
 
-# GreatWall
+# 春秋云境-GreatWall
 
 首先扫描端口，发现8080存活
 
