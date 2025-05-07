@@ -9,6 +9,7 @@ categories:
   - penetration
 isCJKLanguage: true
 ---
+日常练习
 <!--more-->
 # VulnHub-w1r3s-1.0.1
 

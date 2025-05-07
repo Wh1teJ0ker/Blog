@@ -9,6 +9,7 @@ categories:
   - penetration
 isCJKLanguage: true
 ---
+日常练习
 <!--more-->
 # VulnHub-SickOS1.1
 
