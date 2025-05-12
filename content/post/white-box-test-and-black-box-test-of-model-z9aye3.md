@@ -2,13 +2,13 @@
 title: 模型的白盒测试和黑盒测试
 slug: white-box-test-and-black-box-test-of-model-z9aye3
 url: /post/white-box-test-and-black-box-test-of-model-z9aye3.html
+featured: true
 date: '2025-06-27 21:38:09+08:00'
 lastmod: '2025-05-07 20:23:41+08:00'
 toc: true
 isCJKLanguage: true
 categories:
   - AI
-featured: true
 ---
 一些关于CTF的AI安全学习
 <!--more-->
