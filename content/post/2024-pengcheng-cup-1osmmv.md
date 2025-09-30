@@ -1,16 +1,15 @@
 ---
-title: 2024鹏程杯
-slug: 2024-pengcheng-cup-1osmmv
-url: /post/2024-pengcheng-cup-1osmmv.html
-date: '2024-11-10 15:19:31+08:00'
-lastmod: '2025-04-05 00:22:24+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-11-10 15:19:31+08:00'
+description: 明文攻击，不嘻嘻~
 isCJKLanguage: true
+lastmod: '2025-04-05 00:22:24+08:00'
+slug: 2024-pengcheng-cup-1osmmv
+title: 2024鹏程杯
+toc: true
+url: /post/2024-pengcheng-cup-1osmmv.html
 ---
-明文攻击，不嘻嘻~
-<!--more-->
 # 2024鹏程杯
 
 备注：图片图床使用为Github，打不开需要挂梯子！

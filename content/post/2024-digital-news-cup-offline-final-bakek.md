@@ -1,16 +1,15 @@
 ---
-title: 2024数信杯线下决赛
-slug: 2024-digital-news-cup-offline-final-bakek
-url: /post/2024-digital-news-cup-offline-final-bakek.html
-date: '2024-11-10 15:19:23+08:00'
-lastmod: '2025-04-05 00:20:37+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-11-10 15:19:23+08:00'
+description: 唐山两日游~
 isCJKLanguage: true
+lastmod: '2025-04-05 00:20:37+08:00'
+slug: 2024-digital-news-cup-offline-final-bakek
+title: 2024数信杯线下决赛
+toc: true
+url: /post/2024-digital-news-cup-offline-final-bakek.html
 ---
-唐山两日游~
-<!--more-->
 # 2024数信杯线下决赛
 
 备注：图片图床使用为Github，打不开需要挂梯子！

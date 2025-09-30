@@ -1,16 +1,15 @@
 ---
-title: VulnHub-w1r3s-1.0.1
-slug: vulnhubw1r3s101-zep7pg
-url: /post/vulnhubw1r3s101-zep7pg.html
-date: '2025-03-03 14:41:56+08:00'
-lastmod: '2025-05-07 21:33:23+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2025-03-03 14:41:56+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:33:23+08:00'
+slug: vulnhubw1r3s101-zep7pg
+title: VulnHub-w1r3s-1.0.1
+toc: true
+url: /post/vulnhubw1r3s101-zep7pg.html
 ---
-日常练习
-<!--more-->
 # VulnHub-w1r3s-1.0.1
 
 载入虚拟机后是一个未知账户，需要密码，流程开始

@@ -5,9 +5,11 @@
       {{ range .Paginator.Pages }}
       <article>
         <div class="card">
-          <h3><a href="{{ .RelPermalink }}">{{ .Params.title }}</a></h3>
+          <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
           {{ partial "blog/meta.html" . }}
-          {{ .Summary }}
+          {{ with .Description }}
+          <p class="desc">{{ . }}</p>
+          {{ end }}
         </div>
       </article>
       {{ end -}}

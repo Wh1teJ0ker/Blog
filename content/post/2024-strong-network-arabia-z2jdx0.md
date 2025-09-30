@@ -1,16 +1,15 @@
 ---
-title: 2024强网拟态
-slug: 2024-strong-network-arabia-z2jdx0
-url: /post/2024-strong-network-arabia-z2jdx0.html
-date: '2024-10-20 02:38:59+08:00'
-lastmod: '2025-04-05 00:37:39+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-10-20 02:38:59+08:00'
+description: 还行吧
 isCJKLanguage: true
+lastmod: '2025-04-05 00:37:39+08:00'
+slug: 2024-strong-network-arabia-z2jdx0
+title: 2024强网拟态
+toc: true
+url: /post/2024-strong-network-arabia-z2jdx0.html
 ---
-还行吧
-<!--more-->
 # 2024强网拟态
 
 备注：图片图床使用为Github，打不开需要挂梯子！

@@ -1,16 +1,15 @@
 ---
-title: VulnHub-SickOS1.1
-slug: vulnhubsickos11-z1xib45
-url: /post/vulnhubsickos11-z1xib45.html
-date: '2025-03-03 14:42:47+08:00'
-lastmod: '2025-05-07 21:34:39+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2025-03-03 14:42:47+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:34:39+08:00'
+slug: vulnhubsickos11-z1xib45
+title: VulnHub-SickOS1.1
+toc: true
+url: /post/vulnhubsickos11-z1xib45.html
 ---
-日常练习
-<!--more-->
 # VulnHub-SickOS1.1
 
 ## 信息搜集

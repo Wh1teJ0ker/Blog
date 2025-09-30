@@ -1,16 +1,15 @@
 ---
-title: 2024西湖论剑
-slug: 2024-west-lake-sword-discussion-zskx3a
-url: /post/2024-west-lake-sword-discussion-zskx3a.html
-date: '2024-08-26 13:49:49+08:00'
-lastmod: '2025-04-04 19:41:01+08:00'
-toc: true
-isCJKLanguage: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-08-26 13:49:49+08:00'
+description: 取证？Musc?
+isCJKLanguage: true
+lastmod: '2025-04-04 19:41:01+08:00'
+slug: 2024-west-lake-sword-discussion-zskx3a
+title: 2024西湖论剑
+toc: true
+url: /post/2024-west-lake-sword-discussion-zskx3a.html
 ---
-取证？Musc?
-<!--more-->
 # 2024西湖论剑
 
 # 2024西湖论剑

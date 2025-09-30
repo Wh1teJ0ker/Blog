@@ -1,20 +1,15 @@
 ---
-title: 2025京津冀长城杯- AI
-slug: 2025-beijingtianjinhebei-great-wall-cup-ai-kjo1e
-url: /post/2025-beijingtianjinhebei-great-wall-cup-ai-kjo1e.html
-date: '2025-09-17 14:55:27+08:00'
-lastmod: '2025-09-30 20:16:12+08:00'
 categories:
-  - CTF-Writeup
-description: 京津冀长城杯，质量还是可以的，就是p疯了
-toc: true
+- CTF-Writeup
+date: '2025-09-17 14:55:27+08:00'
+description: 2025京津冀长城杯- AI
 isCJKLanguage: true
+lastmod: '2025-09-30 20:16:12+08:00'
+slug: 2025-beijingtianjinhebei-great-wall-cup-ai-kjo1e
+title: 2025京津冀长城杯- AI
+toc: true
+url: /post/2025-beijingtianjinhebei-great-wall-cup-ai-kjo1e.html
 ---
-
-
-
-# 2025京津冀长城杯- AI
-
 # AI
 
 ## easy_poison

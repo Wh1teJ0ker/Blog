@@ -1,16 +1,15 @@
 ---
-title: 2024数信杯北区决赛
-slug: 2024-digital-cup-north-district-final-z1f5wbd
-url: /post/2024-digital-cup-north-district-final-z1f5wbd.html
-date: '2024-09-30 17:35:28+08:00'
-lastmod: '2025-04-05 00:39:32+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-09-30 17:35:28+08:00'
+description: 现在不知道为什么越来越喜欢出数字安全的了hhh
 isCJKLanguage: true
+lastmod: '2025-04-05 00:39:32+08:00'
+slug: 2024-digital-cup-north-district-final-z1f5wbd
+title: 2024数信杯北区决赛
+toc: true
+url: /post/2024-digital-cup-north-district-final-z1f5wbd.html
 ---
-现在不知道为什么越来越喜欢出数字安全的了hhh
-<!--more-->
 # 2024数信杯北区决赛
 
 # 数据分析

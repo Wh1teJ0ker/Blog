@@ -1,16 +1,15 @@
 ---
-title: 2025阴间CTF
-slug: 2025-underworld-ctf-1atj9l
-url: /post/2025-underworld-ctf-1atj9l.html
-date: '2025-04-05 00:16:03+08:00'
-lastmod: '2025-04-06 17:30:32+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2025-04-05 00:16:03+08:00'
+description: 太阴了，没想到现在的musc神力已经发展到如此地步了
 isCJKLanguage: true
+lastmod: '2025-04-06 17:30:32+08:00'
+slug: 2025-underworld-ctf-1atj9l
+title: 2025阴间CTF
+toc: true
+url: /post/2025-underworld-ctf-1atj9l.html
 ---
-太阴了，没想到现在的musc神力已经发展到如此地步了
-<!--more-->
 # 2025阴间CTF
 
 # Misc

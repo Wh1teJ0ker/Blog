@@ -1,18 +1,15 @@
 ---
-title: 2024HSCCTF
-slug: 2024hscctf-d5uap
-url: /post/2024hscctf-d5uap.html
+categories:
+- CTF-Writeup
 date: '2024-08-27 13:51:23+08:00'
-lastmod: '2025-04-04 19:45:11+08:00'
-toc: true
-categories:
-  - CTF-Writeup
+description: 理性评判，只能说一坨
 isCJKLanguage: true
-categories:
-  - CTF-Writeup
+lastmod: '2025-04-04 19:45:11+08:00'
+slug: 2024hscctf-d5uap
+title: 2024HSCCTF
+toc: true
+url: /post/2024hscctf-d5uap.html
 ---
-理性评判，只能说一坨
-<!--more-->
 # 2024HSCCTF
 
 # 2024HSCCTF

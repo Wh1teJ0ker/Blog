@@ -1,16 +1,15 @@
 ---
-title: Tryhackme-easy-Pickle Rick
-slug: tryhackmeeasypickle-rick-1vlraf
-url: /post/tryhackmeeasypickle-rick-1vlraf.html
-date: '2024-08-14 14:08:26+08:00'
-lastmod: '2025-05-07 21:28:57+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2024-08-14 14:08:26+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:28:57+08:00'
+slug: tryhackmeeasypickle-rick-1vlraf
+title: Tryhackme-easy-Pickle Rick
+toc: true
+url: /post/tryhackmeeasypickle-rick-1vlraf.html
 ---
-日常练习
-<!--more-->
 # Tryhackme-easy-Pickle Rick
 
 # 前言

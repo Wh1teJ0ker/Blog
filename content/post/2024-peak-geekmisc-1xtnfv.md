@@ -1,18 +1,15 @@
 ---
-title: 2024巅峰极客-Misc
-slug: 2024-peak-geekmisc-1xtnfv
-url: /post/2024-peak-geekmisc-1xtnfv.html
-date: '2024-08-18 15:26:41+08:00'
-lastmod: '2025-04-04 17:34:56+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-08-18 15:26:41+08:00'
+description: easy-病毒分析，但是脑洞（
 isCJKLanguage: true
+lastmod: '2025-04-04 17:34:56+08:00'
+slug: 2024-peak-geekmisc-1xtnfv
+title: 2024巅峰极客-Misc
+toc: true
+url: /post/2024-peak-geekmisc-1xtnfv.html
 ---
-
-easy-病毒分析，但是脑洞（
-<!--more-->
-
 # 2024巅峰极客-Misc
 
 方案1：

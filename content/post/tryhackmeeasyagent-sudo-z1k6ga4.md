@@ -1,16 +1,15 @@
 ---
-title: Tryhackme-easy-Agent Sudo
-slug: tryhackmeeasyagent-sudo-z1k6ga4
-url: /post/tryhackmeeasyagent-sudo-z1k6ga4.html
-date: '2024-08-14 14:04:54+08:00'
-lastmod: '2025-05-07 21:31:14+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2024-08-14 14:04:54+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:31:14+08:00'
+slug: tryhackmeeasyagent-sudo-z1k6ga4
+title: Tryhackme-easy-Agent Sudo
+toc: true
+url: /post/tryhackmeeasyagent-sudo-z1k6ga4.html
 ---
-日常练习
-<!--more-->
 # Tryhackme-easy-Agent Sudo
 
 # +Agent Sudo

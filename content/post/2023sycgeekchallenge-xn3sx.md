@@ -1,17 +1,15 @@
 ---
-title: 2023SYCGeekchallenge
-slug: 2023sycgeekchallenge-xn3sx
-url: /post/2023sycgeekchallenge-xn3sx.html
-date: '2023-11-15 13:46:49+08:00'
-lastmod: '2025-04-04 19:17:33+08:00'
-toc: true
-isCJKLanguage: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2023-11-15 13:46:49+08:00'
+description: SYC yyds!除区块链以外，还差一题ak，太菜啦，qwq\~\~
+isCJKLanguage: true
+lastmod: '2025-04-04 19:17:33+08:00'
+slug: 2023sycgeekchallenge-xn3sx
+title: 2023SYCGeekchallenge
+toc: true
+url: /post/2023sycgeekchallenge-xn3sx.html
 ---
-
-SYC yyds!除区块链以外，还差一题ak，太菜啦，qwq\~\~
-<!--more-->
 # 2023SYCGeekchallenge
 
 # 2023SYCGeekchallenge

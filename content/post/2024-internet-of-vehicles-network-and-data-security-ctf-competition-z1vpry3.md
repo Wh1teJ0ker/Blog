@@ -1,17 +1,15 @@
 ---
-title: 2024车联网网络和数据安全CTF竞赛
-slug: 2024-internet-of-vehicles-network-and-data-security-ctf-competition-z1vpry3
-url: >-
-  /post/2024-internet-of-vehicles-network-and-data-security-ctf-competition-z1vpry3.html
-date: '2024-08-23 09:17:46+08:00'
-lastmod: '2025-04-05 00:41:58+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-08-23 09:17:46+08:00'
+description: 幸运的三血~
 isCJKLanguage: true
+lastmod: '2025-04-05 00:41:58+08:00'
+slug: 2024-internet-of-vehicles-network-and-data-security-ctf-competition-z1vpry3
+title: 2024车联网网络和数据安全CTF竞赛
+toc: true
+url: /post/2024-internet-of-vehicles-network-and-data-security-ctf-competition-z1vpry3.html
 ---
-幸运的三血~
-<!--more-->
 # 2024车联网网络和数据安全CTF竞赛
 
 # misc

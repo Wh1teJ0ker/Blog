@@ -1,17 +1,15 @@
 ---
-title: 2025ACTF
-slug: 2025actf-z9mnyi
-url: /post/2025actf-z9mnyi.html
-date: '2025-04-26 16:19:22+08:00'
-lastmod: '2025-05-07 21:00:38+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2025-04-26 16:19:22+08:00'
 description: AAAAACTF，感觉不错
 isCJKLanguage: true
+lastmod: '2025-05-07 21:00:38+08:00'
+slug: 2025actf-z9mnyi
+title: 2025ACTF
+toc: true
+url: /post/2025actf-z9mnyi.html
 ---
-AAAAACTF，感觉不错
-<!--more-->
 # 2025ACTF
 
 # Misc

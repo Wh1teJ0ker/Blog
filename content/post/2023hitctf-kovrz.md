@@ -1,17 +1,15 @@
 ---
-title: 2023HITCTF
-slug: 2023hitctf-kovrz
-url: /post/2023hitctf-kovrz.html
-date: '2023-10-20 13:44:59+08:00'
-lastmod: '2025-04-04 18:06:02+08:00'
-toc: true
-isCJKLanguage: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2023-10-20 13:44:59+08:00'
+description: CTF第一次获得奖金的比赛，也算是比较有纪念意义了
+isCJKLanguage: true
+lastmod: '2025-04-04 18:06:02+08:00'
+slug: 2023hitctf-kovrz
+title: 2023HITCTF
+toc: true
+url: /post/2023hitctf-kovrz.html
 ---
-CTF第一次获得奖金的比赛，也算是比较有纪念意义了
-<!--more-->
-
 # 2023HITCTF
 
 # 前言

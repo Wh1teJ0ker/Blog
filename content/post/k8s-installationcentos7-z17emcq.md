@@ -1,17 +1,15 @@
 ---
-title: K8s安装-Centos7
-slug: k8s-installationcentos7-z17emcq
-url: /post/k8s-installationcentos7-z17emcq.html
-date: '2024-08-28 08:36:16+08:00'
-lastmod: '2025-04-06 14:16:35+08:00'
-toc: true
 categories:
-  - K8s
+- K8s
+date: '2024-08-28 08:36:16+08:00'
+description: 基于CentOs对k8s的第一次学习尝试
 isCJKLanguage: true
----                                                                                                                                                                                                                                                     
-基于CentOs对k8s的第一次学习尝试
-<!--more-->
-
+lastmod: '2025-04-06 14:16:35+08:00'
+slug: k8s-installationcentos7-z17emcq
+title: K8s安装-Centos7
+toc: true
+url: /post/k8s-installationcentos7-z17emcq.html
+---
 # K8s安装-Centos7
 
 # 环境与配置文件

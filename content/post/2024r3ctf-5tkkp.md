@@ -1,16 +1,15 @@
 ---
-title: 2024R3CTF
-slug: 2024r3ctf-5tkkp
-url: /post/2024r3ctf-5tkkp.html
-date: '2024-08-26 13:57:37+08:00'
-lastmod: '2025-04-04 21:04:49+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-08-26 13:57:37+08:00'
+description: cool!最爱的取证
 isCJKLanguage: true
+lastmod: '2025-04-04 21:04:49+08:00'
+slug: 2024r3ctf-5tkkp
+title: 2024R3CTF
+toc: true
+url: /post/2024r3ctf-5tkkp.html
 ---
-cool!最爱的取证
-<!--more-->
 # 2024R3CTF
 
 # Forensics

@@ -1,16 +1,15 @@
 ---
-title: Tryhackme-easy-RootMe
-slug: tryhackmeeasyrootme-1bz4w8
-url: /post/tryhackmeeasyrootme-1bz4w8.html
-date: '2024-08-14 14:06:02+08:00'
-lastmod: '2025-05-07 21:30:11+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2024-08-14 14:06:02+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:30:11+08:00'
+slug: tryhackmeeasyrootme-1bz4w8
+title: Tryhackme-easy-RootMe
+toc: true
+url: /post/tryhackmeeasyrootme-1bz4w8.html
 ---
-日常练习
-<!--more-->
 # Tryhackme-easy-RootMe
 
 # Reconnaissance

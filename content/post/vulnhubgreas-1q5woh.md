@@ -1,16 +1,15 @@
 ---
-title: VulnHub-Jarbas
-slug: vulnhubgreas-1q5woh
-url: /post/vulnhubgreas-1q5woh.html
-date: '2025-03-03 14:42:16+08:00'
-lastmod: '2025-05-07 21:32:29+08:00'
-toc: true
 categories:
-  - penetration
+- penetration
+date: '2025-03-03 14:42:16+08:00'
+description: 日常练习
 isCJKLanguage: true
+lastmod: '2025-05-07 21:32:29+08:00'
+slug: vulnhubgreas-1q5woh
+title: VulnHub-Jarbas
+toc: true
+url: /post/vulnhubgreas-1q5woh.html
 ---
-日常练习
-<!--more-->
 # VulnHub-Jarbas
 
 ## 信息搜集

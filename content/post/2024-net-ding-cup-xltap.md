@@ -1,16 +1,15 @@
 ---
-title: 2024网鼎杯
-slug: 2024-net-ding-cup-xltap
-url: /post/2024-net-ding-cup-xltap.html
-date: '2024-10-29 11:59:39+08:00'
-lastmod: '2025-04-05 00:37:09+08:00'
-toc: true
 categories:
-  - CTF-Writeup
+- CTF-Writeup
+date: '2024-10-29 11:59:39+08:00'
+description: 也是笑话了，p成什么鬼样子了
 isCJKLanguage: true
+lastmod: '2025-04-05 00:37:09+08:00'
+slug: 2024-net-ding-cup-xltap
+title: 2024网鼎杯
+toc: true
+url: /post/2024-net-ding-cup-xltap.html
 ---
-也是笑话了，p成什么鬼样子了
-<!--more-->
 # 2024网鼎杯
 
 # Misc

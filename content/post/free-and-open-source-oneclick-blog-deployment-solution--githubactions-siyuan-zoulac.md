@@ -1,21 +1,16 @@
 ---
-title: 自动化博客部署方案-Github Actions + Siyuan
-slug: >-
-  free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac
-url: >-
-  /post/free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac.html
-date: '2024-07-26 21:41:54+08:00'
-lastmod: '2025-04-04 12:56:06+08:00'
-toc: true
 categories:
-  - Other
-isCJKLanguage: true
+- Other
+date: '2024-07-26 21:41:54+08:00'
+description: 自动化博客部署方案-Github Actions + Siyuan，优点是免费开源
 featured: true
+isCJKLanguage: true
+lastmod: '2025-04-04 12:56:06+08:00'
+slug: free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac
+title: 自动化博客部署方案-Github Actions + Siyuan
+toc: true
+url: /post/free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac.html
 ---
-
-自动化博客部署方案-Github Actions + Siyuan，优点是免费开源
-<!--more-->
-
 # 自动化博客部署方案-Github Actions + Siyuan
 
 原本呢，很长一段时间都没怎么写过博客了，很多东西都记录在语雀上了

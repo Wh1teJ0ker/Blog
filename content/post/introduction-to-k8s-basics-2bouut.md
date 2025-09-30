@@ -1,17 +1,15 @@
 ---
-title: K8s基础介绍
-slug: introduction-to-k8s-basics-2bouut
-url: /post/introduction-to-k8s-basics-2bouut.html
-date: '2024-08-28 08:37:03+08:00'
-lastmod: '2025-04-06 14:13:40+08:00'
-toc: true
 categories:
-  - K8s
+- K8s
+date: '2024-08-28 08:37:03+08:00'
+description: K8s初认知
 isCJKLanguage: true
+lastmod: '2025-04-06 14:13:40+08:00'
+slug: introduction-to-k8s-basics-2bouut
+title: K8s基础介绍
+toc: true
+url: /post/introduction-to-k8s-basics-2bouut.html
 ---
-K8s初认知
-<!--more-->
-
 # K8s基础介绍
 
 首先来学习一下k8s的相关原理
