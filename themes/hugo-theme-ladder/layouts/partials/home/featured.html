@@ -1,13 +1,17 @@
-{{ $featured := where .Site.Pages "Params.featured" true }}
-{{ if gt $featured 0 }}
-  <h2>{{- i18n "featured_posts" -}}</h2>
+{{/* 取最近的 N 篇文章，这里我写 5 篇，你可以改成你想要的数量 */}}
+{{ $recent := first 20 (where .Site.RegularPages "Type" "post" | sort "Date" "desc") }}
+
+{{ if gt (len $recent) 0 }}
+<h2>{{- i18n "recent_posts" -}}</h2>
 {{ end }}
 <div class="featured-list">
-  {{ range $featured }}
+    {{ range $recent }}
     <article class="featured-single">
-        <h4><a href="{{ .RelPermalink }}">{{ .Params.title }}</a></h4>
+        <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
         {{ partial "blog/meta.html" . }}
-        {{ .Summary }}
+        {{ with .Description }}
+        <p class="desc">{{ . }}</p>
+        {{ end }}
     </article>
-  {{ end -}}
+    {{ end -}}
 </div>
