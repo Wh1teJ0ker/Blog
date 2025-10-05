@@ -1,5 +1,4 @@
-{{/* 取最近的 N 篇文章，这里我写 5 篇，你可以改成你想要的数量 */}}
-{{ $recent := first 20 (where .Site.RegularPages "Type" "post" | sort "Date" "desc") }}
+{{ $recent := first 20 .Site.RegularPages.ByDate.Reverse }}
 
 {{ if gt (len $recent) 0 }}
 <h2>{{- i18n "recent_posts" -}}</h2>
