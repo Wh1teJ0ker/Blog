@@ -323,7 +323,7 @@ bkcrack -C strong_encrypted.zip -c veracrypt.core -k 25b0091d 6687a00d 791e474d 
 
 在core文件内查找到密码
 
-```Plain
+```bash
 strings veracrypt.core | grep -i "password"
 ```
 
@@ -339,7 +339,7 @@ strings veracrypt.core | grep -i "password"
 
 ![](assets/network-asset-asynccode-20251209221117-0m53ddg.png)
 
-```Plain
+```bash
 flag{Fr33BSD_part1t10n_taB1e_Is_StraNg3}
 ```
 
@@ -347,7 +347,7 @@ flag{Fr33BSD_part1t10n_taB1e_Is_StraNg3}
 
 🤡修了一个晚上
 
-```python
+```bash
 https://pan.baidu.com/s/1Tzad98GtbeuLs5RS0V_wuw?pwd=avev
 ```
 
@@ -373,7 +373,7 @@ PS：被密码手猜出来的，郁郁了🤡
 
 七道re，我们一个re手不堪重任，帮忙做了一题easy的，AI太好用了
 
-```bash
+```python
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
