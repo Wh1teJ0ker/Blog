@@ -17,6 +17,8 @@ isCJKLanguage: true
 
 # Misc
 
+@脉冲星，友好合作
+
 ## 标准的绝密压缩
 
 首先分析流量，发现关键的PNG图片相关的流量，全部在tcp流的data部分，先使用tshark导出
