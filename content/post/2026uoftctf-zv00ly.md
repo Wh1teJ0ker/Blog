@@ -19,13 +19,13 @@ isCJKLanguage: true
 
 ## Reverse Wordle | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 My friend said they always use the same starting word, can you help me find out what it is?
 
 Submit the sha256 hash of the ALL CAPS word wrapped in the flag format uoftctf{...}
 
-### WriteUp
+**WriteUp**
 
 把三局的“第一行反馈”分别用三局答案去约束（1\=REBUT，67\=CRASS，1336\=DITTY）后，在官方可猜词表里唯一能同时满足三组反馈的起手词是：SQUIB。
 
@@ -41,25 +41,25 @@ Submit the sha256 hash of the ALL CAPS word wrapped in the flag format uoftctf{.
 
 ## Encryption Service | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 We made an encryption service. We forgot to make the decryption though. As compensation we are giving free encrypted flags
 
 ​`nc 34.86.4.154 5000`​
 
-### WriteUp
+**WriteUp**
 
 奇怪的漏洞点，很新鲜，没见过，再看看
 
 ## Guess The Number | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 Guess my super secret number
 
 ​`nc 35.231.13.90 5000`​
 
-### WriteUp
+**WriteUp**
 
 单纯的猜测，在未知量是 100 bit，每次询问只回 Yes/No，最多 1 bit 信息。50 次最多 50 bit 信息，不够唯一确定 x。
 
@@ -207,7 +207,7 @@ if __name__ == "__main__":
 
 ## Lottery | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Han Shangyan quietly gives away all his savings to protect someone he cares about, leaving himself with nothing. Now broke, his only hope is chance itself.
 
@@ -215,13 +215,13 @@ Can you help Han Shangyan win the lottery?
 
 ​`nc 35.245.30.212 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## K&K Training Room | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Welcome to the K&K Training Room. Before every match, players must check in through the bot.
 
@@ -229,41 +229,41 @@ A successful check in grants the K&K role, opening access to team channels and m
 
 [https://discord.gg/3u6V8uAGm7](https://discord.gg/3u6V8uAGm7)
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## File Upload | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Upload and download files
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Vibe Code | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 AI is so ubiquitous in CTF, so I am forcing you to use it to solve this easy C jail.
 
 ​`nc 34.23.133.46 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Nothing Ever Changes | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 While conducting her research on artificial intelligence, Tong Nian claims to have found a way to create adversarial examples without changing anything at all. Her colleagues are skeptical. Can you help her hash out the details of her approach and verify its validity?
 
 Try it out [here](http://35.245.68.223:5000/health)!
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -271,7 +271,7 @@ Try it out [here](http://35.245.68.223:5000/health)!
 
 ## Go Go Coaster! | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 During an episode of Go Go Squid!, Han Shangyan was too scared to go on a roller coaster. What's the English name of this roller coaster? Also, what's its height in whole feet?
 
@@ -283,7 +283,7 @@ Notes:
 
 1. Flag is case-insenstive, just remember to replace spaces with underscores and no decimal points
 
-### WriteUp
+**WriteUp**
 
 《亲爱的，热爱的》（Go Go Squid!）第 12 集去的 **上海欢乐谷**里那台“主角认证的恐怖级跌落式过山车（近 90 度垂直俯冲）”。
 
@@ -298,7 +298,7 @@ uoftctf{Diving_Coaster_213}
 
 ## Go Go Cabinet! | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 I really like Go Go Squid! In fact, I like it so much that I even bought the same model of cabinet that is in the series!
 
@@ -316,13 +316,13 @@ Notes:
 1. Mind the flag format/example :)
 2. There is a 1-second fowards leniency in the timestamp (if 1:00 is correct, then 1:01 is correct)
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## My Shikishi is Fake! | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 After the whole incident with Pokemon cards, Han Shangyan decided to buy Tong Nian shikishis autographed by famous manga artists instead. He came across this seller with autographs and sketches done by creators of Dragon Ball, Chainsaw Man, and more, all with certificates of authenticity and money-back guarantees! Surely this is too good to be true?
 
@@ -344,13 +344,13 @@ Notes:
 1. OSINTing the author will not help, though you are free to do so.
 2. Flag is case-sensitive.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## T1 | 状态:solved/running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Han Shangyan wanted to buy an autographed Pokemon card for Tong Nian. Unfortunately, he found out that it was fake! He wants to find out more about this forger, but they have deleted the auction! Can you help him put a stop to this 2-year-long scheme?
 
@@ -375,7 +375,7 @@ Notes:
 1. OSINTing the author will not help you, though you are free to do so.
 2. Flag is case-insensitive.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -383,11 +383,11 @@ Notes:
 
 ## Baby Exfil | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 Team K&K has identified suspicious network activity on their machine. Fearing that a competing team may be attempting to steal confidential data through underhanded means, they need your help analyzing the network logs to uncover the truth.
 
-### WriteUp
+**WriteUp**
 
 翻找流量找到了恶意脚本
 
@@ -581,7 +581,7 @@ for stream_key, stream_packets in streams.items():
 
 在其中一张图里找到了flag
 
-![image](http://127.0.0.1:50211/assets/image-20260111215009-essj4un.png)
+![image](https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20260111215009-essj4un.png)
 
 ```bash
 uoftctf{b4by_w1r3sh4rk_an4lys1s}
@@ -589,7 +589,7 @@ uoftctf{b4by_w1r3sh4rk_an4lys1s}
 
 ## My Pokemon Card is Fake! | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Han Shangyan noticed that recently, Tong Nian has been getting into Pokemon cards. So, what could be a better present than a literal prototype for the original Charizard? Not only that, it has been authenticated and graded a PRISTINE GEM MINT 10 by CGC!!!
 
@@ -609,7 +609,7 @@ Notes:
 1. You're free to dig more into the whole situation after you've solved the challenge, it's very interesting, though so much hasn't been or can't be said :(
 2. Two days after I write this challenge, I'm going to meet the person whose name was used for all this again. Hopefully I'll be back to respond to tickets!!!
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -617,7 +617,7 @@ Notes:
 
 ## No Quotes | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 Unless it's from "Go Go Squid!", no quotes are allowed here! Let this wholesome quote heal your soul:
 
@@ -625,7 +625,7 @@ Ai Qing: "If you didn't know about robot combat back then, what would you be doi
 
 Wu Bai: "There's no if. As long as you're here, I'll be here."
 
-### WriteUp
+**WriteUp**
 
 ```python
 import requests
@@ -712,31 +712,31 @@ if __name__ == "__main__":
 
 ## Firewall | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Free flag at /flag.html
 
 ​`curl http://35.227.38.232:5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Personal Blog | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 For your eyes only?
 
 Visit the website [here](http://34.26.148.28:5000/).
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## No Quotes 2 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Unless it's from "Go Go Squid!", no quotes are allowed here! Let this wholesome quote heal your soul:
 
@@ -746,13 +746,13 @@ Wu Bai: "There's no if. As long as you're here, I'll be here."
 
 Now complete with a double check for extra security!
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## No Quotes 3 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Unless it's from "Go Go Squid!", no quotes are allowed here! Let this wholesome quote heal your soul:
 
@@ -764,23 +764,23 @@ Now complete with a double check for extra security AND ​**proper hashing**!
 
 (The author also hates **periods** and is 6'7" btw)
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Pasteboard | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 For Team K&K, dating is forbidden. So Mi Shaofei and Sun Yaya hide their relationship the only way they can: by slipping messages into a notes sharing app.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Unrealistic Client-Side Challenge - Flag 1 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Han Shangyan was tired of Team K&K getting skill-diffed every time they were faced with client-side web challenges. After some self-reflection, he finally accepted that training his squad solely with aim trainers *might* not be the best approach. Instead, he decided to make a *totally realistic* CTF challenge for his team to practice on.
 
@@ -788,25 +788,25 @@ Submit flag 1 here. Both challenges use the same attachment.
 
 Note: Port 5001 is not exposed on the remote instance. However, the bot can still access it and this does not interfere with the intended solution.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Vulnerability Research | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Inspired by the recent **10.0 CVSS** react2shell vulnerability, Han Shangyan decided to embark on a web application framework auditing journey himself. He stumbled upon this old web framework. Can you help him audit it for any bugs?
 
 Note: This challenge involves exploiting a real 0-day. Please refrain from posting writeups or sharing details about the vulnerability publicly until it has been patched by the maintainers.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Unrealistic Client-Side Challenge - Flag 2 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Han Shangyan was tired of Team K&K getting skill-diffed every time they were faced with client-side web challenges. After some self-reflection, he finally accepted that training his squad solely with aim trainers *might* not be the best approach. Instead, he decided to make a *totally realistic* CTF challenge for his team to practice on.
 
@@ -814,7 +814,7 @@ Submit flag 2 here. Both challenges use the same attachment.
 
 Note: Port 5001 is not exposed on the remote instance. However, the bot can still access it and this does not interfere with the intended solution.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -822,13 +822,13 @@ Note: Port 5001 is not exposed on the remote instance. However, the bot can stil
 
 ## Baby (Obfuscated) Flag Checker | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 All this obfuscation has left Han Shangyan seeing double. Even Grunt refuses to untangle this mess for him, so it's up to you to do the real *grunt*work (hahaha get it???).
 
 Hint: This challenge can be solved without fully deobfuscating the script, but writing a deobfuscator might help you with the "ML Connoisseur" challenge...
 
-### WriteUp
+**WriteUp**
 
 ```python
 
@@ -904,41 +904,41 @@ if __name__ == "__main__":
 
 ## Bring Your Own Program | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Team K&K discovered a mysterious emulator for an unknown architecture. I wonder what kind of programs it can run...
 
 ​`nc 35.245.96.82 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Symbol of Hope | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Like a beacon in the dark, Go Go Squid! stands as a symbol of hope to those who seek to be healed.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Will u Accept Some Magic? | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 How does Kotlin compile to wasm so well? Where did my heap go?
 
 Wrap the password in uoftctf{}
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## ML Connoisseur | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Tong Nian is a talented machine learning student. She claims to have built a classifier, but never revealed what it is supposed to recognize. The model behaves oddly, and its purpose is unclear. Can you figure out what it's really classifying?
 
@@ -946,7 +946,7 @@ Download: [https://uoftctf-2026-downloads.uoftctf.org/ml-connoisseur.zip](https:
 
 Example usage: `python chal.py examples/0.png`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -954,7 +954,7 @@ Example usage: `python chal.py examples/0.png`​
 
 ## Leaked d | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 Someone leaked my d, surely generating a new key pair is safe enough.
 
@@ -968,7 +968,7 @@ e2\=6767671
 
 c\=31703515320997441500407462163885912085193988887521686491271883832485018463764003313655377418478488372329742364292629844576532415828605994734718987367062694340608380583593689052813716395874850039382743513756381017287371000882358341440383454299152364807346068866304481227367259672607408256375720022838698292966
 
-### WriteUp
+**WriteUp**
 
 ```python
 from Crypto.Util.number import inverse, long_to_bytes
@@ -1025,7 +1025,7 @@ print(long_to_bytes(m))
 
 ## Gambler's Fallacy | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 can we win a zillion dollars tonight?
 
@@ -1033,7 +1033,7 @@ algorithms inspired by primedice
 
 ​`nc 34.162.20.138 5000`​
 
-### WriteUp
+**WriteUp**
 
 ```python
 
@@ -1276,55 +1276,55 @@ if __name__ == "__main__":
 
 ## UofT LFSR Labyrinth | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 A quirky 48-bit UofT stream taps through a WG-flavoured filter, leaving 80 bits of trace and a sealed flag. The blueprint is public; the hidden state is the dance you need to unravel.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## MAT247 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 If V admits a T-cyclic vector, and ST=TS, show that S = p(T) for some polynomial T.
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Orca | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Orcas eat squids :(
 
 ​`nc 34.186.247.84 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Rotor Cipher | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 We captured a rotor cipher, but they destroyed the rotors before we got to it. Can you recover the rotor wiring?
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## MAT347 | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Groups, Rings, and Fields. But only groups (and modules!).
 
 ​`nc 104.196.21.25 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
@@ -1332,13 +1332,13 @@ Groups, Rings, and Fields. But only groups (and modules!).
 
 ## Baby bof | 状态:solved｜Live
 
-### 题目描述
+**题目描述**
 
 People said gets is not safe, but I think I figured out how to make it safe.
 
 ​`nc 34.48.173.44 5000`​
 
-### WriteUp
+**WriteUp**
 
 ```python
 from pwn import *
@@ -1371,7 +1371,7 @@ io.interactive()
 
 ## extended-eBPF | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 I extended the eBPF because its cool.
 
@@ -1379,25 +1379,25 @@ Note: You can log in as the ctf user
 
 ​`nc 34.26.243.6 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## Calculator | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 Look at this very simple calculator I implemented in c++.
 
 ​`nc 34.162.229.67 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## uprobe | 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 uprobes are cool
 
@@ -1405,18 +1405,18 @@ Note: You can log in as the ctf user
 
 ​`nc 136.107.76.27 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
 
 ## AES AEAD| 状态:running｜Reproduction
 
-### 题目描述
+**题目描述**
 
 We tried rolling our own crypto. What could possibly go wrong?
 
 ​`nc 35.185.46.39 5000`​
 
-### WriteUp
+**WriteUp**
 
 暂无
