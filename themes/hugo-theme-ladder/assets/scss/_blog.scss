@@ -18,14 +18,75 @@
 
 .blog-single {
   position: relative;
-  max-width: 80rem;
+  max-width: 120rem;
   margin: auto;
   padding: 1.5rem;
 
+  .blog-body {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: flex-start;
+
+    @media only screen and (max-width: 1000px) {
+      flex-direction: column;
+    }
+  }
+
+  .blog-content-wrapper {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+  }
+
   .blog-toc {
-    top: 4rem;
+    position: sticky;
+    top: 2rem;
+    width: 25rem;
+    flex-shrink: 0;
     height: auto;
+    max-height: calc(100vh - 4rem);
     overflow-y: auto;
+    
+    @media only screen and (max-width: 1000px) {
+      position: relative;
+      width: 100%;
+      top: 0;
+      margin-bottom: 2rem;
+    }
+
+    .toc-details {
+      .toc-summary {
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        outline: none;
+        list-style: none;
+        
+        &::-webkit-details-marker {
+          display: none;
+        }
+
+        &::after {
+          content: '';
+          display: inline-block;
+          width: 0; 
+          height: 0; 
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-top: 5px solid currentColor;
+          margin-left: 8px;
+          vertical-align: middle;
+          transition: transform 0.2s ease;
+        }
+      }
+
+      &[open] .toc-summary::after {
+        transform: rotate(180deg);
+      }
+    }
 
     ul {
       padding-left: 0;
@@ -76,8 +137,17 @@
 }
 
 .blog-content {
+  overflow-wrap: break-word;
+  word-break: break-word;
+
   p img {
     border-radius: 0.6rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  iframe, video {
+    max-width: 100%;
   }
 
   a {

@@ -60,8 +60,8 @@
   "keywords": [
     
   ],
-  "articleBody": "easy-病毒分析，但是脑洞（\n2024巅峰极客-Misc 方案1：\n部分说直接运行样本就会存在释放文件的操作，我这边尝试未果\n方案2：\nupx脱壳\n​​\n然后foremost分离出来得到一张图片\n​​\nLSB隐写\n​​\nhttp://47.104.129.38/79407f2309b5763fbd0e33dc583c4262/default.a\n下载样本\n注意观察原始样本中存在大量yyttddd，这个就是密钥\n异或出来即得样本\n​​\n然后利用下面脚本进行提取的\nhttps://github.com/CaledoniaProject/pupyrat-config-decoder\n​​\n但是在安装好相对应的库后，发现如上报错\n再询问以及查询源码后得知，其中存在一个反编译行为\n​​\n但是实际上在tmp这个变量的时候就已经得到相关的结果了\n​​\n注释后打印结果即可\n​​\n1 {'launcher_args': ['--host', '60.177.118.44:3432', '-t', 'ssl'] 最终flag为\n1 flag{b57758d5acc923137eef453239ba685b} ‍\n",
-  "wordCount" : "259",
+  "articleBody": "2024巅峰极客-Misc 方案1：\n部分说直接运行样本就会存在释放文件的操作，我这边尝试未果\n方案2：\nupx脱壳\n​​\n然后foremost分离出来得到一张图片\n​​\nLSB隐写\n​​\nhttp://47.104.129.38/79407f2309b5763fbd0e33dc583c4262/default.a\n下载样本\n注意观察原始样本中存在大量yyttddd，这个就是密钥\n异或出来即得样本\n​​\n然后利用下面脚本进行提取的\nhttps://github.com/CaledoniaProject/pupyrat-config-decoder\n​​\n但是在安装好相对应的库后，发现如上报错\n再询问以及查询源码后得知，其中存在一个反编译行为\n​​\n但是实际上在tmp这个变量的时候就已经得到相关的结果了\n​​\n注释后打印结果即可\n​​\n1 {'launcher_args': ['--host', '60.177.118.44:3432', '-t', 'ssl'] 最终flag为\n1 flag{b57758d5acc923137eef453239ba685b} ‍\n",
+  "wordCount" : "244",
   "inLanguage": "en",
   "datePublished": "2024-08-18T15:26:41+08:00",
   "dateModified": "2025-04-04T17:34:56+08:00",
@@ -102,7 +102,7 @@
     <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
 
     
-    <script src="/js/highlight.min.min.c607d6febd16934a82eb61d3a896ed9d869f54373cc63ce95864ed5488fe3128.js"></script>
+    <script src="/js/highlight.min.min.65a3017a8aabe1f9330e70527075c8d51bc9634d5cac35077af03588c1df8078.js"></script>
     <script>hljs.highlightAll();</script>
 
     </head>
@@ -154,11 +154,19 @@
             
             
 
+            <li class="navigation-item navigation-search">
+                <a href="javascript:void(0)" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </a>
+            </li>
+
             
         </ul>
         
     </section>
 </nav>
+
+
 <div id="content">
 <article class="blog-single">
   <header class="blog-title">
@@ -173,11 +181,15 @@
 <p>
 
   <div class="blog-toc">
-    <nav id="TableOfContents"></nav>
+    <details open class="toc-details">
+    <summary class="toc-summary">目录</summary>
+    <div class="toc-content">
+        <nav id="TableOfContents"></nav>
+    </div>
+</details>
   </div>
 
-  <section class="blog-content"><p>easy-病毒分析，但是脑洞（</p>
-<h1 id="2024巅峰极客-misc">2024巅峰极客-Misc</h1>
+  <section class="blog-content"><h1 id="2024巅峰极客-misc">2024巅峰极客-Misc</h1>
 <p>方案1：</p>
 <p>部分说直接运行样本就会存在释放文件的操作，我这边尝试未果</p>
 <p>方案2：</p>
@@ -207,7 +219,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;launcher_args&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;--host&#39;</span><span class="p">,</span> <span class="s1">&#39;60.177.118.44:3432&#39;</span><span class="p">,</span> <span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;ssl&#39;</span><span class="p">]</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">{</span><span class="s1">&#39;launcher_args&#39;</span>: <span class="o">[</span><span class="s1">&#39;--host&#39;</span>, <span class="s1">&#39;60.177.118.44:3432&#39;</span>, <span class="s1">&#39;-t&#39;</span>, <span class="s1">&#39;ssl&#39;</span><span class="o">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>最终flag为</p>
@@ -216,10 +228,11 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">flag</span><span class="p">{</span><span class="n">b57758d5acc923137eef453239ba685b</span><span class="p">}</span>
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">flag<span class="o">{</span>b57758d5acc923137eef453239ba685b<span class="o">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>‍</p></section>
+</div><p>‍</p>
+</section>
 
   
     
@@ -254,8 +267,14 @@
   
   <div class="paginator">
     
+    <a class="prev" href="http://localhost:1313/post/2024-internet-of-vehicles-network-and-data-security-ctf-competition-z1vpry3.html">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentColor" stroke-linecap="round"/>
+      </svg>
+      <span>2024车联网网络和数据安全CTF竞赛</span></a>
     
-    <a class="next" href="http://localhost:1313/post/free-and-open-source-oneclick-blog-deployment-solution--githubactions-siyuan-zoulac.html"><span>自动化博客部署方案-Github Actions &#43; Siyuan</span>
+    
+    <a class="next" href="http://localhost:1313/post/tryhackmeeasybasic-pentesting-21olpr.html"><span>Tryhackme-easy-Basic Pentesting</span>
       <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11" stroke="currentColor" stroke-linecap="round"/>
       </svg>
@@ -270,7 +289,7 @@
 </article>
 
         </div><footer class="footer">
-  <p>&copy; 2025 <a href="http://localhost:1313/">Wh1teJ0kerのBlog</a>
+  <p>&copy; 2026 <a href="http://localhost:1313/">Wh1teJ0kerのBlog</a>
     Powered by
     <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
     <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
@@ -280,6 +299,7 @@
 <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
 </a>
+
 
 <script>
     var mybutton = document.getElementById("top-link");
@@ -300,12 +320,12 @@
 
         const copybutton = document.createElement('button');
         copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'Copy';
+        copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
 
         function copyingDone() {
-            copybutton.innerHTML = 'Copied';
+            copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
             setTimeout(() => {
-                copybutton.innerHTML = 'Copy';
+                copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
             }, 2000);
         }
 
@@ -330,4 +350,57 @@
         codeblock.parentNode.appendChild(copybutton);
     });
 </script></main>
-    </body><script src="/main.min.cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e.js" integrity="sha512-z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP&#43;DGNKHfuwvY7kxvUdBeoGlODJ6&#43;SfaPg==" crossorigin="anonymous" defer></script></html>
+      
+      
+      <div id="search-modal" class="search-modal" style="display: none;">
+          <div class="search-modal-content">
+              <div class="search-input-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="search-input" placeholder="搜索标题、标签或正文关键字" autocomplete="off">
+                  <button type="button" id="search-clear" class="search-clear" aria-label="清除搜索">
+                      ×
+                  </button>
+                  <span class="search-shortcut">ESC</span>
+              </div>
+              <div id="search-results" class="search-results"></div>
+          </div>
+      </div>
+
+      <style>
+        #search-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: none;
+          background-color: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          align-items: center;
+          justify-content: center;
+          padding: 0 1.5rem;
+        }
+
+        #search-modal.active {
+          display: flex;
+        }
+
+        #search-modal .search-modal-content {
+          width: 100%;
+          max-width: 880px;
+          max-height: 80vh;
+          margin: 0;
+          background: transparent;
+          box-shadow: none;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-dark-mode] #search-modal .search-modal-content {
+          background: transparent;
+          border: none;
+        }
+      </style>
+    </body><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+<script src="/main.min.80d50982893555370f4aacc2affcf405ae67515c8053bb96ae4aa69934f4efec7c58bde5638ac91af85238507fcc283a42df3e061b5b83554fd71d3c87979053.js" integrity="sha512-gNUJgok1VTcPSqzCr/z0Ba5nUVyAU7uWrkqmmTT07&#43;x8WL3lY4rJGvhSOFB/zCg6Qt8&#43;Bhtbg1VP1x08h5eQUw==" crossorigin="anonymous" defer></script></html>

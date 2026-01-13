@@ -128,6 +128,15 @@
       }
     }
 
+    .navigation-search {
+      padding: 0;
+      a, span {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        cursor: pointer;
+      }
+    }
+
     .menu-separator {
       padding-left: 1rem;
       padding-right: 1rem;

@@ -40,6 +40,9 @@ params:
       website_id: 56cc42c1-3656-4d3e-af3c-acded927b8ed
       url: https://analytics.umami.is/script.js
   
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+
 menu:
   main:
     - identifier: categories
@@ -63,6 +66,10 @@ menu:
       url: https://cloud.umami.is/share/5RZUCwaG2fOysYPa/wh1tej0ker.github.io
       weight: 6
 markup:
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+    ordered: false
   highlight:
     noClasses: false
     codeFences: true

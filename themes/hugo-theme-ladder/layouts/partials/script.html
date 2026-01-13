@@ -15,8 +15,11 @@
   </script>
 {{ end -}}
 
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
 {{ $app := resources.Get "js/app.js" -}}
-{{ $slice := slice $app -}}
+{{ $search := resources.Get "js/search.js" -}}
+{{ $slice := slice $app $search -}}
 
 {{ if .Site.Params.options.showDarkMode -}}
   {{ $darkModeTheme := .Site.Params.options.darkThemes}}
