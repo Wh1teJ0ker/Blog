@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wh1teJ0kerのBlog</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Ladder@社工大赛了，属于是">
+    <meta name="author" content="Wh1teJ0ker">
+    <link rel="canonical" href="https://wh1tej0ker.github.io/post/2025rctf-2sxbu2.html">
+
+    <link rel="alternate" type="application/rss+xml" href="https://wh1tej0ker.github.io//index.xml" title="Wh1teJ0kerのBlog">
+
+    
+
+
+<script async defer data-website-id="56cc42c1-3656-4d3e-af3c-acded927b8ed" src="https://analytics.umami.is/script.js"></script>
+
+    <meta property="og:url" content="https://wh1tej0ker.github.io/post/2025rctf-2sxbu2.html">
+  <meta property="og:site_name" content="Wh1teJ0kerのBlog">
+  <meta property="og:title" content="2025RCTF">
+  <meta property="og:description" content="社工大赛了，属于是">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-11-15T11:24:18+08:00">
+    <meta property="article:modified_time" content="2025-12-10T15:23:23+08:00">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2025RCTF">
+  <meta name="twitter:description" content="社工大赛了，属于是">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wh1tej0ker.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "2025RCTF",
+      "item": "https://wh1tej0ker.github.io/post/2025rctf-2sxbu2.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2025RCTF",
+  "name": "2025RCTF",
+  "description": "社工大赛了，属于是",
+  "keywords": [
+    
+  ],
+  "articleBody": "2025RCTF Misc Speak Softly Love 1 2 3 4 1.8ssDGBTssUI 2.r178 3.https://mateusz.viste.fr/mateusz.ogg 4.16TofYbGd86C7S6JuAuhGkX4fbmC9QtzwT 第一问\n根据视频试图先找到电脑型号，然后结合关键词music，youtube搜索找到这个。\n1 8ssDGBTssUI 第二问\n查找DOSmid\n1 https://www.vogons.org/viewtopic.php?t=44947 先找到关于这个的大致信息\n使用的svn\n1 svn co svn://svn.mateusz.fr/dosmid dosmid-svn 然后基于上述关键词去查找\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 root@DESKTOP-LV8V93U:/home/2025RCTF/dosmid-svn# svn log -r 200:350 | egrep -i \"playlist|m3u|freeze|empty|loop|soft\" freezed v0.9 to tags freezed v0.9.1 to tags sequential playing of playlists, inspired by a patch proposed by Graham Wiseman freezed v0.9.2 into tags freezed v0.9.3 to tags m3u playlist uses fio calls instead of fopen() and friends fix: /random was always playing first song of the m3u list, now it is random from the start fixed playlist gap delay computation (fixed /delay behavior, too) freezed v0.9.4 to tags freezed v0.9.5 to tags root@DESKTOP-LV8V93U:/home/2025RCTF/dosmid-svn# svn log -r 1:200 | egrep -i \"playlist|m3u|freeze|empty|loop|soft\" do not freeze when no MPU401 is responding setting volume in software again, reinstated default delay=2ms, improved keyboard reaction times and adjusted documentation added INT28h powersaving during idle loops detecting when a playlist is passed on command-line (but no m3u support yet) first semi-experimental M3U support freezed v0.6 into tags freezed v0.6.1 into tags freezed v0.7 in tags freezed v0.8 into tags added an empty and self-documented configuration file 2s silence gap is inserted only in playlist mode (no reason to wait 2s for a single file) fixed freezing when fed with an empty playlist if too many 'soft' errors occur in a row, dosmid aborts (protects against 'soft errors loops', typically with playlist filled with non-existing files) add a note about empty titles, when no textual data could be found in the midi file ignore leading empty title lines freezed v0.9 to tags root@DESKTOP-LV8V93U:/home/2025RCTF/dosmid-svn# svn log -r 1:200 | grep -n \"soft\" 260:setting volume in software again, reinstated default delay=2ms, improved keyboard reaction times and adjusted documentation 712:if too many 'soft' errors occur in a row, dosmid aborts (protects against 'soft errors loops', typically with playlist filled with non-existing files) root@DESKTOP-LV8V93U:/home/2025RCTF/dosmid-svn# svn log -r 1:200 | sed -n '710,720p' r178 | mv_fox | 2016-05-09 01:21:38 +0800 (Mon, 09 May 2016) | 1 line if too many 'soft' errors occur in a row, dosmid aborts (protects against 'soft errors loops', typically with playlist filled with non-existing files) ------------------------------------------------------------------------ r179 | mv_fox | 2016-05-09 01:25:49 +0800 (Mon, 09 May 2016) | 1 line replaced sleep() calls with equivalent udelay() calls (makes the binary 128 bytes lighter) ------------------------------------------------------------------------ r180 | mv_fox | 2016-05-10 02:04:00 +0800 (Tue, 10 May 2016) | 1 line fetching more textual data from MIDI files (text events, tracks titles, marker events...) and displaying it on a little scrolling window 可以锁定在r178-180，然后试r178就直接对了\n1 r178 第三问\n​\n根据评论区找到主页\n1 2 3 4 主页里 想联系我吗？我的电子邮件地址与此网页的地址几乎相同（firstname@lastname.fr）。 令人惊讶的是，很多人难以念出我的名字，所以这里附上我的名字（图片来自 Wikimedia）。 https://mateusz.viste.fr/mateusz.ogg 第四问\n在主页发现了\n1 gopher://gopher.viste.fr 在26里找到了\n1 16TofYbGd86C7S6JuAuhGkX4fbmC9QtzwT The Alchemist’s Cage Wanna Feel Love Challenge 1\nShe only wanted to sing, but her voice was hidden in silence. What is this email trying to tell you? Look beyond what you hear — seek the whispers in the shadows, the comments that were never meant to be seen.\n邮件隐写\n1 https://www.spammimic.com 1 Don't just listen to the sound; this file is hiding an 'old relic.' Try looking for the 'comments' that the player isn't supposed to see. Challenge 2\nShe wants to tell you something, encoded in melodies. Within the digital symphony, her true voice emerges. What is the hidden message found in the XM file? The words she longed to sing, the feeling she wanted to share.\n然后下载openmpt\n评论和乐曲名有提示\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 #!/usr/bin/env python3 # -*- coding: utf-8 -*- \"\"\" Decode hidden message from feel.wav binary-bar waveform. Expected output: I Feel Fantastic heyheyhey \"\"\" import numpy as np from scipy.io import wavfile def read_mono_pcm(path: str): rate, data = wavfile.read(path) data = data.astype(float) if data.ndim \u003e 1: # 立体声只取一个声道 data = data[:, 0] return rate, data def compute_envelope(data: np.ndarray, window_size: int = 100) -\u003e np.ndarray: \"\"\"对绝对值做滑动平均，得到能量包络\"\"\" abs_data = np.abs(data) n = len(abs_data) // window_size * window_size reshaped = abs_data[:n].reshape(-1, window_size) env = reshaped.mean(axis=1) return env def binarize_envelope(env: np.ndarray) -\u003e np.ndarray: \"\"\"根据能量双峰分布自动求阈值，得到 0/1 序列\"\"\" median_env = np.median(env) low_level = np.median(env[env \u003c median_env]) high_level = np.median(env[env \u003e median_env]) threshold = (low_level + high_level) / 2.0 bits_raw = (env \u003e threshold).astype(int) return bits_raw def run_length_encode(bits: np.ndarray): runs = [] current = bits[0] length = 1 for b in bits[1:]: if b == current: length += 1 else: runs.append((current, length)) current = b length = 1 runs.append((current, length)) return runs def expand_runs_to_bits(runs): \"\"\" 每一串 0/1 在时间上会持续若干个“单位长度”， 大部分长度约是 22 的倍数，这里固定 base_unit = 22， 再按 round(length / base_unit) 还原成重复 bit。 \"\"\" base_unit = 22.0 # 针对 feel.wav 这题是固定的 bit_list = [] for v, l in runs: n = int(round(l / base_unit)) if n \u003c= 0: n = 1 bit_list.extend([v] * n) return bit_list def bits_to_ascii(bit_list): bitstr = \"\".join(str(b) for b in bit_list) bitstr = bitstr[: len(bitstr) // 8 * 8] # 截断到 8 的倍数 bytes_vals = [int(bitstr[i : i + 8], 2) for i in range(0, len(bitstr), 8)] msg = \"\".join(chr(b) for b in bytes_vals) return msg, bytes_vals, bitstr def decode_hidden_message(path: str): rate, data = read_mono_pcm(path) env = compute_envelope(data, window_size=100) bits_raw = binarize_envelope(env) runs = run_length_encode(bits_raw) bit_list = expand_runs_to_bits(runs) msg, bytes_vals, bitstr = bits_to_ascii(bit_list) return msg, bytes_vals, bitstr if __name__ == \"__main__\": # 把这里改成你的文件名（与脚本在同一路径下） wav_path = \"feel.wav\" msg, bytes_vals, bitstr = decode_hidden_message(wav_path) print(\"Decoded bytes:\", bytes_vals) print(\"Decoded message:\") print(msg) 1 I Feel Fantastic heyheyhey Challenge 3\nShe just feels love, and her legend once spread across YouTube. Her song touched hearts, but the original video on the YouTube platform has been removed — deleted, re-uploaded, distorted, like memories fading with time. Through the fragments of public records, find where her voice first echoed: the original video ID, upload date (YYYY-MM-DD), and the one who first shared her song.\n在网络存档上找到原视频\n1 https://archive.org/details/youtube-rLy-AwdCOmI 1 2 3 rLy-AwdCOmI Creepyblog 2009-04-15 Challenge 4\nHer creator captured her voice, preserved in a 15-minute audio/video DVD. She only wanted to sing, and he gave her that chance. If you wish to purchase her album, to hear her songs of love, which link should you visit? After purchasing, who is the sender? And what is the actual creation year when these musical compositions first came to life?\n查找购买，基本AI就能出\n1 2 3 https://androidworld.com/prod68.htm Chris Willis 2004 Challenge 5\n本题也是基本AI出的，多提示词几次，就会给出下面这个，但是有个坑点\njohn-louis-bergeron和john_louis-bergeron都会导航到那个网站，但是交后面那个是错误，因为这个卡住了，错失三血\n1 https://www.findagrave.com/memorial/63520325/john-louis-bergeron ‍\n",
+  "wordCount" : "1693",
+  "inLanguage": "en",
+  "datePublished": "2025-11-15T11:24:18+08:00",
+  "dateModified": "2025-12-10T15:23:23+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Wh1teJ0ker"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wh1tej0ker.github.io/post/2025rctf-2sxbu2.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wh1teJ0kerのBlog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wh1tej0ker.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/favicon.ico">
+
+<link rel="manifest" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.9d998bab4720091d5ec1e0fbbffd92b254a2e791623df6106cd7ea760bfc5c28.css" integrity="sha256-nZmLq0cgCR1eweD7v/2SslSi55FiPfYQbNfqdgv8XCg=" crossorigin="anonymous" media="screen" />
+    
+
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.65a3017a8aabe1f9330e70527075c8d51bc9634d5cac35077af03588c1df8078.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    </head>
+<body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            HOME
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/categories/">分类</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives/">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/friends/">友链</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/about/">关于</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="https://cloud.umami.is/share/5RZUCwaG2fOysYPa/wh1tej0ker.github.io">Dashboard</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/Wh1teJ0ker"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-search">
+                <a href="javascript:void(0)" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </a>
+            </li>
+
+            
+        </ul>
+        
+    </section>
+</nav>
+
+
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>2025RCTF</h1>
+  </header>
+
+  <p>
+  <small>
+    November 15, 2025&nbsp;· &nbsp;· </small>
+
+  
+<p>
+
+  <div class="blog-body">
+    <div class="blog-toc">
+      <details open class="toc-details">
+    <summary class="toc-summary">目录</summary>
+    <div class="toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#speak-softly-love">Speak Softly Love</a></li>
+    <li><a href="#the-alchemists-cage">The Alchemist&rsquo;s Cage</a></li>
+    <li><a href="#wanna-feel-love">Wanna Feel Love</a></li>
+  </ul>
+</nav>
+    </div>
+</details>
+    </div>
+
+    <div class="blog-content-wrapper">
+      <section class="blog-content"><h1 id="2025rctf">2025RCTF</h1>
+<h1 id="misc">Misc</h1>
+<h2 id="speak-softly-love">Speak Softly Love</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mf">1.8</span><span class="n">ssDGBTssUI</span>
+</span></span><span class="line"><span class="cl"><span class="mf">2.</span><span class="n">r178</span>
+</span></span><span class="line"><span class="cl"><span class="mf">3.</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mateusz</span><span class="o">.</span><span class="n">viste</span><span class="o">.</span><span class="n">fr</span><span class="o">/</span><span class="n">mateusz</span><span class="o">.</span><span class="n">ogg</span>
+</span></span><span class="line"><span class="cl"><span class="mf">4.16</span><span class="n">TofYbGd86C7S6JuAuhGkX4fbmC9QtzwT</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第一问</p>
+<p>根据视频试图先找到电脑型号，然后结合关键词music，youtube搜索找到这个。</p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic57d102e55a86e97acc04f71e4258e41e-20251115120444-cvv7p27.png" alt="57d102e55a86e97acc04f71e4258e41e"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mi">8</span><span class="n">ssDGBTssUI</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第二问</p>
+<p>查找DOSmid</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">vogons</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">viewtopic</span><span class="o">.</span><span class="n">php</span><span class="err">?</span><span class="n">t</span><span class="o">=</span><span class="mi">44947</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115120716-3rjoeb3.png" alt="image"></p>
+<p>先找到关于这个的大致信息</p>
+<p>使用的svn</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">svn</span> <span class="n">co</span> <span class="n">svn</span><span class="p">:</span><span class="o">//</span><span class="n">svn</span><span class="o">.</span><span class="n">mateusz</span><span class="o">.</span><span class="n">fr</span><span class="o">/</span><span class="n">dosmid</span> <span class="n">dosmid</span><span class="o">-</span><span class="n">svn</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后基于上述关键词去查找</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">root</span><span class="nd">@DESKTOP</span><span class="o">-</span><span class="n">LV8V93U</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="mi">2025</span><span class="n">RCTF</span><span class="o">/</span><span class="n">dosmid</span><span class="o">-</span><span class="n">svn</span><span class="c1"># svn log -r 200:350 | egrep -i &#34;playlist|m3u|freeze|empty|loop|soft&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9.1</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">sequential</span> <span class="n">playing</span> <span class="n">of</span> <span class="n">playlists</span><span class="p">,</span> <span class="n">inspired</span> <span class="n">by</span> <span class="n">a</span> <span class="n">patch</span> <span class="n">proposed</span> <span class="n">by</span> <span class="n">Graham</span> <span class="n">Wiseman</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9.2</span> <span class="n">into</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9.3</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">m3u</span> <span class="n">playlist</span> <span class="n">uses</span> <span class="n">fio</span> <span class="n">calls</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">fopen</span><span class="p">()</span> <span class="ow">and</span> <span class="n">friends</span>
+</span></span><span class="line"><span class="cl"><span class="n">fix</span><span class="p">:</span> <span class="o">/</span><span class="n">random</span> <span class="n">was</span> <span class="n">always</span> <span class="n">playing</span> <span class="n">first</span> <span class="n">song</span> <span class="n">of</span> <span class="n">the</span> <span class="n">m3u</span> <span class="nb">list</span><span class="p">,</span> <span class="n">now</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">random</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">start</span>
+</span></span><span class="line"><span class="cl"><span class="n">fixed</span> <span class="n">playlist</span> <span class="n">gap</span> <span class="n">delay</span> <span class="n">computation</span> <span class="p">(</span><span class="n">fixed</span> <span class="o">/</span><span class="n">delay</span> <span class="n">behavior</span><span class="p">,</span> <span class="n">too</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9.4</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9.5</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">root</span><span class="nd">@DESKTOP</span><span class="o">-</span><span class="n">LV8V93U</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="mi">2025</span><span class="n">RCTF</span><span class="o">/</span><span class="n">dosmid</span><span class="o">-</span><span class="n">svn</span><span class="c1"># svn log -r 1:200 | egrep -i &#34;playlist|m3u|freeze|empty|loop|soft&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">do</span> <span class="ow">not</span> <span class="n">freeze</span> <span class="n">when</span> <span class="n">no</span> <span class="n">MPU401</span> <span class="ow">is</span> <span class="n">responding</span>
+</span></span><span class="line"><span class="cl"><span class="n">setting</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">software</span> <span class="n">again</span><span class="p">,</span> <span class="n">reinstated</span> <span class="n">default</span> <span class="n">delay</span><span class="o">=</span><span class="mi">2</span><span class="n">ms</span><span class="p">,</span> <span class="n">improved</span> <span class="n">keyboard</span> <span class="n">reaction</span> <span class="n">times</span> <span class="ow">and</span> <span class="n">adjusted</span> <span class="n">documentation</span>
+</span></span><span class="line"><span class="cl"><span class="n">added</span> <span class="n">INT28h</span> <span class="n">powersaving</span> <span class="n">during</span> <span class="n">idle</span> <span class="n">loops</span>
+</span></span><span class="line"><span class="cl"><span class="n">detecting</span> <span class="n">when</span> <span class="n">a</span> <span class="n">playlist</span> <span class="ow">is</span> <span class="n">passed</span> <span class="n">on</span> <span class="n">command</span><span class="o">-</span><span class="n">line</span> <span class="p">(</span><span class="n">but</span> <span class="n">no</span> <span class="n">m3u</span> <span class="n">support</span> <span class="n">yet</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">first</span> <span class="n">semi</span><span class="o">-</span><span class="n">experimental</span> <span class="n">M3U</span> <span class="n">support</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.6</span> <span class="n">into</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.6.1</span> <span class="n">into</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.7</span> <span class="ow">in</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.8</span> <span class="n">into</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">added</span> <span class="n">an</span> <span class="n">empty</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">-</span><span class="n">documented</span> <span class="n">configuration</span> <span class="n">file</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="n">s</span> <span class="n">silence</span> <span class="n">gap</span> <span class="ow">is</span> <span class="n">inserted</span> <span class="n">only</span> <span class="ow">in</span> <span class="n">playlist</span> <span class="n">mode</span> <span class="p">(</span><span class="n">no</span> <span class="n">reason</span> <span class="n">to</span> <span class="n">wait</span> <span class="mi">2</span><span class="n">s</span> <span class="k">for</span> <span class="n">a</span> <span class="n">single</span> <span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">fixed</span> <span class="n">freezing</span> <span class="n">when</span> <span class="n">fed</span> <span class="k">with</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">playlist</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">too</span> <span class="n">many</span> <span class="s1">&#39;soft&#39;</span> <span class="n">errors</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">row</span><span class="p">,</span> <span class="n">dosmid</span> <span class="n">aborts</span> <span class="p">(</span><span class="n">protects</span> <span class="n">against</span> <span class="s1">&#39;soft errors loops&#39;</span><span class="p">,</span> <span class="n">typically</span> <span class="k">with</span> <span class="n">playlist</span> <span class="n">filled</span> <span class="k">with</span> <span class="n">non</span><span class="o">-</span><span class="n">existing</span> <span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">add</span> <span class="n">a</span> <span class="n">note</span> <span class="n">about</span> <span class="n">empty</span> <span class="n">titles</span><span class="p">,</span> <span class="n">when</span> <span class="n">no</span> <span class="n">textual</span> <span class="n">data</span> <span class="n">could</span> <span class="n">be</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">midi</span> <span class="n">file</span>
+</span></span><span class="line"><span class="cl"><span class="n">ignore</span> <span class="n">leading</span> <span class="n">empty</span> <span class="n">title</span> <span class="n">lines</span>
+</span></span><span class="line"><span class="cl"><span class="n">freezed</span> <span class="n">v0</span><span class="mf">.9</span> <span class="n">to</span> <span class="n">tags</span>
+</span></span><span class="line"><span class="cl"><span class="n">root</span><span class="nd">@DESKTOP</span><span class="o">-</span><span class="n">LV8V93U</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="mi">2025</span><span class="n">RCTF</span><span class="o">/</span><span class="n">dosmid</span><span class="o">-</span><span class="n">svn</span><span class="c1"># svn log -r 1:200 | grep -n &#34;soft&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="mi">260</span><span class="p">:</span><span class="n">setting</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">software</span> <span class="n">again</span><span class="p">,</span> <span class="n">reinstated</span> <span class="n">default</span> <span class="n">delay</span><span class="o">=</span><span class="mi">2</span><span class="n">ms</span><span class="p">,</span> <span class="n">improved</span> <span class="n">keyboard</span> <span class="n">reaction</span> <span class="n">times</span> <span class="ow">and</span> <span class="n">adjusted</span> <span class="n">documentation</span>
+</span></span><span class="line"><span class="cl"><span class="mi">712</span><span class="p">:</span><span class="k">if</span> <span class="n">too</span> <span class="n">many</span> <span class="s1">&#39;soft&#39;</span> <span class="n">errors</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">row</span><span class="p">,</span> <span class="n">dosmid</span> <span class="n">aborts</span> <span class="p">(</span><span class="n">protects</span> <span class="n">against</span> <span class="s1">&#39;soft errors loops&#39;</span><span class="p">,</span> <span class="n">typically</span> <span class="k">with</span> <span class="n">playlist</span> <span class="n">filled</span> <span class="k">with</span> <span class="n">non</span><span class="o">-</span><span class="n">existing</span> <span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">root</span><span class="nd">@DESKTOP</span><span class="o">-</span><span class="n">LV8V93U</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="mi">2025</span><span class="n">RCTF</span><span class="o">/</span><span class="n">dosmid</span><span class="o">-</span><span class="n">svn</span><span class="c1"># svn log -r 1:200 | sed -n &#39;710,720p&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">r178</span> <span class="o">|</span> <span class="n">mv_fox</span> <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">09</span> <span class="mi">01</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="o">+</span><span class="mi">0800</span> <span class="p">(</span><span class="n">Mon</span><span class="p">,</span> <span class="mi">09</span> <span class="n">May</span> <span class="mi">2016</span><span class="p">)</span> <span class="o">|</span> <span class="mi">1</span> <span class="n">line</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">too</span> <span class="n">many</span> <span class="s1">&#39;soft&#39;</span> <span class="n">errors</span> <span class="n">occur</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">row</span><span class="p">,</span> <span class="n">dosmid</span> <span class="n">aborts</span> <span class="p">(</span><span class="n">protects</span> <span class="n">against</span> <span class="s1">&#39;soft errors loops&#39;</span><span class="p">,</span> <span class="n">typically</span> <span class="k">with</span> <span class="n">playlist</span> <span class="n">filled</span> <span class="k">with</span> <span class="n">non</span><span class="o">-</span><span class="n">existing</span> <span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">------------------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">r179</span> <span class="o">|</span> <span class="n">mv_fox</span> <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">09</span> <span class="mi">01</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">49</span> <span class="o">+</span><span class="mi">0800</span> <span class="p">(</span><span class="n">Mon</span><span class="p">,</span> <span class="mi">09</span> <span class="n">May</span> <span class="mi">2016</span><span class="p">)</span> <span class="o">|</span> <span class="mi">1</span> <span class="n">line</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">replaced</span> <span class="n">sleep</span><span class="p">()</span> <span class="n">calls</span> <span class="k">with</span> <span class="n">equivalent</span> <span class="n">udelay</span><span class="p">()</span> <span class="n">calls</span> <span class="p">(</span><span class="n">makes</span> <span class="n">the</span> <span class="n">binary</span> <span class="mi">128</span> <span class="nb">bytes</span> <span class="n">lighter</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">------------------------------------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="n">r180</span> <span class="o">|</span> <span class="n">mv_fox</span> <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">10</span> <span class="mi">02</span><span class="p">:</span><span class="mi">04</span><span class="p">:</span><span class="mi">00</span> <span class="o">+</span><span class="mi">0800</span> <span class="p">(</span><span class="n">Tue</span><span class="p">,</span> <span class="mi">10</span> <span class="n">May</span> <span class="mi">2016</span><span class="p">)</span> <span class="o">|</span> <span class="mi">1</span> <span class="n">line</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">fetching</span> <span class="n">more</span> <span class="n">textual</span> <span class="n">data</span> <span class="kn">from</span> <span class="nn">MIDI</span> <span class="n">files</span> <span class="p">(</span><span class="n">text</span> <span class="n">events</span><span class="p">,</span> <span class="n">tracks</span> <span class="n">titles</span><span class="p">,</span> <span class="n">marker</span> <span class="n">events</span><span class="o">...</span><span class="p">)</span> <span class="ow">and</span> <span class="n">displaying</span> <span class="n">it</span> <span class="n">on</span> <span class="n">a</span> <span class="n">little</span> <span class="n">scrolling</span> <span class="n">window</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以锁定在r178-180，然后试r178就直接对了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">r178</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第三问<br>
+​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic20251115115854053_23433-20251115120223-va46xu9.png" alt=""><br>
+根据评论区找到主页</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">主页里</span>
+</span></span><span class="line"><span class="cl"><span class="n">想联系我吗</span><span class="err">？</span><span class="n">我的电子邮件地址与此网页的地址几乎相同</span><span class="err">（</span><span class="n">firstname</span><span class="nd">@lastname.fr</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="n">令人惊讶的是</span><span class="err">，</span><span class="n">很多人难以念出我的名字</span><span class="err">，</span><span class="n">所以这里附上我的名字</span><span class="err">（</span><span class="n">图片来自</span> <span class="n">Wikimedia</span><span class="err">）。</span>
+</span></span><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mateusz</span><span class="o">.</span><span class="n">viste</span><span class="o">.</span><span class="n">fr</span><span class="o">/</span><span class="n">mateusz</span><span class="o">.</span><span class="n">ogg</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>第四问</p>
+<p>在主页发现了</p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115121145-jyj4lr0.png" alt="image"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">gopher</span><span class="p">:</span><span class="o">//</span><span class="n">gopher</span><span class="o">.</span><span class="n">viste</span><span class="o">.</span><span class="n">fr</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115121223-lweqyex.png" alt="image"></p>
+<p>在26里找到了</p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115121241-lp0qf7m.png" alt="image"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="mi">16</span><span class="n">TofYbGd86C7S6JuAuhGkX4fbmC9QtzwT</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="the-alchemists-cage">The Alchemist&rsquo;s Cage</h2>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115235437-axt39pe.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115235558-i6oyv93.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115235631-szogfwu.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251115235650-m69vpuo.png" alt="image"></p>
+<h2 id="wanna-feel-love">Wanna Feel Love</h2>
+<p>Challenge 1</p>
+<p>She only wanted to sing, but her voice was hidden in silence. What is this email trying to tell you? Look beyond what you hear — seek the whispers in the shadows, the comments that were never meant to be seen.</p>
+<p>邮件隐写</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">https://www.spammimic.com
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251116150220-i3m16fv.png" alt="image"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">Don</span><span class="s1">&#39;t just listen to the sound; this file is hiding an &#39;</span><span class="n">old</span> <span class="n">relic</span><span class="o">.</span><span class="s1">&#39; Try looking for the &#39;</span><span class="n">comments</span><span class="s1">&#39; that the player isn&#39;</span><span class="n">t</span> <span class="n">supposed</span> <span class="n">to</span> <span class="n">see</span><span class="o">.</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Challenge 2</p>
+<p>She wants to tell you something, encoded in melodies. Within the digital symphony, her true voice emerges. What is the hidden message found in the XM file? The words she longed to sing, the feeling she wanted to share.</p>
+<p>然后下载openmpt</p>
+<p>评论和乐曲名有提示</p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic88e607d2431d6d3e663259e0bb02ddc4-20251117114419-15y23nx.jpg" alt="88e607d2431d6d3e663259e0bb02ddc4"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -*- coding: utf-8 -*-</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Decode hidden message from feel.wav binary-bar waveform.
+</span></span></span><span class="line"><span class="cl"><span class="s2">Expected output: I Feel Fantastic heyheyhey
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">read_mono_pcm</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rate</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>   <span class="c1"># 立体声只取一个声道</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">rate</span><span class="p">,</span> <span class="n">data</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">compute_envelope</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">window_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;对绝对值做滑动平均，得到能量包络&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">abs_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">abs_data</span><span class="p">)</span> <span class="o">//</span> <span class="n">window_size</span> <span class="o">*</span> <span class="n">window_size</span>
+</span></span><span class="line"><span class="cl">    <span class="n">reshaped</span> <span class="o">=</span> <span class="n">abs_data</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">window_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">env</span> <span class="o">=</span> <span class="n">reshaped</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">env</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">binarize_envelope</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;根据能量双峰分布自动求阈值，得到 0/1 序列&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">median_env</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">low_level</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="n">env</span> <span class="o">&lt;</span> <span class="n">median_env</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">high_level</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="n">env</span> <span class="o">&gt;</span> <span class="n">median_env</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">low_level</span> <span class="o">+</span> <span class="n">high_level</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bits_raw</span> <span class="o">=</span> <span class="p">(</span><span class="n">env</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bits_raw</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_length_encode</span><span class="p">(</span><span class="n">bits</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">runs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current</span> <span class="o">=</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bits</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="n">current</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">length</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">runs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current</span> <span class="o">=</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl">            <span class="n">length</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">runs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">runs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">expand_runs_to_bits</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    每一串 0/1 在时间上会持续若干个“单位长度”，
+</span></span></span><span class="line"><span class="cl"><span class="s2">    大部分长度约是 22 的倍数，这里固定 base_unit = 22，
+</span></span></span><span class="line"><span class="cl"><span class="s2">    再按 round(length / base_unit) 还原成重复 bit。
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_unit</span> <span class="o">=</span> <span class="mf">22.0</span>  <span class="c1"># 针对 feel.wav 这题是固定的</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bit_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">l</span> <span class="o">/</span> <span class="n">base_unit</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="n">bit_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">v</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">bit_list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">bits_to_ascii</span><span class="p">(</span><span class="n">bit_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bitstr</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bit_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bitstr</span> <span class="o">=</span> <span class="n">bitstr</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstr</span><span class="p">)</span> <span class="o">//</span> <span class="mi">8</span> <span class="o">*</span> <span class="mi">8</span><span class="p">]</span>  <span class="c1"># 截断到 8 的倍数</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bytes_vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">bitstr</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">8</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bitstr</span><span class="p">),</span> <span class="mi">8</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">bytes_vals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">bytes_vals</span><span class="p">,</span> <span class="n">bitstr</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decode_hidden_message</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rate</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">read_mono_pcm</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">env</span> <span class="o">=</span> <span class="n">compute_envelope</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bits_raw</span> <span class="o">=</span> <span class="n">binarize_envelope</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">runs</span> <span class="o">=</span> <span class="n">run_length_encode</span><span class="p">(</span><span class="n">bits_raw</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bit_list</span> <span class="o">=</span> <span class="n">expand_runs_to_bits</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">msg</span><span class="p">,</span> <span class="n">bytes_vals</span><span class="p">,</span> <span class="n">bitstr</span> <span class="o">=</span> <span class="n">bits_to_ascii</span><span class="p">(</span><span class="n">bit_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">msg</span><span class="p">,</span> <span class="n">bytes_vals</span><span class="p">,</span> <span class="n">bitstr</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 把这里改成你的文件名（与脚本在同一路径下）</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wav_path</span> <span class="o">=</span> <span class="s2">&#34;feel.wav&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">msg</span><span class="p">,</span> <span class="n">bytes_vals</span><span class="p">,</span> <span class="n">bitstr</span> <span class="o">=</span> <span class="n">decode_hidden_message</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Decoded bytes:&#34;</span><span class="p">,</span> <span class="n">bytes_vals</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Decoded message:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">I</span> <span class="n">Feel</span> <span class="n">Fantastic</span> <span class="n">heyheyhey</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Challenge 3</p>
+<p>She just feels love, and her legend once spread across YouTube. Her song touched hearts, but the original video on the YouTube platform has been removed — deleted, re-uploaded, distorted, like memories fading with time. Through the fragments of public records, find where her voice first echoed: the original video ID, upload date (YYYY-MM-DD), and the one who first shared her song.</p>
+<p>在网络存档上找到原视频</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">archive</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">details</span><span class="o">/</span><span class="n">youtube</span><span class="o">-</span><span class="n">rLy</span><span class="o">-</span><span class="n">AwdCOmI</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Picimage-20251117114508-42qyuk7.png" alt="image"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">rLy</span><span class="o">-</span><span class="n">AwdCOmI</span>
+</span></span><span class="line"><span class="cl"><span class="n">Creepyblog</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2009</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">15</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Challenge 4</p>
+<p>Her creator captured her voice, preserved in a 15-minute audio/video DVD. She only wanted to sing, and he gave her that chance. If you wish to purchase her album, to hear her songs of love, which link should you visit? After purchasing, who is the sender? And what is the actual creation year when these musical compositions first came to life?</p>
+<p>查找购买，基本AI就能出</p>
+<p><img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic1cf1a70d2de5cb4aa4a0eaa7b27b8a77-20251117114617-a4bubk4.png" alt="1cf1a70d2de5cb4aa4a0eaa7b27b8a77"></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">androidworld</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">prod68</span><span class="o">.</span><span class="n">htm</span>
+</span></span><span class="line"><span class="cl"><span class="n">Chris</span> <span class="n">Willis</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2004</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Challenge 5</p>
+<p>本题也是基本AI出的，多提示词几次，就会给出下面这个，但是有个坑点</p>
+<p>john-louis-bergeron和john_louis-bergeron都会导航到那个网站，但是交后面那个是错误，因为这个卡住了，错失三血</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">findagrave</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">memorial</span><span class="o">/</span><span class="mi">63520325</span><span class="o">/</span><span class="n">john</span><span class="o">-</span><span class="n">louis</span><span class="o">-</span><span class="n">bergeron</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>‍</p>
+</section>
+
+      
+        
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'Wh1teJ0ker\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOOTzcZA');
+      s.setAttribute('data-category', 'Announcements');
+      s.setAttribute('data-category-id', 'DIC_kwDOOTzcZM4CoxXV');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'top');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'zh-CN');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+      
+
+      
+      
+      <div class="paginator">
+        
+        <a class="prev" href="https://wh1tej0ker.github.io/post/2025-strong-network-mimicryfinal-17suma.html">
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+          <span>2025强网拟态-Final</span></a>
+        
+        
+        <a class="next" href="https://wh1tej0ker.github.io/post/2025uwsp-pointer-overflow-ctf-zrympb.html"><span>2025UWSP Pointer Overflow CTF</span>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+        </a>
+        
+      </div>
+      
+
+      
+
+
+    </div>
+  </div>
+</article>
+
+        </div><footer class="footer">
+  <p>&copy; 2026 <a href="https://wh1tej0ker.github.io/">Wh1teJ0kerのBlog</a>
+    Powered by
+    <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+    <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+️  </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</a>
+
+
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+
+        function copyingDone() {
+            copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+                copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script></main>
+      
+      
+      <div id="search-modal" class="search-modal" style="display: none;">
+          <div class="search-modal-content">
+              <div class="search-input-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="search-input" placeholder="搜索标题、标签或正文关键字" autocomplete="off">
+                  <button type="button" id="search-clear" class="search-clear" aria-label="清除搜索">
+                      ×
+                  </button>
+                  <span class="search-shortcut">ESC</span>
+              </div>
+              <div id="search-results" class="search-results"></div>
+          </div>
+      </div>
+
+      <style>
+        #search-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: none;
+          background-color: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          align-items: center;
+          justify-content: center;
+          padding: 0 1.5rem;
+        }
+
+        #search-modal.active {
+          display: flex;
+        }
+
+        #search-modal .search-modal-content {
+          width: 100%;
+          max-width: 880px;
+          max-height: 80vh;
+          margin: 0;
+          background: transparent;
+          box-shadow: none;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-dark-mode] #search-modal .search-modal-content {
+          background: transparent;
+          border: none;
+        }
+      </style>
+    </body><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+<script src="/main.min.80d50982893555370f4aacc2affcf405ae67515c8053bb96ae4aa69934f4efec7c58bde5638ac91af85238507fcc283a42df3e061b5b83554fd71d3c87979053.js" integrity="sha512-gNUJgok1VTcPSqzCr/z0Ba5nUVyAU7uWrkqmmTT07&#43;x8WL3lY4rJGvhSOFB/zCg6Qt8&#43;Bhtbg1VP1x08h5eQUw==" crossorigin="anonymous" defer></script></html>

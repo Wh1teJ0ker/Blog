@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wh1teJ0kerのBlog</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Ladder@CTF第一次获得奖金的比赛，也算是比较有纪念意义了">
+    <meta name="author" content="Wh1teJ0ker">
+    <link rel="canonical" href="https://wh1tej0ker.github.io/post/2023hitctf-kovrz.html">
+
+    <link rel="alternate" type="application/rss+xml" href="https://wh1tej0ker.github.io//index.xml" title="Wh1teJ0kerのBlog">
+
+    
+
+
+<script async defer data-website-id="56cc42c1-3656-4d3e-af3c-acded927b8ed" src="https://analytics.umami.is/script.js"></script>
+
+    <meta property="og:url" content="https://wh1tej0ker.github.io/post/2023hitctf-kovrz.html">
+  <meta property="og:site_name" content="Wh1teJ0kerのBlog">
+  <meta property="og:title" content="2023HITCTF">
+  <meta property="og:description" content="CTF第一次获得奖金的比赛，也算是比较有纪念意义了">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="post">
+    <meta property="article:published_time" content="2023-10-20T13:44:59+08:00">
+    <meta property="article:modified_time" content="2025-04-04T18:06:02+08:00">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2023HITCTF">
+  <meta name="twitter:description" content="CTF第一次获得奖金的比赛，也算是比较有纪念意义了">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://wh1tej0ker.github.io/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "2023HITCTF",
+      "item": "https://wh1tej0ker.github.io/post/2023hitctf-kovrz.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2023HITCTF",
+  "name": "2023HITCTF",
+  "description": "CTF第一次获得奖金的比赛，也算是比较有纪念意义了",
+  "keywords": [
+    
+  ],
+  "articleBody": "2023HITCTF 前言 希望自己下次能有更大的贡献，太菜啦，哭哭（\n​​\nMisc leftover file 首先查看了一下，发现是modbus协议相关，检查了一下相关功能码\n​​\n发现response存在异常\n​​\n​尝试根据flag头寻找相关规律\n​​\n然后每次的功能码3，进行一次新的修改操作\n​​\n​​\n​​\n到90 93发现flag已经格式完整\n完整exp：\n1 2 3 4 5 6 7 8 9 10 11 12 c = [71, 71, 81, 63, 79, 64, 43, 40, 41, 41, 112, 65, 35, 86, 83, 101, 98, 77, 96, 91, 74, 93, 88, 71, 90, 85, 68, 73, 68, 85, 90, 93] def decrypt(c, x): return ''.join([chr(c[i] + i + x) for i in range(len(c))]) def find(c): for i in range(26): decrypted = decrypt(c, i) if decrypted.startswith(\"HIT\"): return i, decrypted return None, None x, flag = find(c) if x : print(f\"flag: {x}: {flag}\") ​​\n这是仅完成的一题，剩下的是根据官方wp的思路来学习的\n单纯菜，qwq~~\nnetwork-in-network 考点：神经网络逆向\n先来看一下官方给的\n​​\n我再研究研究，qwq\nH1F1 考点：音频反向\n这道题就讲一下思路吧，不想动手复现了\n根据官方wp和吉大师傅的简单操作了一下\n2023HITCTF wp (qq.com)\n只能说学到了一个新的知识：音频diff\n首先根据峰值将两端音频对齐，然后对其中一段音频反向\n可以发现下图的怪异bit点\n​​\n进行读取二进制0和1，最后转字符串就行了\n总结 都什么年代了，哪还有什么传统Misc啊（乐\n还有这次比赛的web也确实让人有一种脑干缺失的美\n出题人太懂出题了（悲\n",
+  "wordCount" : "485",
+  "inLanguage": "en",
+  "datePublished": "2023-10-20T13:44:59+08:00",
+  "dateModified": "2025-04-04T18:06:02+08:00",
+  "author":{
+    "@type": "Person",
+    "name": "Wh1teJ0ker"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://wh1tej0ker.github.io/post/2023hitctf-kovrz.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wh1teJ0kerのBlog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wh1tej0ker.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+    <link rel="icon" type="image/png" href="/favicon.ico" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/favicon.ico">
+
+<link rel="manifest" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/lxgw-wenkai-webfont/1.6.0/style.css" />
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/main.min.9d998bab4720091d5ec1e0fbbffd92b254a2e791623df6106cd7ea760bfc5c28.css" integrity="sha256-nZmLq0cgCR1eweD7v/2SslSi55FiPfYQbNfqdgv8XCg=" crossorigin="anonymous" media="screen" />
+    
+
+
+    
+    <link rel="stylesheet" href="/scss/highlight/github-dark.min.min.66034289ee9a113219a2c4aae0a8bd2095ab255c832a42efcf5863f10814e7a1.css" />
+
+    
+    <script src="/js/highlight.min.min.65a3017a8aabe1f9330e70527075c8d51bc9634d5cac35077af03588c1df8078.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    </head>
+<body>
+      <main class="wrapper"><nav class="navigation">
+    <section class="container">
+        <a class="navigation-brand" href="/">
+            HOME
+        </a>
+        <input type="checkbox" id="menu-toggle" />
+        <label class="menu-button float-right" for="menu-toggle">
+            <span></span><span></span><span></span>
+        </label>
+        
+        <ul class="navigation-list" id="navigation-list">
+            
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/categories/">分类</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/archives/">归档</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/friends/">友链</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="/about/">关于</a>
+            </li>
+            
+            <li class="navigation-item navigation-menu">
+                <a class="navigation-link" href="https://cloud.umami.is/share/5RZUCwaG2fOysYPa/wh1tej0ker.github.io">Dashboard</a>
+            </li>
+            
+            
+
+            <li class="navigation-item menu-separator">
+                <span>|</span>
+            </li>
+
+            
+            
+            <li class="navigation-item navigation-social">
+                <a class="navigation-link" href="https://github.com/Wh1teJ0ker"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+            </li>
+            
+            
+
+            <li class="navigation-item navigation-search">
+                <a href="javascript:void(0)" id="search-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </a>
+            </li>
+
+            
+        </ul>
+        
+    </section>
+</nav>
+
+
+<div id="content">
+<article class="blog-single">
+  <header class="blog-title">
+    <h1>2023HITCTF</h1>
+  </header>
+
+  <p>
+  <small>
+    October 20, 2023&nbsp;· &nbsp;· </small>
+
+  
+<p>
+
+  <div class="blog-body">
+    <div class="blog-toc">
+      <details open class="toc-details">
+    <summary class="toc-summary">目录</summary>
+    <div class="toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#leftover-file">leftover file</a></li>
+    <li><a href="#network-in-network">network-in-network</a></li>
+    <li><a href="#h1f1">H1F1</a></li>
+  </ul>
+</nav>
+    </div>
+</details>
+    </div>
+
+    <div class="blog-content-wrapper">
+      <section class="blog-content"><h1 id="2023hitctf">2023HITCTF</h1>
+<h1 id="前言">前言</h1>
+<p>希望自己下次能有更大的贡献，太菜啦，哭哭（</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-We3CjlQpxTPSgcK-20240826134632-ijrfal7.png" alt="We3CjlQpxTPSgcK">​</p>
+<h1 id="misc">Misc</h1>
+<h2 id="leftover-file">leftover file</h2>
+<p>首先查看了一下，发现是modbus协议相关，检查了一下相关功能码</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-pUu1vYTSV2F8Gwe-20240826134632-e8bkrms.png" alt="pUu1vYTSV2F8Gwe">​</p>
+<p>发现response存在异常</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-6vpOtLGRNk7WuCS-20240826134633-h99mb68.png" alt="6vpOtLGRNk7WuCS">​</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-9aefbxp7ENLOMd1-20240826134633-nr0pivo.png" alt="9aefbxp7ENLOMd1">尝试根据flag头寻找相关规律</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-vkmWO1qZ74jMobi-20240826134634-hzhemc6.png" alt="vkmWO1qZ74jMobi">​</p>
+<p>然后每次的功能码3，进行一次新的修改操作</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-GMP5fUcgob2DmRV-20240826134634-xb7ktab.png" alt="GMP5fUcgob2DmRV">​</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-K1mdlh3nTRjkWJe-20240826134635-zkgh8w1.png" alt="K1mdlh3nTRjkWJe">​</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-27M6IRgJvsZUCxy-20240826134635-jbhdp55.png" alt="27M6IRgJvsZUCxy">​</p>
+<p>到90 93发现flag已经格式完整</p>
+<p>完整exp：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">71</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">93</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">))])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">decrypted</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">decrypted</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&#34;HIT&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">decrypted</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">x</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;flag: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-rz5YT8Ai2fogaIu-20240826134635-mh0wkdx.png" alt="rz5YT8Ai2fogaIu">​</p>
+<p>这是仅完成的一题，剩下的是根据官方wp的思路来学习的</p>
+<p>单纯菜，qwq~~</p>
+<h2 id="network-in-network">network-in-network</h2>
+<p><strong>考点：神经网络逆向</strong></p>
+<p>先来看一下官方给的</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-3IeufHGkZVx2Bdw-20240826134636-bsvax9s.png" alt="3IeufHGkZVx2Bdw">​</p>
+<p>我再研究研究，qwq</p>
+<h2 id="h1f1">H1F1</h2>
+<p><strong>考点：音频反向</strong></p>
+<p>这道题就讲一下思路吧，不想动手复现了</p>
+<p>根据官方wp和吉大师傅的简单操作了一下</p>
+<p><a href="https://mp.weixin.qq.com/s/O14tELa2JCkhJUPA7RNfRw">2023HITCTF wp (qq.com)</a></p>
+<p>只能说学到了一个新的知识：音频diff</p>
+<p>首先根据峰值将两端音频对齐，然后对其中一段音频反向</p>
+<p>可以发现下图的怪异bit点</p>
+<p>​<img src="https://raw.githubusercontent.com/Wh1teJ0ker/PicGo/main/Pic/net-img-hvCyXY5inZpN6fS-20240826134637-5zvntl8.png" alt="hvCyXY5inZpN6fS">​</p>
+<p>进行读取二进制0和1，最后转字符串就行了</p>
+<h1 id="总结">总结</h1>
+<p>都什么年代了，哪还有什么传统Misc啊（乐</p>
+<p>还有这次比赛的web也确实让人有一种脑干缺失的美</p>
+<p>出题人太懂出题了（悲</p>
+</section>
+
+      
+        
+<div class="comments">
+  <script>
+      const getTheme = window.localStorage && window.localStorage.getItem("theme");
+      let theme = getTheme === 'dark' ? 'dark' : 'light';
+      let s = document.createElement('script');
+      s.src = 'https://giscus.app/client.js';
+      s.setAttribute('data-repo', 'Wh1teJ0ker\/discussion');
+      s.setAttribute('data-repo-id', 'R_kgDOOTzcZA');
+      s.setAttribute('data-category', 'Announcements');
+      s.setAttribute('data-category-id', 'DIC_kwDOOTzcZM4CoxXV');
+      s.setAttribute('data-mapping', 'pathname');
+      s.setAttribute('data-strict', '0');
+      s.setAttribute('data-reactions-enabled', '1');
+      s.setAttribute('data-emit-metadata', '0');
+      s.setAttribute('data-input-position', 'top');
+      s.setAttribute('data-theme', theme);
+      s.setAttribute('data-lang', 'zh-CN');
+      s.setAttribute('data-loading', 'lazy');
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+  </script>
+</div>
+
+      
+
+      
+      
+      <div class="paginator">
+        
+        <a class="prev" href="https://wh1tej0ker.github.io/post/2023sycgeekchallenge-xn3sx.html">
+          <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.77086 21.1546C11.0491 22.698 21.4339 21.7773 21.4339 16.3608V4.63375C21.4339 3.93962 21.3581 3.30535 21.1917 2.76787M3.77086 21.1546C1.9934 20.7777 0.973585 18.7264 1.08749 16.688C1.2668 13.479 1.15721 9.43135 1.00513 6.21507C0.87809 3.52811 3.12891 1.16316 5.51029 1.25008C9.76594 1.40542 15.377 1.20229 18.7912 1.00542C20.0864 0.930734 20.8406 1.63385 21.1917 2.76787M3.77086 21.1546C4.56586 21.4723 5.49168 21.7879 6.5 22.0658M21.1917 2.76787C23.1097 4.18217 23.13 12.4191 22.9004 16.3608C20.8478 24.0194 12.3061 23.6662 6.5 22.0658M21.1917 2.76787C21.7612 4.51192 22.7203 9.67216 22 16.3608C21.2797 23.0494 11.3665 22.9511 6.5 22.0658M9.94496 9C9.28897 9.61644 7.63215 10.997 6.04814 11.7966C5.98257 11.8297 5.98456 11.9753 6.05061 12.0063C7.05496 12.4779 8.92941 13.9264 9.94496 15M6.44444 11.9667C8.86549 12.0608 14 12 16 11" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+          <span>2023SYCGeekchallenge</span></a>
+        
+        
+      </div>
+      
+
+      
+
+
+    </div>
+  </div>
+</article>
+
+        </div><footer class="footer">
+  <p>&copy; 2026 <a href="https://wh1tej0ker.github.io/">Wh1teJ0kerのBlog</a>
+    Powered by
+    <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>
+    <a href="https://github.com/guangzhengli/hugo-theme-ladder" rel="noopener" target="_blank">Ladder</a>
+️  </p>
+</footer>
+
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</a>
+
+
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+
+        function copyingDone() {
+            copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+            setTimeout(() => {
+                copybutton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+        codeblock.parentNode.appendChild(copybutton);
+    });
+</script></main>
+      
+      
+      <div id="search-modal" class="search-modal" style="display: none;">
+          <div class="search-modal-content">
+              <div class="search-input-wrapper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="search-input" placeholder="搜索标题、标签或正文关键字" autocomplete="off">
+                  <button type="button" id="search-clear" class="search-clear" aria-label="清除搜索">
+                      ×
+                  </button>
+                  <span class="search-shortcut">ESC</span>
+              </div>
+              <div id="search-results" class="search-results"></div>
+          </div>
+      </div>
+
+      <style>
+        #search-modal {
+          position: fixed;
+          inset: 0;
+          z-index: 2000;
+          display: none;
+          background-color: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          align-items: center;
+          justify-content: center;
+          padding: 0 1.5rem;
+        }
+
+        #search-modal.active {
+          display: flex;
+        }
+
+        #search-modal .search-modal-content {
+          width: 100%;
+          max-width: 880px;
+          max-height: 80vh;
+          margin: 0;
+          background: transparent;
+          box-shadow: none;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        [data-dark-mode] #search-modal .search-modal-content {
+          background: transparent;
+          border: none;
+        }
+      </style>
+    </body><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
+<script src="/main.min.80d50982893555370f4aacc2affcf405ae67515c8053bb96ae4aa69934f4efec7c58bde5638ac91af85238507fcc283a42df3e061b5b83554fd71d3c87979053.js" integrity="sha512-gNUJgok1VTcPSqzCr/z0Ba5nUVyAU7uWrkqmmTT07&#43;x8WL3lY4rJGvhSOFB/zCg6Qt8&#43;Bhtbg1VP1x08h5eQUw==" crossorigin="anonymous" defer></script></html>
